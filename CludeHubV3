@@ -262,5 +262,4 @@ local Section = Tab2:AddSection({
 local Section = Tab2:AddSection({
 	Name = "hat"
 })
-
-
+end
