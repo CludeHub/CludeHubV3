@@ -171,7 +171,8 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
 		print(Value)
 	end    
 })
-
+end
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 if game.PlaceId == 4924922222 then
 local Window1 = OrionLib:MakeWindow({Name = "BrookHaven", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
