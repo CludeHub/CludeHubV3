@@ -2231,7 +2231,7 @@ VoidPart.Transparency = 1
 VoidPart.CanCollide = false
 end
 
-                local Window = OrionLib:MakeWindow({Name = "Slap Battles hub that exists | DISCONTINUED", HidePremium = true, IntroEnabled = false, SaveConfig = false, ConfigFolder = "OrionTest"})
+                local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = true, IntroEnabled = false, SaveConfig = false, ConfigFolder = "OrionTest"})
 
                 local Tab = Window:MakeTab({
                     Name = "Home",
@@ -2269,11 +2269,32 @@ end
                     PremiumOnly = false
                 })
 
+                local Tab8 = Window:MakeTab({
+	            Name = "New",
+	            Icon = "rbxassetid://4483345998",
+	            PremiumOnly = false
+                })
+
                 local Tab7 = Window:MakeTab({
                     Name = "Player",
                     Icon = "http://www.roblox.com/asset/?id=4335489011",
                     PremiumOnly = false
                 })
+_G.infPhase = false
+Tab8:AddButton({
+	Name = "Infinite phase",
+	Callback = function()
+while _G.infPhase == true do
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+game:GetService("ReplicatedStorage").PhaseA:FireServer()
+wait(5.475)
+end
+      		print("button pressed")
+  	end    
+})
+
 
 Tab:AddLabel("Made by Paul")
 
