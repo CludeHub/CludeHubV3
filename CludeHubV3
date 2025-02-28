@@ -1,4 +1,1392 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
+local Window = OrionLib:MakeWindow({Name = "CludeHub 👏 | Slap Battles", HidePremium = false, SaveConfig = true, ConfigFolder = "SBSHub"})
+if not game.Workspace:FindFirstChild("Safe Spot") then
+local safeSpot = Instance.new("Part")
+safeSpot.Size = Vector3.new(512, 20, 512)
+safeSpot.Parent = game.Workspace
+safeSpot.CFrame = CFrame.new(7000, 0, 0)
+safeSpot.Transparency = 0.5
+safeSpot.Anchored = true
+safeSpot.Name = "Safe Spot"
+else
+local safeSpot = game.Workspace:FindFirstChild("Safe Spot")
+safeSpot.Size = Vector3.new(512, 20, 512)
+safeSpot.Parent = game.Workspace
+safeSpot.CFrame = CFrame.new(7000, 0, 0)
+safeSpot.Anchored = true
+safeSpot.Name = "Safe Spot"
+end
+
+if not game.ReplicatedStorage:FindFirstChild("summonPortal") then
+local robAnim = Instance.new("Animation")
+robAnim.AnimationId = "rbxassetid://13675136513"
+robAnim.Parent = game.ReplicatedStorage
+robAnim.Name = "summonPortal"
+end
+
+--variables n stuff
+
+_G.antiCD = false
+_G.infPhase = false
+_G.canSlap = false
+_G.canInfJump = false
+_G.isDancing = false
+_G.antiTurret = false
+_G.antiPusher = false
+_G.kineticActive = false
+_G.skinColor = 255
+_G.loopColor = false
+_G.loopCollectSlapples = false
+_G.loopPlaceBrick = false
+_G.bobFarmCheck = true
+_G.noPower = false
+_G.antiSquid = false
+_G.replicaFarm = false
+_G.antiReaper = false
+_G.recallPlayer = "none"
+_G.skukuchiPlayer = "none"
+_G.kaka = false
+_G.cloudSpeed = false
+_G.larrySpeed = 30
+
+function antiCoolDown()
+while _G.antiCD == true do
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local tool = character:FindFirstChildOfClass("Tool") or player.Backpack:FindFirstChildOfClass("Tool")
+
+local localscript = tool:FindFirstChildOfClass("LocalScript")
+local localscriptclone = localscript:Clone()
+localscriptclone = localscript:Clone()
+localscriptclone:Clone()
+localscript:Destroy()
+localscriptclone.Parent = tool
+wait(0.1)
+end
+end
+
+function infinitePhase()
+while _G.infPhase == true do
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+game:GetService("ReplicatedStorage").PhaseA:FireServer()
+wait(5.475)
+end
+end
+
+function ghostInvisible()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+if character.isInArena.Value == false then
+fireclickdetector(game.Workspace.Lobby.Ghost.ClickDetector)
+game:GetService("ReplicatedStorage").Ghostinvisibilityactivated:FireServer()
+
+while character.Humanoid.Health ~= 0 do
+character.Head.Transparency = 0.5
+character.Torso.Transparency = 0.5
+character["Left Arm"].Transparency = 0.5
+character["Right Arm"].Transparency = 0.5
+character["Left Leg"].Transparency = 0.5
+character["Right Leg"].Transparency = 0.5
+wait(0.05)
+end
+end
+end
+
+function invincibility()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local teleport = game.Workspace.Lobby.Teleport1
+
+OrionLib:MakeNotification({
+	Name = "doing stuff",
+	Content = "wait until smth happens",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
+if character.isInArena.Value ~= true then
+character.HumanoidRootPart.CFrame = teleport.CFrame
+end
+wait(0.5)
+local tool = character:FindFirstChildOfClass("Tool") or player.Backpack:FindFirstChildOfClass("Tool")
+tool.Parent = game.ReplicatedStorage
+character.Humanoid.Health = 0
+wait(6)
+player = game.Players.LocalPlayer
+character = player.Character or player.CharacterAdded:Wait()
+tool.Parent = character
+character.HumanoidRootPart.CFrame = game.Workspace.Origo.CFrame
+end
+
+function killerfishGlove()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local tool = character:FindFirstChild("fish") or player.Backpack:FindFirstChild("fish")
+
+local fish = game.Workspace.Lobby.fish
+local fishStand = game.Workspace.Lobby.GloveStands.fish
+local leaderstats = player:FindFirstChild("leaderstats")
+local gloveStat = leaderstats:FindFirstChild("Glove")
+
+local userInputService = game:GetService("UserInputService")
+local canUseAbility = true
+userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+if character.isInArena.Value == true then
+if gloveStat.Value == "fish" or gloveStat.Value == "Killerfish" then
+    if input.KeyCode == Enum.KeyCode.R and canUseAbility then
+            canUseAbility = false
+            game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+            wait(3.05)
+            canUseAbility = true
+        end
+    end
+    end
+end)
+
+while fish:FindFirstChild("Texture") do
+fish.Texture:Destroy()
+fish.Color = Color3.new(124, 124, 124)
+fish.Material = "DiamondPlate"
+fishStand.GloveDesc.DescOutline.DescFrame:FindFirstChild("Name").Text = "Killerfish"
+wait(0.05)
+end
+
+while true do
+if gloveStat.Value == "fish" or gloveStat.Value == "Killerfish" then
+gloveStat.Value = "Killerfish"
+end
+wait(0.05)
+end
+
+while tool.Glove:FindFirstChild("Texture") do
+tool.Glove.Texture:Destroy()
+wait(0.05)
+end
+
+tool.Glove.Color = Color3.new(124, 124, 124)
+tool.Glove.Material = "DiamondPlate"
+tool.Name = "Killerfish"
+end
+
+function tpsafeSpot()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local safeSpot = game.Workspace:FindFirstChild("Safe Spot")
+character.HumanoidRootPart.CFrame = safeSpot.CFrame + Vector3.new(0, 10, 0)
+
+end
+
+function tpArena()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local arenaPart = game.Workspace.Origo
+character.HumanoidRootPart.CFrame = arenaPart.CFrame + Vector3.new(0, 0, 0)
+
+end
+
+function maxKinetic()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local leaderstats = player.leaderstats
+local gloveStat = leaderstats.Glove.Value
+if gloveStat == "Kinetic" then
+game:GetService("ReplicatedStorage"):WaitForChild("SelfKnockback"):FireServer({["Force"] = 0,["Direction"] = Vector3.new(0.5,0,0)})
+local kineticCount = character:WaitForChild("KineticCharge")
+while _G.kineticActive == true do
+print(kineticCount.Value)
+game:GetService("ReplicatedStorage"):WaitForChild("SelfKnockback"):FireServer({["Force"] = 0,["Direction"] = Vector3.new(0.5,0,0)})
+wait(0.05)
+end
+else
+OrionLib:MakeNotification({
+	Name = "guh",
+	Content = "you don't have kinetic equipped kaka",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+end
+end
+
+function antiTurret()
+while _G.antiTurret == true do
+    local turret = game.Workspace:FindFirstChild("Turret")
+
+    if turret then
+    turret.HingePart.Glove.TouchInterest:Destroy()
+    turret.HingePart.Glove.Transparency = 0.5
+    end
+
+    wait(0.05)
+end
+end
+
+function antiPusher()
+while _G.antiPusher == true do
+    local wall = game.Workspace:FindFirstChild("wall")
+
+    if wall then
+        wall.Transparency = 0.5
+        wall.CanCollide = false
+    end
+
+    wait(0.05)
+end
+end
+
+function edgelordGlove()
+    local lobby = game.Workspace.Lobby
+    local defaultGlove = lobby.Default
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local leaderstats = player:FindFirstChild("leaderstats")
+    local gloveStat = leaderstats.Glove
+    fireclickdetector(defaultGlove.ClickDetector)
+    gloveStat.Value = "Edgelord"
+    wait(0.1)
+    gloveStat.Value = "Edgelord"
+    local tool = player.Character:WaitForChild("Default") or player.Backpack:WaitForChild("Default")
+    if tool then
+        tool.LocalScript.Enabled = false
+        tool.Name = "Edgelord"
+        local userInputService = game:GetService("UserInputService")
+        local debounce = false  -- Debounce to prevent rapid input
+        userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+        if character:FindFirstChild("Edgelord") then
+        if not debounce and gloveStat.Value == "Edgelord" and input.UserInputType == Enum.UserInputType.MouseButton1 then
+                debounce = true
+                game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.TheForceAnim, game.Players.LocalPlayer.Character.Humanoid):Play()
+                for _, v in pairs(game.Players:GetPlayers()) do
+                    if v ~= game.Players.LocalPlayer and not v.Character.Head:FindFirstChild("UnoReverseCard") then
+                        if (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                            game:GetService("ReplicatedStorage"):WaitForChild("b"):FireServer(v.Character.HumanoidRootPart)
+                            wait(0.1)  -- Consider adjusting this delay
+                        end
+                    end
+                end
+                wait(1)  -- Adjust this delay to control how frequently the input can be registered
+                debounce = false
+            end
+            else
+            print("false")
+            end
+        end)
+    end
+end
+
+function halloweenStyle()
+local arenaModel = game.Workspace.Arena
+local mainIsland = arenaModel["main island"]
+local lobby = game.Workspace.Lobby
+local desiredColor = Color3.fromRGB(203, 135, 18)
+local island1 = arenaModel.island1
+local island2 = arenaModel.island2
+local island3 = arenaModel.island3
+local island4 = arenaModel.island4
+local island5 = arenaModel.island5
+
+-- music :D
+game.Workspace.Backgroundmusic.Gaiety.SoundId = "rbxassetid://7625335725"
+game.Workspace.Backgroundmusic.Activity.SoundId = "rbxassetid://11054403993"
+local music3 = Instance.new("Sound")
+music3.Volume = 0.2
+music3.Parent = game.Workspace.Backgroundmusic
+music3.SoundId = "rbxassetid://11058768310"
+music3.Name = "Unknown"
+
+local music4 = Instance.new("Sound")
+music4.Volume = 0.2
+music4.Parent = game.Workspace.Backgroundmusic
+music4.SoundId = "rbxassetid://11058958195"
+music4.Name = "Spooky Scary Skeletons"
+--
+
+island1.Grass.Color = Color3.fromRGB(203, 135, 18)
+island2.Grass.Color = Color3.fromRGB(203, 135, 18)
+island3.Grass.Color = Color3.fromRGB(203, 135, 18)
+island4.Grass.Color = Color3.fromRGB(203, 135, 18)
+
+arenaModel.CubeOfDeathArea["the cube of death(i heard it kills)"].Color = Color3.fromRGB(255, 111, 0)
+arenaModel.CubeOfDeathArea["the cube of death(i heard it kills)"].Material = "Neon"
+
+island1:FindFirstChild("Sakura Tree").Leaves:Destroy()
+island1:FindFirstChild("Sakura Tree").FallingLeaves:Destroy()
+island1:FindFirstChild("Sakura Tree")["petal pile"]:Destroy()
+
+island2:FindFirstChild("Sakura Tree").Leaves:Destroy()
+island2:FindFirstChild("Sakura Tree").FallingLeaves:Destroy()
+island2:FindFirstChild("Sakura Tree")["petal pile"]:Destroy()
+
+island3:FindFirstChild("Sakura Tree").Leaves:Destroy()
+island3:FindFirstChild("Sakura Tree").FallingLeaves:Destroy()
+island3:FindFirstChild("Sakura Tree")["petal pile"]:Destroy()
+
+local bushModel = island5.Bush
+
+for _, conveyorNeon in pairs(lobby.Conveyors:GetChildren()) do
+    if conveyorNeon:IsA("MeshPart") and conveyorNeon.Name == "MeshPart" then
+       conveyorNeon.Color = Color3.fromRGB(255, 111, 0)
+    end
+end
+
+for _, coolNeon in pairs(lobby.Model:GetChildren()) do
+    if coolNeon:IsA("Part") and coolNeon.Name == "Part" then
+       coolNeon.Color = Color3.fromRGB(255, 111, 0)
+    end
+end
+
+for _, upperNeon in pairs(lobby.Model:GetChildren()) do
+    if upperNeon:IsA("MeshPart") and upperNeon.Name == "MeshPart" and upperNeon.MeshId == "rbxassetid://10788909428" then
+       upperNeon.Color = Color3.fromRGB(255, 111, 0)
+    end
+end
+
+for _, tvNeon in pairs(lobby.TV:GetChildren()) do
+    if tvNeon:IsA("MeshPart") and tvNeon.Name == "MeshPart" and tvNeon.MeshId == "rbxassetid://7054877589" then
+       tvNeon.Color = Color3.fromRGB(255, 111, 0)
+    end
+end
+
+for _, othertvNeon in pairs(lobby.TV:GetChildren()) do
+    if othertvNeon:IsA("Part") and othertvNeon.Name == "Part" then
+       othertvNeon.Color = Color3.fromRGB(255, 111, 0)
+    end
+end
+
+for _, chains in pairs(arenaModel["default island"].chains:GetChildren()) do
+    if chains:IsA("MeshPart") and chains.Name == "MeshPart" then
+       chains.Color = Color3.fromRGB(255, 111, 0)
+       chains.Material = "Neon"
+    end
+end
+
+for _, chains2 in pairs(arenaModel.Chainwork:GetChildren()) do
+    if chains2:IsA("MeshPart") and chains2.Name == "MeshPart" then
+       chains2.Color = Color3.fromRGB(255, 111, 0)
+       chains2.Material = "Neon"
+    end
+end
+
+for _, child in pairs(island5:GetChildren()) do
+    if child:IsA("UnionOperation") and child.Material == Enum.Material.Grass then
+       child.UsePartColor = true
+       child.Color = desiredColor
+    end
+end
+
+for _, tree1 in pairs(island5:GetChildren()) do
+    if tree1:IsA("Model") and tree1.Name == "Low Poly Tree" and tree1:FindFirstChild("Leaves1") then
+       tree1.Leaves1.Color = Color3.fromRGB(255, 132, 0)
+       tree1.Leaves2.Color = Color3.fromRGB(255, 132, 0)
+    end
+end
+
+for _, tree2 in pairs(island5:GetChildren()) do
+    if tree2:IsA("Model") and tree2.Name == "Low Poly Tree" and tree2:FindFirstChild("leaves") then
+       tree2.leaves.Color = Color3.fromRGB(255, 132, 0)
+    end
+end
+
+for _, tree3 in pairs(island5:GetChildren()) do
+    if tree3:IsA("Model") and tree3.Name == "Low Poly Tree" and tree3:FindFirstChild("Tree6") then
+       for _, treeLeaves in pairs(tree3:GetChildren()) do
+    if treeLeaves:IsA("MeshPart") and treeLeaves.Name == "Tree6" then
+       treeLeaves.Color = Color3.fromRGB(255, 132, 0)
+    end
+end
+    end
+end
+
+for _, treeLeaves in pairs(island4["Big Tree"]:GetChildren()) do
+    if treeLeaves:IsA("MeshPart") and treeLeaves.Name == "MeshPart" then
+       treeLeaves.Color = Color3.fromRGB(255, 132, 0)
+    end
+end
+
+for _, tree4 in pairs(island5:GetDescendants()) do
+    if tree4:IsA("Model") and tree4.Name == "Model" then
+        local hasSmoothPlastic = false
+        local childVar = nil
+        
+        for _, child in pairs(tree4:GetChildren()) do
+            if child:IsA("MeshPart") and child.Material == Enum.Material.SmoothPlastic then
+                childVar = child
+                hasSmoothPlastic = true
+                break -- No need to continue checking, as we found one.
+            end
+        end
+
+        if hasSmoothPlastic then
+            childVar.Color = Color3.fromRGB(255, 132, 0)
+        end
+    end
+end
+
+island5.Tree.Leaf.Color = Color3.fromRGB(255, 132, 0)
+
+for _, bmodel in pairs(island5:GetDescendants()) do
+    if bmodel:IsA("Model") and bmodel.Name == "Bush" then
+        for _, part in pairs(bmodel:GetDescendants()) do
+    if part:IsA("MeshPart") and part.Name == "Part" then
+        part.Color = desiredColor
+    end
+end
+    end
+end
+
+for _, mpart in pairs(island5:GetDescendants()) do
+    if mpart:IsA("MeshPart") and mpart.Name == "Bush" then
+        mpart.Color = desiredColor
+    end
+end
+
+for _, object in pairs(mainIsland:GetDescendants()) do
+    if object:IsA("MeshPart") and object.Name == "Hair/Grass/spikes" then
+        object.Color = desiredColor
+    end
+end
+
+mainIsland.Grass.Color = Color3.fromRGB(203, 135, 18)
+
+while true do
+game.Lighting.ClockTime = 0
+wait(0.05)
+end
+
+end
+
+function loopSlapples()
+local head = game.Players.LocalPlayer.Character:WaitForChild("Head")
+while _G.loopCollectSlapples == true do
+for _, slapple in pairs(game.Workspace.Arena.island5.Slapples:GetDescendants()) do
+    if slapple:IsA("Model") and slapple.Glove:FindFirstChild("TouchInterest") then
+        firetouchinterest(head, slapple.Glove, 0)
+        firetouchinterest(head, slapple.Glove, 1)
+    end
+end
+wait(0.05)
+end
+end
+
+function quickBrick()
+local playerGUI = game.Players.LocalPlayer.PlayerGui
+local character = game.Players.LocalPlayer.Character
+while _G.loopPlaceBrick == true do
+game:GetService("ReplicatedStorage").lbrick:FireServer()
+playerGUI.BRICKCOUNT.ImageLabel.TextLabel.Text = playerGUI.BRICKCOUNT.ImageLabel.TextLabel.Text + 1
+wait(2.05)
+end
+end
+
+function bobFarm()
+while _G.bobFarmCheck == true do
+local player = game.Players.LocalPlayer
+local leaderstats = player:FindFirstChild("leaderstats")
+local glovestat = leaderstats:FindFirstChild("Glove")
+local character = game.Players.LocalPlayer.Character
+if glovestat.Value == "Replica" then
+if character.isInArena.Value == false then
+if character.Humanoid.Health ~= 0 then
+character.HumanoidRootPart.CFrame = game.Workspace.Lobby.Teleport1.CFrame
+wait(0.5)
+game:GetService("ReplicatedStorage").Duplicate:FireServer()
+wait(1)
+character.Humanoid.Health = 0
+wait(4)
+else
+game:GetService("ReplicatedStorage").Duplicate:FireServer()
+wait(1)
+character.Humanoid.Health = 0
+wait(4)
+end
+end
+end
+wait(0.05)
+end
+end
+
+function noGlovePower()
+while _G.noPower == true do
+local character = game.Players.LocalPlayer.Character
+character.HumanoidRootPart:WaitForChild("BodyVelocity"):Destroy()
+character.HumanoidRootPart:WaitForChild("BodyAngularVelocity"):Destroy()
+wait(0.05)
+end
+end
+
+function antiSquid()
+while _G.antiSquid == true do
+local player = game.Players.LocalPlayer
+local squidInk = player.PlayerGui.SquidInk
+while squidInk:FindFirstChild("ImageLabel") do
+squidInk:FindFirstChild("ImageLabel"):Destroy()
+wait(0.0005)
+end
+wait(0.0005)
+end
+end
+
+function replicaSlapFarm()
+while _G.replicaFarm == true do
+game:GetService("ReplicatedStorage").Duplicate:FireServer()
+wait(0.5)
+game:GetService("ReplicatedStorage"):WaitForChild("RojoAbility"):FireServer("Release", {game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame})
+wait(8)
+end
+end
+
+function noReaper()
+while _G.antiReaper == true do
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("DeathMark") then
+game:GetService("ReplicatedStorage").ReaperGone:FireServer(game:GetService("Players").LocalPlayer.Character.DeathMark)
+game.Lighting.DeathMarkColorCorrection:Destroy()
+game.Workspace.Backgroundmusic.Activity.Volume = 0.2
+game.Workspace.Backgroundmusic.Gaiety.Volume = 0.2
+game.Workspace.reaperambience:Destroy()
+end
+wait(0.05)
+end
+end
+
+function recallTP()
+local character = game.Players.LocalPlayer.Character
+local originalPos = character.HumanoidRootPart.CFrame
+local tpTarget = game.Workspace:FindFirstChild(_G.recallPlayer)
+if tpTarget and character:FindFirstChild("Recall") then
+game:GetService("ReplicatedStorage").Recall:InvokeServer(game:GetService("Players").LocalPlayer.Character.Recall)
+wait(2.5)
+character.HumanoidRootPart.CFrame = tpTarget.HumanoidRootPart.CFrame
+wait(1)
+character.HumanoidRootPart.CFrame = originalPos
+end
+end
+
+function skukuchiTorture()
+local character = game.Players.LocalPlayer.Character
+local skukuchiTarget = game.Workspace:FindFirstChild(_G.skukuchiPlayer)
+if skukuchiTarget then
+game:GetService("ReplicatedStorage").SM:FireServer(game:GetService("Players"):FindFirstChild(_G.skukuchiPlayer))
+end
+end
+
+function bobMorph()
+local char = game.Players.LocalPlayer.Character
+
+for _, part in pairs(char:GetDescendants()) do
+    if part:IsA("Part") then
+        part.Color = Color3.fromRGB(0, 0, 0)
+        part.Material = "Neon"
+    end
+end
+
+for _, accessory in pairs(char:GetDescendants()) do
+    if accessory:IsA("Accessory") then
+        accessory:Destroy()
+    end
+end
+
+char.Head.Mesh.MeshType = "Head"
+char.Head.Mesh.Scale = Vector3.new(1.25, 1.25, 1.25)
+char.Head.face.Texture = "rbxassetid://4114747358"
+char.Head.Nametag.TextLabel.Text = "B̸̺̗̣̝̤̞͍͍̖̘̤̑̍͑͐̎̓̈́Ö̷̡͙̲̭̠̹̪̦̋̅͑̈́͝Ḇ̵̨̡̧̰͚͍̾͌"
+
+end
+
+function cloudSpeed()
+local player = game.Players.LocalPlayer
+while _G.cloudSpeed == true do
+local cloud = game.Workspace:FindFirstChild(player.Name .. "_Cloud")
+cloud.BodyVelocity.Velocity = cloud.BodyVelocity.Velocity * 1.1
+wait(0.05)
+end
+end
+
+function larrySpeed()
+while true do
+local player = game.Players.LocalPlayer
+for _, model in pairs(workspace:GetDescendants()) do
+    if model:IsA("Model") and model:FindFirstChild("Skelly") then
+        model.VehicleSeat.LinearVelocity.LineVelocity = _G.larrySpeed
+    end
+end
+wait(0.05)
+end
+end
+
+function ingredients()
+   local times = 0
+   while times < 100 do
+   times = times + 1
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Autumn Sprout")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Blood Rose")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Blue Crystal")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Dark Root")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Dire Flower")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Elder Wood")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Fire Flower")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Glowing Mushroom")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Hazel Lily")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Jade Stone")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Lamp Grass")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Mushroom")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Plane Flower")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Red Crystal")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Wild Vine")
+   game.ReplicatedStorage.AlchemistEvent:FireServer("AddItem", "Winter Rose")
+   wait()
+   end
+end
+
+
+--tabs
+
+local HomeTab = Window:MakeTab({
+	Name = "Home",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local CombatTab = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local UtilityTab = Window:MakeTab({
+	Name = "Utility",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local CGTab = Window:MakeTab({
+	Name = "Custom Gloves",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local BadgeTab = Window:MakeTab({
+	Name = "Badges",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local AnimationTab = Window:MakeTab({
+	Name = "Animations",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local AntiTab = Window:MakeTab({
+	Name = "Antis",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local VisualTab = Window:MakeTab({
+	Name = "Visuals",
+	Icon = "rbxassetid://982385992",
+	PremiumOnly = false
+})
+
+local BanTab = Window:MakeTab({
+	Name = "Self-Ban",
+	Icon = "rbxassetid://10777735148",
+	PremiumOnly = false
+})
+
+--toggles
+
+CombatTab:AddToggle({
+	Name = "Anti CD",
+	Default = false,
+	Callback = function(Value)
+	_G.antiCD = Value
+	antiCoolDown()
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "Infinite Phase",
+	Default = false,
+	Callback = function(Value)
+	_G.infPhase = Value
+	infinitePhase()
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Floss",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Floss, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Groove",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Groove, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Headless",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Headless, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Helicopter",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Helicopter, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Kick",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Kick, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "L",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.L, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Parker",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Parker, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Spasm",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Spasm, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AnimationTab:AddToggle({
+	Name = "Thriller",
+	Default = false,
+	Callback = function(Value)
+	_G.isDancing = Value
+	if _G.isDancing == true then
+	game.Players.LocalPlayer.Character.Humanoid:WaitForChild("Animator"):LoadAnimation(game.ReplicatedStorage.AnimationPack.Thriller, game.Players.LocalPlayer.Character.Humanoid):Play()
+	elseif _G.isDancing == false then
+	local Anims = game.Players.LocalPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks() -- gets all Animations
+
+for _,animation in Anims do -- Iterates through all Animations
+    animation:Stop() -- stops animations
+end
+	end
+	end    
+})
+
+AntiTab:AddToggle({
+	Name = "Anti Turret",
+	Default = false,
+	Callback = function(Value)
+	_G.antiCD = Value
+	antiTurret()
+	end    
+})
+
+AntiTab:AddToggle({
+	Name = "Anti Pusher",
+	Default = false,
+	Callback = function(Value)
+	_G.antiCD = Value
+	antiPusher()
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "Max Kinetic (stop when above 50)",
+	Default = false,
+	Callback = function(Value)
+	_G.kineticActive = Value
+	maxKinetic()
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "Loop Change Color (color from picker)",
+	Default = false,
+	Callback = function(Value)
+	_G.loopColor = Value
+	while _G.loopColor == true do
+	game:GetService("ReplicatedStorage"):WaitForChild("Goldify"):FireServer(false, BrickColor.new(_G.skinColor))
+	wait(0.05)
+	end
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "Auto Collect Slapples",
+	Default = false,
+	Callback = function(Value)
+	_G.loopCollectSlapples = Value
+	loopSlapples()
+	end    
+})
+
+BadgeTab:AddToggle({
+	Name = "Quick Trap (around 34 mins)",
+	Default = false,
+	Callback = function(Value)
+	_G.loopPlaceBrick = Value
+	quickBrick()
+	end    
+})
+
+BadgeTab:AddToggle({
+	Name = "Bob Farm",
+	Default = false,
+	Callback = function(Value)
+	_G.bobFarmCheck = Value
+	bobFarm()
+	end    
+})
+
+AntiTab:AddToggle({
+	Name = "Anti BV (Body Velocity)",
+	Default = false,
+	Callback = function(Value)
+	_G.noPower = Value
+	noGlovePower()
+	end    
+})
+
+AntiTab:AddLabel("reduces glove knockback + other stuff")
+
+AntiTab:AddToggle({
+	Name = "Anti Squid",
+	Default = false,
+	Callback = function(Value)
+	_G.antiSquid = Value
+	antiSquid()
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "Replica Slap Farm (VERY slow)",
+	Default = false,
+	Callback = function(Value)
+	_G.replicaFarm = Value
+	replicaSlapFarm()
+	end    
+})
+
+AntiTab:AddToggle({
+	Name = "Anti Reaper",
+	Default = false,
+	Callback = function(Value)
+	_G.antiReaper = Value
+	noReaper()
+	end    
+})
+
+UtilityTab:AddToggle({
+	Name = "2x Cloud Speed",
+	Default = false,
+	Callback = function(Value)
+	_G.cloudSpeed = Value
+	cloudSpeed()
+	end    
+})
+
+--buttons
+
+HomeTab:AddButton({
+	Name = "Destroy GUI",
+	Callback = function()
+	    OrionLib:Destroy()
+  	end    
+})
+
+UtilityTab:AddButton({
+	Name = "Invisibility (666 slaps required and only in lobby)",
+	Callback = function()
+	    ghostInvisible()
+  	end    
+})
+
+UtilityTab:AddButton({
+	Name = "Ragdoll (useful for kinetic)",
+	Callback = function()
+	    game:GetService("ReplicatedStorage"):WaitForChild("SelfKnockback"):FireServer({["Force"] = 0,["Direction"] = Vector3.new(0.5,0,0)})
+  	end    
+})
+
+CombatTab:AddButton({
+	Name = "Invincibility (some gloves don't work)",
+	Callback = function()
+      	invincibility()
+  	end    
+})
+
+CGTab:AddButton({
+	Name = "Killerfish (replaces fish, r to use)",
+	Callback = function()
+      	killerfishGlove()
+  	end    
+})
+
+UtilityTab:AddButton({
+	Name = "Safe Spot",
+	Callback = function()
+      	tpsafeSpot()
+  	end    
+})
+
+UtilityTab:AddButton({
+	Name = "Arena",
+	Callback = function()
+      	tpArena()
+  	end    
+})
+
+UtilityTab:AddButton({
+	Name = "Lobby",
+	Callback = function()
+      	local char = game.Players.LocalPlayer.Character
+      	local lobby = game.Workspace.Lobby
+      	char.HumanoidRootPart.CFrame = lobby.PotatoSign.Text.CFrame
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Edgelord Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.TheForceAnim, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Laugh",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.AnimationPack.Laugh, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Skukuchi Attacker Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.CutsceneAttacker, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Skukuchi Target Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.CutsceneTarget, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Extended Slap Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.ExtendedSlap, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Slap Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Slap, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Bomb Throw Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.bombthrow, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Bubble Shoot Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.bubbleshoot, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Revolver Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Hitman.RevolverAnim, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Ban Hammer Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Ban Hammer"], game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Bomb Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations.Bomb, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Rocket Launcher Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Rocket Launcher"], game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Rojo Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.Animation, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Rojo Recoil Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.AnimationRecoil, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Thor Animation",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Thor.Animation, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+AnimationTab:AddButton({
+	Name = "Rob Anim",
+	Callback = function()
+      	game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.summonPortal, game.Players.LocalPlayer.Character.Humanoid):Play()
+  	end    
+})
+
+CGTab:AddButton({
+	Name = "Edgelord (click only in lobby + don't spam abilities)",
+	Callback = function()
+      	edgelordGlove()
+  	end    
+})
+
+CGTab:AddLabel("the edgelord glovestat is client side, even killerfish.")
+
+VisualTab:AddButton({
+	Name = "Halloween Map (not accurate)",
+	Callback = function()
+      	halloweenStyle()
+  	end    
+})
+
+VisualTab:AddLabel("THIS TOOK ME WAY TOO LONG HELP ME PLEASE")
+
+BanTab:AddButton({
+	Name = "Ban Yourself (bruhhhh)",
+	Callback = function()
+	local character = game.Players.LocalPlayer.Character
+    local Humanoid = character.Humanoid
+    while true do
+    Humanoid:ChangeState("Jumping")
+    wait(0.05)
+    end
+  	end    
+})
+
+BanTab:AddLabel("look idfk WHY you would wanna do this")
+BanTab:AddLabel("but still adding it lmao")
+
+CombatTab:AddButton({
+	Name = "Rojo Attack Anim (don't spam)",
+	Callback = function()
+local canRojo = true
+if canRojo == true then
+canRojo = false
+game:GetService("ReplicatedStorage"):WaitForChild("RojoAbility"):FireServer("Charge")
+game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.Animation, game.Players.LocalPlayer.Character.Humanoid):Play()
+wait(6)
+game:GetService("ReplicatedStorage"):WaitForChild("RojoAbility"):FireServer("Release", {game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame})
+game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.AnimationRecoil, game.Players.LocalPlayer.Character.Humanoid):Play()
+wait(1)
+canRojo = true
+  	end
+  	end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Rocket (with animation)",
+	Callback = function()
+game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Rocket Launcher"], game.Players.LocalPlayer.Character.Humanoid):Play()
+wait(0.7)
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Rocket Launcher")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Bomb (with animation)",
+	Callback = function()
+game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations.Bomb, game.Players.LocalPlayer.Character.Humanoid):Play()
+wait(0.4)
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Bomb")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Hammer (with animation)",
+	Callback = function()
+game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Ban Hammer"], game.Players.LocalPlayer.Character.Humanoid):Play()
+wait(0.9)
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Ban Hammer")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Null Ability",
+	Callback = function()
+game:GetService("ReplicatedStorage").NullAbility:FireServer()
+end
+})
+
+CombatTab:AddButton({
+	Name = "Rhytm Explosion",
+	Callback = function()
+game:GetService("ReplicatedStorage").rhythmevent:FireServer("AoeExplosion",0)
+end
+})
+
+CombatTab:AddButton({
+	Name = "Rojo Attack",
+	Callback = function()
+game:GetService("ReplicatedStorage"):WaitForChild("RojoAbility"):FireServer("Release", {game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame})
+  	end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Rocket (without animation)",
+	Callback = function()
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Rocket Launcher")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Bomb (without animation)",
+	Callback = function()
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Bomb")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Retro Hammer (without animation)",
+	Callback = function()
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Ban Hammer")
+end
+})
+
+CombatTab:AddButton({
+	Name = "Explode",
+	Callback = function()
+local character = game.Players.LocalPlayer.Character
+game:GetService("ReplicatedStorage").RetroAbility:FireServer("Bomb")
+character.HumanoidRootPart:WaitForChild("BodyVelocity"):Destroy()
+end
+})
+
+UtilityTab:AddButton({
+	Name = "Cheeky (only in lobby + 3k slaps)",
+	Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character
+if character.isInArena.Value == false then
+local lobby = game.Workspace.Lobby
+local cheekyG = lobby.Cheeky
+fireclickdetector(cheekyG.ClickDetector)
+game:GetService("ReplicatedStorage").Spherify:FireServer()
+end
+end
+})
+
+UtilityTab:AddButton({
+	Name = "To Arena (makes you touch the portal)",
+	Callback = function()
+local head = game.Players.LocalPlayer.Character.Head
+local tp1 = game.Workspace.Lobby.Teleport1
+firetouchinterest(head, tp1, 0)
+firetouchinterest(head, tp1, 1)
+end
+})
+
+UtilityTab:AddButton({
+	Name = "Recall Player Teleport",
+	Callback = function()
+    recallTP()
+end
+})
+
+UtilityTab:AddLabel("use this while holding recall")
+
+UtilityTab:AddButton({
+	Name = "Skukuchi Torture",
+	Callback = function()
+    skukuchiTorture()
+end
+})
+
+VisualTab:AddButton({
+	Name = "Become Bob",
+	Callback = function()
+    bobMorph()
+end
+})
+
+UtilityTab:AddButton({
+	Name = "Infinite Ingredients (Alchemist Only)",
+	Callback = function()
+    ingredients()
+end
+})
+
+--color pickers
+
+UtilityTab:AddColorpicker({
+	Name = "Set Color (need golden)",
+	Default = Color3.fromRGB(255, 0, 0),
+	Callback = function(Value)
+	_G.skinColor = Value
+	end	  
+})
+
+--text boxes
+
+UtilityTab:AddTextbox({
+	Name = "Player Name (for recall tp)",
+	Default = "Player",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.recallPlayer = Value
+		print(_G.recallPlayer)
+	end	  
+})
+
+UtilityTab:AddTextbox({
+	Name = "Player Name (for skukuchi torture)",
+	Default = "Player",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.skukuchiPlayer = Value
+		print(_G.skukuchiPlayer)
+	end	  
+})
+
+--sliders
+
+UtilityTab:AddSlider({
+	Name = "Larry Speed (it gotta be your own larry)",
+	Min = 0,
+	Max = 250,
+	Default = 30,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "bananas",
+	Callback = function(Value)
+		_G.larrySpeed = Value
+		larrySpeed()
+	end    
+})
+
+OrionLib:Init()
+end
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 if game.PlaceId == 1240123653 then
 local Window = OrionLib:MakeWindow({Name = "Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
