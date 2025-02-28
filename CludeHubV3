@@ -4396,6 +4396,7 @@ v.BackgroundTransparency = 1
                 end
 gethui().Orion.Name = "OrionEdited"
 
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 if game.PlaceId == 1240123653 then
 local Window = OrionLib:MakeWindow({Name = "Zombie Attack", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
