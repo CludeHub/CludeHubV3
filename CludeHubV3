@@ -1,4 +1,4 @@
-if game Place.Id ==
+if game Place.Id == 13772394625 or game.PlaceId == 14732610803 or game.PlaceId == 15517169103 or game.PlaceId == 15234596844 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))() 
 
 local Window = OrionLib:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -55,7 +55,7 @@ RunService.PreSimulation:Connect(function()
     local Speed = Ball.zoomies.VectorVelocity.Magnitude
     local Distance = (HRP.Position - Ball.Position).Magnitude
     
-    if Ball:GetAttribute("target") == Player.Name and not Parried and Distance / Speed <= 0.55 then
+    if Ball:GetAttribute("target") == Player.Name and not Parried and Distance / Speed <= 0.1 then
       VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
       Parried = true
       Cooldown = tick()
