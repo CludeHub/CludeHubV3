@@ -2277,6 +2277,12 @@ end
 
 Tab:AddLabel("Made by Paul")
 
+Tab4:AddButton({
+	Name = "Auto Farm Slaps (Equip Boxer Gloves)",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
 Tab:AddButton({
 	Name = "Infinite yield",
 	Callback = function()
