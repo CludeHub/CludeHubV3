@@ -137,9 +137,8 @@ TournamentAntiVoid.CanCollide = false
 TournamentAntiVoid.Transparency = 1
 TournamentAntiVoid.Anchored = true
 end
-end
 
-if game.PlaceId == 9431156611 then
+elseif game.PlaceId == 9431156611 then
 local bypass;
     bypass = hookmetamethod(game, "__namecall", function(method, ...) 
         if getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.Events.Ban then
