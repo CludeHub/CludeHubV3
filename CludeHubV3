@@ -2280,6 +2280,22 @@ Tab:AddLabel("Made by Paul")
 Tab4:AddButton({
 	Name = "Auto Farm Slaps (Equip Boxer Gloves)",
 	Callback = function()
+while true do
+local args = {
+    [1] = game:GetService("Players").LocalPlayer,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").Events.Boxing:FireServer(unpack(args))
+wait(0.1)
+local args = {
+    [1] = game:GetService("Players").LocalPlayer,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").Events.Boxing:FireServer(unpack(args))
+wait(0.1)
+end
       		print("button pressed")
   	end    
 })
