@@ -108,8 +108,6 @@ end
       		print("button pressed")
   	end    
 })
-end
--- By Paul
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 if game.PlaceId == 11520107397 or game.PlaceId == 6403373529 or game.PlaceId == 9015014224 then
@@ -4479,4 +4477,3 @@ for i,v in pairs(gethui().Orion:GetDescendants()) do
 v.BackgroundTransparency = 1
                     end
                 end
-gethui().Orion.Name = "OrionEdited"
