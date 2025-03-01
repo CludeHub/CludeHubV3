@@ -1,114 +1,12 @@
-if game.PlaceId == 13772394625 or game.PlaceId == 14732610803 or game.PlaceId == 15517169103 or game.PlaceId == 15234596844 then
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))() 
-
-local Window = OrionLib:MakeWindow({Name = "Blade Ball", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
-
-local Tab = Window:MakeTab({
-	Name = "Main",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "Auto Parry",
-	Callback = function()
-local RunService = game:GetService("RunService") or game:FindFirstDescendant("RunService")
-local Players = game:GetService("Players") or game:FindFirstDescendant("Players")
-local VirtualInputManager = game:GetService("VirtualInputManager") or game:FindFirstDescendant("VirtualInputManager")
-
-local Player = Players.LocalPlayer
-
-local Cooldown = tick()
-local IsParried = false
-local Connection = nil
-
-local function GetBall()
-  for _, Ball in ipairs(workspace.Balls:GetChildren()) do
-    if Ball:GetAttribute("realBall") then
-      return Ball
-    end
-  end
+if not game:IsLoaded() then
+    game.Loaded:Wait()
 end
 
-local function ResetConnection()
-    if Connection then
-        Connection:Disconnect()
-        Connection = nil
-    end
-end
+game:GetService("GuiService"):ClearError()
 
-workspace.Balls.ChildAdded:Connect(function()
-    local Ball = GetBall()
-    if not Ball then return end
-    ResetConnection()
-    Connection = Ball:GetAttributeChangedSignal("target"):Connect(function()
-        Parried = false
-    end)
-end)
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
-RunService.PreSimulation:Connect(function()
-    local Ball, HRP = GetBall(), Player.Character.HumanoidRootPart
-    if not Ball or not HRP then
-      return
-    end
-    
-    local Speed = Ball.zoomies.VectorVelocity.Magnitude
-    local Distance = (HRP.Position - Ball.Position).Magnitude
-    
-    if Ball:GetAttribute("target") == Player.Name and not Parried and Distance / Speed <= 0.55 then
-      VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
-      Parried = true
-      Cooldown = tick()
-      
-      if (tick() - Cooldown) >= 1 then
-        Partied = false
-      end
-    end
-end)
-      		print("Auto Parry Acticated")
-  	end    
-})
-
-Tab:AddButton({
-	Name = "safe spot",
-	Callback = function()
-local part = Instance.new("Part")
-part.Position = Vector3.new(500, 498, 872)
-part.Size = Vector3.new(10, 1, 10) -- Adjust size as needed for "big"
-part.Anchored = true
-part.CanCollide = true
-part.Parent = workspace
-wait(0.1)
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
-character:SetPrimaryPartCFrame(CFrame.new(500, 507, 872))
-      		print("button pressed")
-  	end    
-})
-
-Tab:AddButton({
-	Name = "esp",
-	Callback = function()
-local Players = game:GetService("Players")
-
-for _, Player in ipairs(Players:GetPlayers()) do
-    local Character = Player.Character
-
-    if Character then
-        local Highlight = Instance.new("Highlight")
-        Highlight.Parent = Character
-        Highlight.Adornee = Character
-        Highlight.FillTransparency = 1
-        Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-        Highlight.OutlineTransparency = 0
-        Highlight.DepthMode = "Occluded"
-    end
-end
-      		print("button pressed")
-  	end    
-})
-elseif game.PlaceId == 11520107397 or game.PlaceId == 6403373529 or game.PlaceId == 9015014224 then
+if game.PlaceId == 11520107397 or game.PlaceId == 6403373529 or game.PlaceId == 9015014224 then
 local bypass;
     bypass = hookmetamethod(game, "__namecall", function(method, ...) 
         if getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.Ban then
@@ -137,8 +35,9 @@ TournamentAntiVoid.CanCollide = false
 TournamentAntiVoid.Transparency = 1
 TournamentAntiVoid.Anchored = true
 end
+end
 
-elseif game.PlaceId == 9431156611 then
+if game.PlaceId == 9431156611 then
 local bypass;
     bypass = hookmetamethod(game, "__namecall", function(method, ...) 
         if getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.Events.Ban then
@@ -201,7 +100,7 @@ AntiLava.CanCollide = false
                     PremiumOnly = false
                 })
 
-Tab:AddLabel("Made by Paul Paras")
+Tab:AddLabel("Made by Paul")
 
 Tab:AddButton({
 	Name = "Infinite Yield",
@@ -899,7 +798,7 @@ elseif game.PlaceId == 11520107397 then
                     PremiumOnly = false
                 })
 
-Tab:AddLabel("Made by Paul Paras")
+Tab:AddLabel("Made by Paul")
 
 Tab:AddButton({
 	Name = "Infinite Yield",
@@ -1932,7 +1831,7 @@ elseif game.PlaceId == 11828384869 then
                     PremiumOnly = false
                 })
 
-Tab:AddLabel("Made by Paul Paras")
+Tab:AddLabel("Message Guy that exists#1915 if you have issues")
 
 Tab:AddButton({
 	Name = "Infinite Yield",
@@ -2376,10 +2275,10 @@ end
                     PremiumOnly = false
                 })
 
-Tab:AddLabel("Made by Paul Paras")
+Tab:AddLabel("Made by Paul")
 
 Tab:AddButton({
-	Name = "Infinite Yield",
+	Name = "Infinite yield",
 	Callback = function()
       		loadstring(game:HttpGet('https://raw.githubusercontent.com/ionlyusegithubformcmods/1-Line-Scripts/main/Infinite%20Yield%20but%20with%20secure%20dex'))()
   	end    
@@ -4474,3 +4373,4 @@ for i,v in pairs(gethui().Orion:GetDescendants()) do
 v.BackgroundTransparency = 1
                     end
                 end
+gethui().Orion.Name = "OrionEdited"
