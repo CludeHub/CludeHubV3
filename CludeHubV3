@@ -1,4 +1,4 @@
-if game.Place.Id == 13772394625 or game.Place.Id == 14732610803 or game.Place.Id == 15517169103 or game.Place.Id == 15234596844 then
+if game.PlaceId == 13772394625 or game.PlaceId == 14732610803 or game.PlaceId == 15517169103 or game.PlaceId == 15234596844 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))() 
 
 local Window = OrionLib:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
