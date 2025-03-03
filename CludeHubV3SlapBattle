@@ -1,7 +1,3 @@
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
 game:GetService("GuiService"):ClearError()
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
