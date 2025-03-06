@@ -2402,6 +2402,21 @@ task.wait()
 end
 end
                 })
+_G.infPhase = false
+Tab2:AddToggle({
+	Name = "Infinite Phase",
+	Default = false,
+	Callback = function(Value)
+while _G.infPhase == true do
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+game:GetService("ReplicatedStorage").PhaseA:FireServer()
+wait(5.475)
+end
+		print(Value)
+	end    
+})
 
 Tab2:AddDropdown({
 	Name = "Godmode (Resets character) (Breaks killstreak)",
