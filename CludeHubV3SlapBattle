@@ -2,6 +2,18 @@
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game.CoreGui
 
+while true do
+function getNil(name,class) for _,v in pairs(getnilinstances())do if v.ClassName==class and v.Name==name then return v;end end end
+
+local args = {
+    [1] = getNil("CCRE66", "Model").HumanoidRootPart
+}
+
+game:GetService("ReplicatedStorage").GeneralHit:FireServer(unpack(args))
+print("You got 1 Slaps")
+wait(0.1)
+end
+
 -- Create the main frame to hold the buttons
 local frame = Instance.new("Frame")
 frame.Parent = screenGui
