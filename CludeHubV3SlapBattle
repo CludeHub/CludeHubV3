@@ -112,7 +112,7 @@ toucheyButton.MouseButton1Click:Connect(function()
         flingThread = coroutine.create(fling)
         coroutine.resume(flingThread)
     else
-        toucheyButton.Text = "No Touchey"  -- Reset the text back to "Touchey"
+        toucheyButton.Text = "Touchey"  -- Reset the text back to "Touchey"
         toucheyButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)  -- Reset button to green
         hiddenfling = false  -- Stop the fling
     end
