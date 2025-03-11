@@ -1,1 +1,4 @@
 coming soon...
+
+game.ReplicatedStorage.Assets.Retro.Parent = game.Workspace
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Retro.Map.RetroObbyMap.Spawn.CFrame
