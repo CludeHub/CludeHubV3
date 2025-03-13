@@ -555,7 +555,97 @@ local function setRainbowMainButtonBorder()
 end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
+-- Game Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:FindFirstChild("HumanoidRootPart")
 
+-- Slap Events Mapped to Glove Names
+local slapEvents = {
+    ["Default"] = "b",
+    ["Extended"] = "b",
+    ["Diamond"] = "DiamondHit",
+    ["Brick"] = "BrickHit",
+    ["ZZZZZZZ"] = "ZZZZZZZHit",
+    ["Snow"] = "SnowHit",
+    ["Pusher"] = "PusherHit",
+    ["Magnet"] = "MagnetHIT",
+    ["Fort"] = "Fort",
+    ["General"] = "GeneralHit",
+    ["Ghost"] = "GhostHit",
+    ["Dice"] = "DiceHit",
+    ["Bull"] = "BullHit",
+    ["Swapper"] = "HitSwapper",
+    ["Flash"] = "FlashHit",
+    ["Spring"] = "springhit",
+    ["Pull"] = "PullHit",
+    ["Reverse"] = "ReverseHit",
+    ["Shukuchi"] = "ShukuchiHit",
+    ["Defense"] = "DefenseHit",
+    ["KS"] = "KSHit",
+    ["Reaper"] = "ReaperHit",
+    ["Replica"] = "ReplicaHit",
+    ["Mister"] = "MisterHit",
+    ["Mail"] = "MailHit",
+    ["Golden"] = "GoldenHit",
+    ["Boomerang"] = "BoomerangH",
+    ["Speedrun"] = "Speedrunhit"
+}
+
+local slapAuraEnabled = false
+local slapAuraLoop
+
+-- Function to Get Current Glove Name
+local function getEquippedGlove()
+    local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+    return tool and tool.Name or nil
+end
+
+-- Function to Get the Corresponding Slap Event
+local function getSlapEvent(gloveName)
+    local eventName = slapEvents[gloveName]
+    return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
+end
+
+-- Function to Slap Closest Player
+local function slapClosestPlayer()
+    while slapAuraEnabled do
+        local equippedGlove = getEquippedGlove()
+        local slapEvent = getSlapEvent(equippedGlove)
+
+        if slapEvent then
+            for _, otherPlayer in pairs(Players:GetPlayers()) do
+                if otherPlayer ~= player and otherPlayer.Character then
+                    local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 30 then -- Increased range
+                        slapEvent:FireServer(otherHRP)
+                    end
+                end
+            end
+        end
+
+        task.wait(0.2)
+    end
+end
+
+-- Function to Toggle Slap Aura and Update Button Text
+local function toggleSlapAura()
+    slapAuraEnabled = not slapAuraEnabled
+    if slapAuraEnabled then
+        -- Update button text to "ON"
+        game:GetService("ReplicatedStorage").arButton.Text = "SLAP AURA: ON"
+        slapAuraLoop = task.spawn(slapClosestPlayer)
+    else
+        -- Update button text to "OFF"
+        game:GetService("ReplicatedStorage").arButton.Text = "SLAP AURA: OFF"
+        task.cancel(slapAuraLoop)
+    end
+end
+
+-- Connect the Button Click to the Function
+game:GetService("ReplicatedStorage").arButton.MouseButton1Click:Connect(toggleSlapAura)
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
