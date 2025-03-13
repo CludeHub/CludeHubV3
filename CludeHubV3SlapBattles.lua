@@ -428,6 +428,102 @@ end
 -- Start the rainbow effect on the TextButton's border
 coroutine.wrap(setRainbowMainButtonBorder)()
 
+-- Create the TextButton
+local msButton = Instance.new("TextButton")
+msButton.Size = UDim2.new(0, 105, 0, 40)  
+msButton.Position = UDim2.new(0, 10, 0, 109) 
+msButton.Text = "misc"  -- Set text of the button
+msButton.BackgroundTransparency = 1 -- Make the background transparent
+msButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+msButton.TextSize = 15.9  -- Set text size
+msButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+msButton.Parent = frame2  -- Parent the TextButton to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local smStroke = Instance.new("UIStroke")
+smStroke.Parent = msButton
+smStroke.Thickness = 2  -- Set thickness of the border
+smStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+smStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            smStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
+-- Create the TextButton
+local bdButton = Instance.new("TextButton")
+bdButton.Size = UDim2.new(0, 105, 0, 40)  
+bdButton.Position = UDim2.new(0, 10, 0, 146) 
+bdButton.Text = "Badge"  -- Set text of the button
+bdButton.BackgroundTransparency = 1 -- Make the background transparent
+bdButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+bdButton.TextSize = 15.9  -- Set text size
+bdButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+bdButton.Parent = frame2  -- Parent the TextButton to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local dbStroke = Instance.new("UIStroke")
+dbStroke.Parent = bdButton
+dbStroke.Thickness = 2  -- Set thickness of the border
+dbStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+dbStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            dbStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
+-- Create the TextButton
+local plButton = Instance.new("TextButton")
+plButton.Size = UDim2.new(0, 105, 0, 40)  
+plButton.Position = UDim2.new(0, 10, 0, 188) 
+plButton.Text = "Player"  -- Set text of the button
+plButton.BackgroundTransparency = 1 -- Make the background transparent
+plButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+plButton.TextSize = 15.9  -- Set text size
+plButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+plButton.Parent = frame2  -- Parent the TextButton to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local lpStroke = Instance.new("UIStroke")
+lpStroke.Parent = plButton
+lpStroke.Thickness = 2  -- Set thickness of the border
+lpStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+lpStroke.Transparency = 0 -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            lpStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
