@@ -555,6 +555,64 @@ local function setRainbowMainButtonBorder()
 end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
+-- Game Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:FindFirstChild("HumanoidRootPart")
+
+-- All Hit Events from Your List
+local slapEvents = {
+    ["GoldenHit"] = true, ["MailHit"] = true, ["Speedrunhit"] = true, ["BoomerangH"] = true, ["HtSpace"] = true, 
+    ["MisterHit"] = true, ["GeneralHit"] = true, ["ReaperHit"] = true, ["ReplicaHit"] = true, ["DefenseHit"] = true,
+    ["KSHit"] = true, ["ReverseHit"] = true, ["ShukuchiHit"] = true, ["DuelistHit"] = true, ["woahHit"] = true,
+    ["IceHit"] = true, ["hitAdios"] = true, ["BlockedHit"] = true, ["engiehit"] = true, ["RockyHit"] = true
+}
+
+-- Function to Get Remote Events
+local function getEvent(eventList)
+    for _, v in pairs(ReplicatedStorage:GetChildren()) do
+        if v:IsA("RemoteEvent") and eventList[v.Name] then
+            return v
+        end
+    end
+    return nil
+end
+
+local slapAuraEnabled = false
+local slapAuraLoop
+
+-- Function to Slap Closest Player
+local function slapClosestPlayer()
+    local slapEvent = getEvent(slapEvents)
+    if not slapEvent then return end
+
+    while slapAuraEnabled do
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
+                    local args = {[1] = otherHRP}
+                    slapEvent:FireServer(unpack(args))
+                end
+            end
+        end
+        task.wait(0.2)
+    end
+end
+
+-- Toggle Slap Aura
+arButton.MouseButton1Click:Connect(function()
+    slapAuraEnabled = not slapAuraEnabled
+    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
+
+    if slapAuraEnabled then
+        slapAuraLoop = task.spawn(slapClosestPlayer)
+    else
+        task.cancel(slapAuraLoop)
+        end
+    end)
 
 -- Set ZIndex values for proper layering order
 
