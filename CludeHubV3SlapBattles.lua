@@ -396,6 +396,38 @@ end
 -- Start the rainbow effect on the close button's border
 coroutine.wrap(setRainbowCloseButtonBorder)()
 
+-- Create the TextButton
+local cmButton = Instance.new("TextButton")
+cmButton.Size = UDim2.new(0, 105, 0, 40)  
+cmButton.Position = UDim2.new(0, 10, 0, 68) 
+cmButton.Text = "Combat"  -- Set text of the button
+cmButton.BackgroundTransparency = 1 -- Make the background transparent
+cmButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+cmButton.TextSize = 15.9  -- Set text size
+cmButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+cmButton.Parent = frame2  -- Parent the TextButton to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local cbStroke = Instance.new("UIStroke")
+cbStroke.Parent = cmButton
+cbStroke.Thickness = 2  -- Set thickness of the border
+cbStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+cbStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            cbStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
@@ -409,6 +441,7 @@ fpsLabel.ZIndex = 7
 playerCountLabel.ZIndex = 8
 timerLabel.ZIndex = 9
 mainButton.ZIndex = 10 
+cmButton.ZIndex = 10
 ]]
 
 local TweenService = game:GetService("TweenService")
