@@ -597,8 +597,6 @@ local slapEvents = {
 
 local slapAuraEnabled = false
 local slapAuraLoop
-local lastSlapTime = 0
-local slapCooldown = 0.5
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
