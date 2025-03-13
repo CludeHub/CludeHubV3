@@ -524,6 +524,73 @@ end
 -- Start the rainbow effect on the TextButton's border
 coroutine.wrap(setRainbowMainButtonBorder)()
 
+-- Create the TextButton
+local arButton = Instance.new("TextButton")
+arButton.Size = UDim2.new(0, 105, 0, 40)
+arButton.Position = UDim2.new(0, 368, 0, 30)
+arButton.Text = "Slap Aura: OFF"
+arButton.BackgroundTransparency = 1
+arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+arButton.TextSize = 15.9
+arButton.Visible = false
+arButton.TextStrokeTransparency = 0.5
+arButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local arButtonStroke = Instance.new("UIStroke")
+arButtonStroke.Parent = arButton
+arButtonStroke.Thickness = 2
+arButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+arButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+    local hue = tick() % 5 / 5  -- Smooth cycling hue
+    arButtonStroke.Color = Color3.fromHSV(hue, 1, 1)
+end)
+
+-- Slap Aura Variables
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:FindFirstChild("HumanoidRootPart")
+
+local slapEvent = ReplicatedStorage:FindFirstChild("b") -- Slap remote event
+local slapRange = 20 -- Adjust range (default: 20 studs)
+local slapAuraEnabled = false -- Toggle state
+local slapAuraLoop
+
+-- Function to find and slap the closest player
+local function slapClosestPlayer()
+    while slapAuraEnabled do
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= slapRange then
+                    local args = {[1] = otherHRP}
+                    slapEvent:FireServer(unpack(args)) -- Fire slap at target
+                end
+            end
+        end
+        task.wait(0.2) -- Adjust slap speed
+    end
+end
+
+-- Button Click Event to Toggle Slap Aura
+arButton.MouseButton1Click:Connect(function()
+    slapAuraEnabled = not slapAuraEnabled  -- Toggle state
+    arButton.Text = slapAuraEnabled and "Slap Aura: ON" or "Slap Aura: OFF"
+
+    if slapAuraEnabled then
+        slapAuraLoop = task.spawn(slapClosestPlayer) -- Start Slap Aura
+    else
+        task.cancel(slapAuraLoop) -- Stop Slap Aura
+    end
+end)
+
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
@@ -576,16 +643,21 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 mainButton.MouseButton1Click:Connect(function()
+arButton.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
+arButton.Visible = true
 end)
 
 msButton.MouseButton1Click:Connect(function()
+arButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
+arButton.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
+arButton.Visible = false
 end)
