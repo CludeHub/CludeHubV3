@@ -628,7 +628,7 @@ local function slapClosestPlayer()
             end
         end
 
-        task.wait(0.10)
+        task.wait(1)
     end
 end
 
