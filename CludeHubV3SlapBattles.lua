@@ -548,53 +548,13 @@ local function setRainbowMainButtonBorder()
     while true do
         for i = 0, 1, 0.01 do
             local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            mainButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            arButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
             wait(0.05)  -- Faster color change speed
         end
     end
 end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
-
--- Slap Aura Variables
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local player = Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:FindFirstChild("HumanoidRootPart")
-
-local slapEvent = ReplicatedStorage:FindFirstChild("b") -- Slap remote event
-local slapRange = 20 -- Adjust range (default: 20 studs)
-local slapAuraEnabled = false -- Toggle state
-local slapAuraLoop
-
--- Function to find and slap the closest player
-local function slapClosestPlayer()
-    while slapAuraEnabled do
-        for _, otherPlayer in pairs(Players:GetPlayers()) do
-            if otherPlayer ~= player and otherPlayer.Character then
-                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= slapRange then
-                    local args = {[1] = otherHRP}
-                    slapEvent:FireServer(unpack(args)) -- Fire slap at target
-                end
-            end
-        end
-        task.wait(0.2) -- Adjust slap speed
-    end
-end
-
--- Button Click Event to Toggle Slap Aura
-arButton.MouseButton1Click:Connect(function()
-    slapAuraEnabled = not slapAuraEnabled  -- Toggle state
-    arButton.Text = slapAuraEnabled and "Slap Aura: ON" or "Slap Aura: OFF"
-
-    if slapAuraEnabled then
-        slapAuraLoop = task.spawn(slapClosestPlayer) -- Start Slap Aura
-    else
-        task.cancel(slapAuraLoop) -- Stop Slap Aura
-    end
-end)
 
 -- Set ZIndex values for proper layering order
 
