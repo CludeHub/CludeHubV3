@@ -592,7 +592,8 @@ local slapEvents = {
     ["Mail"] = "MailHit",
     ["Golden"] = "GoldenHit",
     ["Boomerang"] = "BoomerangH",
-    ["Speedrun"] = "Speedrunhit"
+    ["Speedrun"] = "Speedrunhit",
+    ["Plague"] = "Plaguehit"
 }
 
 local slapAuraEnabled = false
