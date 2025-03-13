@@ -544,12 +544,17 @@ arButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
 arButtonStroke.Transparency = 0
 
 -- Rainbow effect using RenderStepped for smooth updates
-local RunService = game:GetService("RunService")
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            mainButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
 
-RunService.RenderStepped:Connect(function()
-    local hue = tick() % 5 / 5  -- Smooth cycling hue
-    arButtonStroke.Color = Color3.fromHSV(hue, 1, 1)
-end)
+coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
 
 -- Slap Aura Variables
 local Players = game:GetService("Players")
