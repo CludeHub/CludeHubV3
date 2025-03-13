@@ -597,7 +597,7 @@ local slapEvents = {
 }
 
 local slapAuraEnabled = false
-local slapAuraLoop
+local slapCooldowns = {}
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
@@ -611,7 +611,7 @@ local function getSlapEvent(gloveName)
     return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
 end
 
--- Function to Slap Closest Player
+-- Function to Slap Closest Player with Cooldown
 local function slapClosestPlayer()
     while slapAuraEnabled do
         local equippedGlove = getEquippedGlove()
@@ -621,32 +621,40 @@ local function slapClosestPlayer()
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Increased range
-                        slapEvent:FireServer(otherHRP)
+                    local ragdoll = otherPlayer.Character:FindFirstChild("Ragdolled") -- Detect ragdoll state
+
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
+                        -- Check if player is on cooldown
+                        if not slapCooldowns[otherPlayer] then
+                            slapEvent:FireServer(otherHRP)
+                            slapCooldowns[otherPlayer] = true
+
+                            -- Wait for ragdoll to end before removing cooldown
+                            task.spawn(function()
+                                repeat task.wait(0.1) until not ragdoll or not ragdoll.Parent
+                                slapCooldowns[otherPlayer] = nil
+                            end)
+                        end
                     end
                 end
             end
         end
 
-        task.wait(0.10)
+        task.wait(0.10) -- Short delay to prevent overload
     end
 end
 
--- Function to Toggle Slap Aura and Update Button Text
+-- Toggle Slap Aura with Button Text Update
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
+    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
+
     if slapAuraEnabled then
-        -- Update button text to "ON"
-        arButton.Text = "Slap Aura: ON"
-        slapAuraLoop = task.spawn(slapClosestPlayer)
-    else
-        -- Update button text to "OFF"
-        arButton.Text = "Slap Aura: OFF"
-        task.cancel(slapAuraLoop)
+        slapClosestPlayer()
     end
 end
 
--- Connect the Button Click to the Function
+-- Connect Button Click
 arButton.MouseButton1Click:Connect(toggleSlapAura)
 -- Set ZIndex values for proper layering order
 
