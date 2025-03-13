@@ -12,6 +12,7 @@ frame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)  -- Set background color
 frame.Size = UDim2.new(0, 50, 0, 50)  -- Set size
 frame.Position = UDim2.new(0, 53, 0, 0)  -- Set position
 frame.Parent = screenGui  -- Parent frame to ScreenGui
+frame.BackgroundTransparency = 0.7
 
 -- Add UICorner to the first frame to round its corners
 local frameCorner = Instance.new("UICorner")
@@ -23,16 +24,17 @@ local imageButton = Instance.new("ImageButton")
 imageButton.Size = UDim2.new(0, 50, 0, 50)  -- Set size of the button
 imageButton.Position = UDim2.new(0, 0, 0, 0)  -- Set position of the button
 imageButton.Image = "rbxassetid://15315284749"  -- Set image for the button
-imageButton.Transparency = 1  -- Make the button transparent
+imageButton.Transparency = 1 -- Make the button transparent
 imageButton.Parent = frame  -- Parent imageButton to the frame
 
 -- Create the second frame (initially hidden above the screen)
 local frame2 = Instance.new("Frame")
 frame2.BackgroundColor3 = Color3.fromRGB(32, 32, 32)  -- Set background color
 frame2.Size = UDim2.new(0, 500, 0, 300)  -- Set size
-frame2.Position = UDim2.new(0, 153, 0, 0)  -- Initially place it above the screen (hidden)
+frame2.Position = UDim2.new(0, 153, 0, -300)  -- Initially place it above the screen (hidden)
 frame2.Parent = screenGui  -- Parent frame2 to ScreenGui
 frame2.Visible = false  -- Make frame2 initially invisible
+frame2.BackgroundTransparency = 0.8
 
 -- Add UICorner to the second frame to round its corners
 local frame2Corner = Instance.new("UICorner")
@@ -394,12 +396,6 @@ end
 -- Start the rainbow effect on the close button's border
 coroutine.wrap(setRainbowCloseButtonBorder)()
 
--- Toggle the frame visibility when the close button is clicked
-closeButton.MouseButton1Click:Connect(function()
-    frame.Visible = true  -- Make frame visible
-    frame2.Visible = false  -- Make frame2 invisible
-end)
-
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
@@ -415,17 +411,34 @@ timerLabel.ZIndex = 9
 mainButton.ZIndex = 10 
 ]]
 
--- Toggle the frame visibility when the imageButton is clicked
-imageButton.MouseButton1Click:Connect(function()
-    if frame2.Visible then
-        -- If frame2 is visible, hide it
-        frame2.Visible = false
-        frame.Visible = true
+local TweenService = game:GetService("TweenService")
+local isOpen = false  -- Track if frame2 is open
 
-    else
-        -- If frame2 is hidden, show it
+local normalPosition = UDim2.new(0, 153, 0, 00)  -- Position when open
+local hiddenPosition = UDim2.new(0, 153, 0, -400)  -- Position when hidden
+
+local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)  -- Smooth animation
+
+imageButton.MouseButton1Click:Connect(function()
+    if not isOpen then  -- Only open if it's closed
+        isOpen = true
+        local tween = TweenService:Create(frame2, tweenInfo, {Position = normalPosition})
+        tween:Play()
         frame2.Visible = true
-        frame.Visible = false
+    end
+end)
+
+closeButton.MouseButton1Click:Connect(function()
+    if isOpen then  -- Only close if it's open
+        isOpen = false
+        local tween = TweenService:Create(frame2, tweenInfo, {Position = hiddenPosition})
+        tween:Play()
+        
+        -- Wait for animation to finish before hiding (optional)
+        tween.Completed:Connect(function()
+            frame2.Visible = false
+            frame.Visible = true
+        end)
     end
 end)
 
