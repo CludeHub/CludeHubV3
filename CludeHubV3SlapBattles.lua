@@ -561,8 +561,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local hrp = char:FindFirstChild("HumanoidRootPart")
+local backpack = player:FindFirstChild("Backpack")
 
--- List of All Known Slap Events (ALL Gloves)
+-- List of All Known Slap and Stun Events
 local slapEvents = {
     ["b"] = true,  
     ["SnowHit"] = true,  
@@ -594,10 +595,9 @@ local slapEvents = {
     ["Speedrunhit"] = true  
 }
 
--- Stun Events (Same as before)
 local stunEvents = {
-    ["HtStun"] = true,  -- Stun Event  
-    ["HtSpace"] = true  -- Space Glove Stun  
+    ["HtStun"] = true,  
+    ["HtSpace"] = true  
 }
 
 -- Function to Find the Right Slap and Stun Events
@@ -610,15 +610,24 @@ local function getEvent(eventList)
     return nil
 end
 
+local function getEquippedGlove()
+    if char and char:FindFirstChildOfClass("Tool") then
+        return char:FindFirstChildOfClass("Tool").Name
+    elseif backpack and backpack:FindFirstChildOfClass("Tool") then
+        return backpack:FindFirstChildOfClass("Tool").Name
+    end
+    return nil
+end
+
 local slapAuraEnabled = false
 local slapAuraLoop
 
--- Default Slap Aura Range
-local defaultRange = 20  -- Default slap aura range
-
 -- Function to Slap and Stun Closest Player
 local function slapAndStunClosestPlayer()
-    local slapEvent = getEvent(slapEvents)
+    local equippedGlove = getEquippedGlove()
+    if not equippedGlove or not slapEvents[equippedGlove .. "Hit"] then return end
+
+    local slapEvent = ReplicatedStorage:FindFirstChild(equippedGlove .. "Hit")
     local stunEvent = getEvent(stunEvents)
     if not slapEvent then return end
 
@@ -626,28 +635,29 @@ local function slapAndStunClosestPlayer()
         for _, otherPlayer in pairs(Players:GetPlayers()) do
             if otherPlayer ~= player and otherPlayer.Character then
                 local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= defaultRange then  -- Slap Aura Default Range
+                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 30 then -- Adjust range
                     local args = {[1] = otherHRP}
                     slapEvent:FireServer(unpack(args))
                     if stunEvent then
-                        stunEvent:FireServer(unpack(args)) -- Stun them too!
+                        stunEvent:FireServer(unpack(args))
                     end
                 end
             end
         end
-        task.wait(0.2)  -- Loop interval (can adjust as needed)
+        task.wait(0.1) -- Faster loop
     end
 end
 
--- Toggle Slap Aura
-arButton.MouseButton1Click:Connect(function()
-    slapAuraEnabled = not slapAuraEnabled
-    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
-
-    if slapAuraEnabled then
-        slapAuraLoop = task.spawn(slapAndStunClosestPlayer)
-    else
-        task.cancel(slapAuraLoop)
+-- Toggle Slap Aura (Keybind: "T")
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.T then
+        slapAuraEnabled = not slapAuraEnabled
+        if slapAuraEnabled then
+            slapAuraLoop = task.spawn(slapAndStunClosestPlayer)
+        else
+            task.cancel(slapAuraLoop)
+        end
     end
 end)
 -- Set ZIndex values for proper layering order
