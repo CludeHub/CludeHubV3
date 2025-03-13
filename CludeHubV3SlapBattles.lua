@@ -621,14 +621,14 @@ local function slapClosestPlayer()
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 30 then -- Increased range
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Increased range
                         slapEvent:FireServer(otherHRP)
                     end
                 end
             end
         end
 
-        task.wait(1)
+        task.wait(0.10)
     end
 end
 
