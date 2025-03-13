@@ -425,6 +425,7 @@ imageButton.MouseButton1Click:Connect(function()
         local tween = TweenService:Create(frame2, tweenInfo, {Position = normalPosition})
         tween:Play()
         frame2.Visible = true
+        frame.Visible = false
     end
 end)
 
