@@ -442,6 +442,9 @@ playerCountLabel.ZIndex = 8
 timerLabel.ZIndex = 9
 mainButton.ZIndex = 10 
 cmButton.ZIndex = 10
+msButton.ZIndex = 10
+bdButton.ZIndex = 10
+plButton.ZIndex = 10
 ]]
 
 local TweenService = game:GetService("TweenService")
@@ -477,4 +480,16 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 mainButton.MouseButton1Click:Connect(function()
+end)
+
+cmButton.MouseButton1Click:Connect(function()
+end)
+
+msButton.MouseButton1Click:Connect(function()
+end)
+
+bdButton.MouseButton1Click:Connect(function()
+end)
+
+plButton.MouseButton1Click:Connect(function()
 end)
