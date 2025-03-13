@@ -10,7 +10,7 @@ screenGui.Parent = playerGui
 local frame = Instance.new("Frame")
 frame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)  -- Set background color
 frame.Size = UDim2.new(0, 50, 0, 50)  -- Set size
-frame.Position = UDim2.new(0, 52, 0, 232)  -- Set position
+frame.Position = UDim2.new(0, 53, 0, 0)  -- Set position
 frame.Parent = screenGui  -- Parent frame to ScreenGui
 
 -- Add UICorner to the first frame to round its corners
@@ -148,11 +148,11 @@ coroutine.wrap(setRainbowTextLabelBorder)()
 -- Create a TextLabel for the rainbow border at the top of frame2
 local textLabel3 = Instance.new("TextLabel")
 textLabel3.Size = UDim2.new(1, 0, 0, 30)  -- Set size (full width, 30px height)
-textLabel3.Position = UDim2.new(0, -117, 0, -1)  -- Position at the top of frame2
-textLabel3.Text = "|"  -- Set the tex
+textLabel3.Position = UDim2.new(0, -109, 0, 134)  -- Position at the top of frame2
+textLabel3.Text = "_________________________"  -- Set the tex
 textLabel3.BackgroundTransparency = 1  -- Make the background transparent
 textLabel3.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-textLabel3.TextSize = 23 -- Set text size
+textLabel3.TextSize = 16 -- Set text size
 textLabel3.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
 textLabel3.Parent = frame2  -- Parent the TextLabel to frame2
 
@@ -330,7 +330,79 @@ end
 -- Start updating the timer
 coroutine.wrap(updateTimer)()
 
+-- Create the TextButton
+local mainButton = Instance.new("TextButton")
+mainButton.Size = UDim2.new(0, 105, 0, 40)  -- Set size of the button (200px width, 50px height)
+mainButton.Position = UDim2.new(0, 10, 0, 30)  -- Position inside frame2 (adjust position as needed)
+mainButton.Text = "Info"  -- Set text of the button
+mainButton.BackgroundTransparency = 1 -- Make the background transparent
+mainButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+mainButton.TextSize = 15.9  -- Set text size
+mainButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+mainButton.Parent = frame2  -- Parent the TextButton to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local mainButtonStroke = Instance.new("UIStroke")
+mainButtonStroke.Parent = mainButton
+mainButtonStroke.Thickness = 2  -- Set thickness of the border
+mainButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+mainButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            mainButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
+-- Create a TextButton for the "Close" button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 50, 0, 30)  -- Set the size of the button (50px width, 30px height)
+closeButton.Position = UDim2.new(0, 450, 0, 1)  -- Position inside frame2 (adjust as needed)
+closeButton.Text = "-"  -- Set the text to "-"
+closeButton.BackgroundTransparency = 1  -- Make the background transparent
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+closeButton.TextSize = 20  -- Set text size
+closeButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+closeButton.Parent = frame2  -- Parent the close button to frame2
+
+-- Create a UIStroke to give a rainbow border effect to the close button
+local closeButtonStroke = Instance.new("UIStroke")
+closeButtonStroke.Parent = closeButton
+closeButtonStroke.Thickness = 2  -- Set the thickness of the border (2)
+closeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+closeButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the close button
+local function setRainbowCloseButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            closeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the close button's border
+coroutine.wrap(setRainbowCloseButtonBorder)()
+
+-- Toggle the frame visibility when the close button is clicked
+closeButton.MouseButton1Click:Connect(function()
+    frame.Visible = true  -- Make frame visible
+    frame2.Visible = false  -- Make frame2 invisible
+end)
+
 -- Set ZIndex values for proper layering order
+
+textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
 imageButton.ZIndex = 3
@@ -340,6 +412,7 @@ textLabel3.ZIndex = 6
 fpsLabel.ZIndex = 7
 playerCountLabel.ZIndex = 8
 timerLabel.ZIndex = 9
+mainButton.ZIndex = 10 
 ]]
 
 -- Toggle the frame visibility when the imageButton is clicked
@@ -347,9 +420,14 @@ imageButton.MouseButton1Click:Connect(function()
     if frame2.Visible then
         -- If frame2 is visible, hide it
         frame2.Visible = false
+        frame.Visible = true
 
     else
         -- If frame2 is hidden, show it
         frame2.Visible = true
+        frame.Visible = false
     end
+end)
+
+mainButton.MouseButton1Click:Connect(function()
 end)
