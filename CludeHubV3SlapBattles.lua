@@ -632,26 +632,7 @@ local function slapAndStunClosestPlayer()
                 end
             end
         end
-        task.wait(0.1) -- Faster slap aura (every 0.1 second)
-    end
-end
-
--- Function to Slow down hit events
-local function slowHitEvents()
-    local slapEvent = getEvent(slapEvents)
-    if not slapEvent then return end
-    
-    while slapAuraEnabled do
-        for _, otherPlayer in pairs(Players:GetPlayers()) do
-            if otherPlayer ~= player and otherPlayer.Character then
-                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
-                    local args = {[1] = otherHRP}
-                    slapEvent:FireServer(unpack(args))
-                    task.wait(0.5) -- Slower hit events (every 0.5 seconds)
-                end
-            end
-        end
+        task.wait(0.2) -- Normal slap aura interval
     end
 end
 
@@ -661,8 +642,7 @@ arButton.MouseButton1Click:Connect(function()
     arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
 
     if slapAuraEnabled then
-        slapAuraLoop = task.spawn(slapAndStunClosestPlayer) -- Faster slap aura
-        task.spawn(slowHitEvents) -- Slower hit events
+        slapAuraLoop = task.spawn(slapAndStunClosestPlayer)
     else
         task.cancel(slapAuraLoop)
     end
