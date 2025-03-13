@@ -555,7 +555,6 @@ local function setRainbowMainButtonBorder()
 end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
-
 -- Game Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -563,7 +562,7 @@ local player = Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local hrp = char:FindFirstChild("HumanoidRootPart")
 
--- List of All Known Slap and Stun Events
+-- List of All Known Slap Events (ALL Gloves)
 local slapEvents = {
     ["b"] = true,  
     ["SnowHit"] = true,  
@@ -595,6 +594,7 @@ local slapEvents = {
     ["Speedrunhit"] = true  
 }
 
+-- Stun Events (Same as before)
 local stunEvents = {
     ["HtStun"] = true,  -- Stun Event  
     ["HtSpace"] = true  -- Space Glove Stun  
