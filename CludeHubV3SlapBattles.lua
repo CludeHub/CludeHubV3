@@ -555,6 +555,100 @@ local function setRainbowMainButtonBorder()
 end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
+
+-- Game Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:FindFirstChild("HumanoidRootPart")
+
+-- List of All Known Slap and Stun Events
+local slapEvents = {
+    ["b"] = true,  
+    ["SnowHit"] = true,  
+    ["BrickHit"] = true,  
+    ["ZZZZZZZHit"] = true,  
+    ["DiamondHit"] = true,  
+    ["hitAnchor"] = true,  
+    ["PusherHit"] = true,  
+    ["MagnetHIT"] = true,  
+    ["Fort"] = true,  
+    ["GeneralHit"] = true,  
+    ["GhostHit"] = true,  
+    ["DiceHit"] = true,  
+    ["BullHit"] = true,  
+    ["HitSwapper"] = true,  
+    ["FlashHit"] = true,  
+    ["springhit"] = true,  
+    ["PullHit"] = true,  
+    ["ReverseHit"] = true,  
+    ["ShukuchiHit"] = true,  
+    ["DefenseHit"] = true,  
+    ["KSHit"] = true,  
+    ["ReaperHit"] = true,  
+    ["ReplicaHit"] = true,  
+    ["MisterHit"] = true,  
+    ["MailHit"] = true,  
+    ["GoldenHit"] = true,  
+    ["BoomerangH"] = true,  
+    ["Speedrunhit"] = true  
+}
+
+local stunEvents = {
+    ["HtStun"] = true,  -- Stun Event  
+    ["HtSpace"] = true  -- Space Glove Stun  
+}
+
+-- Function to Find the Right Slap and Stun Events
+local function getEvent(eventList)
+    for _, v in pairs(ReplicatedStorage:GetChildren()) do
+        if v:IsA("RemoteEvent") and eventList[v.Name] then
+            return v
+        end
+    end
+    return nil
+end
+
+local slapAuraEnabled = false
+local slapAuraLoop
+
+-- Default Slap Aura Range
+local defaultRange = 20  -- Default slap aura range
+
+-- Function to Slap and Stun Closest Player
+local function slapAndStunClosestPlayer()
+    local slapEvent = getEvent(slapEvents)
+    local stunEvent = getEvent(stunEvents)
+    if not slapEvent then return end
+
+    while slapAuraEnabled do
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= defaultRange then  -- Slap Aura Default Range
+                    local args = {[1] = otherHRP}
+                    slapEvent:FireServer(unpack(args))
+                    if stunEvent then
+                        stunEvent:FireServer(unpack(args)) -- Stun them too!
+                    end
+                end
+            end
+        end
+        task.wait(0.2)  -- Loop interval (can adjust as needed)
+    end
+end
+
+-- Toggle Slap Aura
+arButton.MouseButton1Click:Connect(function()
+    slapAuraEnabled = not slapAuraEnabled
+    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
+
+    if slapAuraEnabled then
+        slapAuraLoop = task.spawn(slapAndStunClosestPlayer)
+    else
+        task.cancel(slapAuraLoop)
+    end
 end)
 -- Set ZIndex values for proper layering order
 
