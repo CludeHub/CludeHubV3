@@ -529,7 +529,7 @@ local arButton = Instance.new("TextButton")
 arButton.Size = UDim2.new(0, 105, 0, 40)
 arButton.Position = UDim2.new(0, 368, 0, 30)
 arButton.Text = "Slap Aura: OFF"
-arButton.BackgroundTransparency = 1
+arButton.BackgroundTransparency = 0
 arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 arButton.TextSize = 15.9
 arButton.Visible = false
@@ -648,6 +648,38 @@ end
 -- Connect the Button Click to the Function
 arButton.MouseButton1Click:Connect(toggleSlapAura)
 
+-- Create the TextButton
+local gdButton = Instance.new("TextButton")
+geButton.Size = UDim2.new(0, 105, 0, 40)  -- Set size of the button (200px width, 50px height)
+gdButton.Position = UDim2.new(0, 10, 0, 0)  -- Position inside frame2 (adjust position as needed)
+gdButton.Text = "Info"  -- Set text of the button
+gdButton.BackgroundTransparency = 0 -- Make the background transparent
+gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+gdButton.TextSize = 15.9  -- Set text size
+gdButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+gdButton.Parent = frame2  -- Parent the TextButton to frame2
+gdButton.Visible = false
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local dgButtonStroke = Instance.new("UIStroke")
+dgButtonStroke.Parent = gdButton
+dgButtonStroke.Thickness = 2  -- Set thickness of the border
+dgButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+dgButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            dgButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
@@ -701,20 +733,25 @@ end)
 
 mainButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
 arButton.Visible = true
+gdButton.Visible = true
 end)
 
 msButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
