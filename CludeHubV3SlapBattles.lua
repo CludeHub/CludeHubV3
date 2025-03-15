@@ -23,7 +23,7 @@ frameCorner.Parent = frame  -- Parent UICorner to the frame
 local imageButton = Instance.new("ImageButton")
 imageButton.Size = UDim2.new(0, 50, 0, 50)  -- Set size of the button
 imageButton.Position = UDim2.new(0, 0, 0, 0)  -- Set position of the button
-imageButton.Image = "rbxassetid://15315284749"  -- Set image for the button
+imageButton.Image = "rbxassetid://15564662251"  -- Set image for the button
 imageButton.Transparency = 1 -- Make the button transparent
 imageButton.Parent = frame  -- Parent imageButton to the frame
 
