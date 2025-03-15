@@ -598,8 +598,7 @@ local slapEvents = {
 
 local slapAuraEnabled = false
 local slapAuraLoop
-local lastSlapTime = 0  -- Cooldown timer
-local ragdolledPlayers = {}  -- Store players that are currently ragdolled
+local lastSlapTimes = {}  -- Track cooldown per player
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
@@ -613,9 +612,9 @@ local function getSlapEvent(gloveName)
     return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
 end
 
--- Function to Check if Player is Ragdolled
+-- Function to Check if a Player is Ragdolled
 local function isRagdolled(target)
-    return target.Character and target.Character:FindFirstChild("Ragdoll")
+    return target.Character and target.Character:FindFirstChild("Humanoid") and target.Character.Humanoid.PlatformStand
 end
 
 -- Function to Slap Closest Player
@@ -624,30 +623,26 @@ local function slapClosestPlayer()
         local equippedGlove = getEquippedGlove()
         local slapEvent = getSlapEvent(equippedGlove)
 
-        if slapEvent and tick() - lastSlapTime >= 1.9 then  -- Cooldown check (1.9s)
+        if slapEvent then
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-                    -- Check if the player is NOT ragdolled
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 and not isRagdolled(otherPlayer) then
-                        slapEvent:FireServer(otherHRP)
-                        lastSlapTime = tick()  -- Update cooldown time
-                        ragdolledPlayers[otherPlayer] = true  -- Mark as ragdolled
-                        break  -- Only slap one player per cooldown
+                    -- Check if the player is within range and not currently in cooldown
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
+                        local lastSlapTime = lastSlapTimes[otherPlayer] or 0
+
+                        -- Ensure cooldown (1.9s) and player isn't ragdolled
+                        if tick() - lastSlapTime >= 1.9 and not isRagdolled(otherPlayer) then
+                            slapEvent:FireServer(otherHRP)
+                            lastSlapTimes[otherPlayer] = tick()  -- Set cooldown for this player
+                        end
                     end
                 end
             end
         end
 
-        -- Remove players from ragdolled list if they're no longer ragdolled
-        for p in pairs(ragdolledPlayers) do
-            if not isRagdolled(p) then
-                ragdolledPlayers[p] = nil  -- Remove from list
-            end
-        end
-
-        task.wait(0.1)
+        task.wait(0.1)  -- Slight delay to reduce load
     end
 end
 
@@ -659,12 +654,13 @@ local function toggleSlapAura()
     if slapAuraEnabled then
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
-        slapAuraLoop = nil  -- Prevent any running tasks from continuing
+        slapAuraLoop = nil  -- Stop the loop
     end
 end
 
 -- Connect the Button Click to the Function
 arButton.MouseButton1Click:Connect(toggleSlapAura)
+
 -- Set ZIndex values for proper layering order
 
 textLabel3.Rotation = 90
