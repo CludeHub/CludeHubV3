@@ -599,6 +599,7 @@ local slapEvents = {
 local slapAuraEnabled = false
 local slapAuraLoop
 local lastSlapTime = 0  -- Cooldown timer
+local ragdolledPlayers = {}  -- Store players that are currently ragdolled
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
@@ -612,22 +613,37 @@ local function getSlapEvent(gloveName)
     return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
 end
 
+-- Function to Check if Player is Ragdolled
+local function isRagdolled(target)
+    return target.Character and target.Character:FindFirstChild("Ragdoll")
+end
+
 -- Function to Slap Closest Player
 local function slapClosestPlayer()
     while slapAuraEnabled do
         local equippedGlove = getEquippedGlove()
         local slapEvent = getSlapEvent(equippedGlove)
 
-        if slapEvent and tick() - lastSlapTime >= 1.9 then  -- Check cooldown (1.9s)
+        if slapEvent and tick() - lastSlapTime >= 1.9 then  -- Cooldown check (1.9s)
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
+
+                    -- Check if the player is NOT ragdolled
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 and not isRagdolled(otherPlayer) then
                         slapEvent:FireServer(otherHRP)
                         lastSlapTime = tick()  -- Update cooldown time
+                        ragdolledPlayers[otherPlayer] = true  -- Mark as ragdolled
                         break  -- Only slap one player per cooldown
                     end
                 end
+            end
+        end
+
+        -- Remove players from ragdolled list if they're no longer ragdolled
+        for p in pairs(ragdolledPlayers) do
+            if not isRagdolled(p) then
+                ragdolledPlayers[p] = nil  -- Remove from list
             end
         end
 
@@ -638,12 +654,12 @@ end
 -- Function to Toggle Slap Aura and Update Button Text
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
+    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
+
     if slapAuraEnabled then
-        arButton.Text = "Slap Aura: ON"
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
-        arButton.Text = "Slap Aura: OFF"
-        task.cancel(slapAuraLoop)
+        slapAuraLoop = nil  -- Prevent any running tasks from continuing
     end
 end
 
