@@ -667,7 +667,6 @@ dgButtonStroke.Thickness = 2  -- Set thickness of the border
 dgButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
 dgButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
 
--- Create a rainbow effect for the border of the TextButton
 local function setRainbowMainButtonBorder()
     while true do
         for i = 0, 1, 0.01 do
