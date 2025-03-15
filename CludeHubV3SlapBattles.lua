@@ -696,6 +696,39 @@ wait(3)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
 end)
 
+-- Create the TextButton
+local clButton = Instance.new("TextLabel")
+clButton.Size = UDim2.new(0, 200, 0, 40)  -- Set size of the button (200px width, 50px height)
+clButton.Position = UDim2.new(0, 206, 0, 30)  -- Position inside frame2 (adjust position as needed)
+clButton.Text = "CludeHub Slap Battle By Paul Paras"  -- Set text of the button
+clButton.BackgroundTransparency = 1 -- Make the background transparent
+clButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
+clButton.TextSize = 15.9  -- Set text size
+clButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
+clButton.Parent = frame2  -- Parent the TextButton to frame2
+clButton.Visible = false
+
+-- Create a UIStroke to give a rainbow border effect to the TextButton
+local clButtonStroke = Instance.new("UIStroke")
+clButtonStroke.Parent = clButton
+clButtonStroke.Thickness = 2  -- Set thickness of the border
+clButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
+clButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
+
+-- Create a rainbow effect for the border of the TextButton
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
+            clButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
+            wait(0.05)  -- Adjust speed of the rainbow effect
+        end
+    end
+end
+
+-- Start the rainbow effect on the TextButton's border
+coroutine.wrap(setRainbowMainButtonBorder)()
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
@@ -748,24 +781,29 @@ end)
 mainButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
+clButton.Visible = true
 end)
 
 cmButton.MouseButton1Click:Connect(function()
 arButton.Visible = true
 gdButton.Visible = true
+clButton.Visible = false
 end)
 
 msButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
+clButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
+clButton.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
+clButton.Visible = false
 end)
