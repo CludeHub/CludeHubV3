@@ -70,6 +70,10 @@ VerifyKeyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 VerifyKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 addUICorner(VerifyKeyButton, 0.2)
 
+GetKeyButton.MouseButton1Click:Connect(function()
+    print("Get Key button clicked!") setclipboard("https://link-center.net/1320790/cludehub-key")
+end)
+
 -- UIStroke for Buttons (Rainbow Effect)
 local getKeyStroke = Instance.new("UIStroke", GetKeyButton)
 getKeyStroke.Thickness = 2
