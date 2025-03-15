@@ -527,7 +527,7 @@ coroutine.wrap(setRainbowMainButtonBorder)()
 -- Create the TextButton
 local arButton = Instance.new("TextButton")
 arButton.Size = UDim2.new(0, 105, 0, 40)
-arButton.Position = UDim2.new(0, 368, 0, 30)
+arButton.Position = UDim2.new(0, 350, 0, 35)
 arButton.Text = "Slap Aura: OFF"
 arButton.BackgroundTransparency = 1
 arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -658,7 +658,36 @@ end
 -- Connect the Button Click to the Function
 arButton.MouseButton1Click:Connect(toggleSlapAura)
 
--- Set ZIndex values for proper layering order
+local gdButton = Instance.new("TextButton")
+gdButton.Size = UDim2.new(0, 105, 0, 40)
+gdButton.Position = UDim2.new(0, 350, 0, 77)
+gdButton.Text = "Godmode"
+gdButton.BackgroundTransparency = 1
+gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+gdButton.TextSize = 15.9
+gdButton.Visible = false
+gdButton.TextStrokeTransparency = 0.5
+gdButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local gdButtonStroke = Instance.new("UIStroke")
+gdButtonStroke.Parent = gdButton
+gdButtonStroke.Thickness = 2
+gdButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+gdButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            gdButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
 
 textLabel3.Rotation = 90
 local ZIndex = [[
@@ -711,20 +740,25 @@ end)
 
 mainButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
 arButton.Visible = true
+gdButton.Visible = true
 end)
 
 msButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
+gdButton.Visible = false
 end)
