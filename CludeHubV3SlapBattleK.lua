@@ -72,6 +72,11 @@ addUICorner(VerifyKeyButton, 0.2)
 
 GetKeyButton.MouseButton1Click:Connect(function()
     print("Get Key button clicked!") setclipboard("https://link-center.net/1320790/cludehub-key")
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "CludeHub";
+    Text = "The link Copied To Clipboard";
+    Duration = 7; -- Time in seconds
+})
 end)
 
 -- UIStroke for Buttons (Rainbow Effect)
