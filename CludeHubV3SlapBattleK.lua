@@ -107,6 +107,11 @@ VerifyKeyButton.MouseButton1Click:Connect(function()
     if KeyBox.Text == correctKey then
         KeyFrame:Destroy()
         print("Correct Key!")
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Welcome to CludeHub";
+    Text = "thanks for using my script";
+    Duration = 7; -- Time in seconds
+})
         loadstring(game:HttpGet("https://raw.githubusercontent.com/CludeHub/CludeHubV3/refs/heads/main/CludeHubV3SlapBattles.lua"))()
     end
 end)
