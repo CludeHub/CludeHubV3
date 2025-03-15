@@ -660,7 +660,7 @@ arButton.MouseButton1Click:Connect(toggleSlapAura)
 
 local gdButton = Instance.new("TextButton")
 gdButton.Size = UDim2.new(0, 105, 0, 40)
-gdButton.Position = UDim2.new(0, 350, 0, 77)
+gdButton.Position = UDim2.new(0, 350, 0, 80)
 gdButton.Text = "Godmode"
 gdButton.BackgroundTransparency = 1
 gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
