@@ -101,6 +101,7 @@ local correctKey = "C-L-U-D-E-10k"
 
 VerifyKeyButton.MouseButton1Click:Connect(function()
     if KeyBox.Text == correctKey then
+KeyFrame:Destroy()
         print("Correct Key!")
 -- Get the local player and their PlayerGui
 local localPlayer = game.Players.LocalPlayer
@@ -872,5 +873,6 @@ plButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
 end)
+print("20k")
 end
 end)
