@@ -597,7 +597,8 @@ local slapEvents = {
 }
 
 local slapAuraEnabled = false
-local slapCooldowns = {}
+local slapAuraLoop
+local slappedPlayers = {} -- Stores cooldown timers for each player
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
@@ -618,43 +619,48 @@ local function slapClosestPlayer()
         local slapEvent = getSlapEvent(equippedGlove)
 
         if slapEvent then
+            local closestPlayer = nil
+            local closestDistance = math.huge
+
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    local ragdoll = otherPlayer.Character:FindFirstChild("Ragdolled") -- Detect ragdoll state
-
                     if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
-                        -- Check if player is on cooldown
-                        if not slapCooldowns[otherPlayer] then
-                            slapEvent:FireServer(otherHRP)
-                            slapCooldowns[otherPlayer] = true
-
-                            -- Wait for ragdoll to end before removing cooldown
-                            task.spawn(function()
-                                repeat task.wait(0.1) until not ragdoll or not ragdoll.Parent
-                                slapCooldowns[otherPlayer] = nil
-                            end)
+                        if not slappedPlayers[otherPlayer] then -- Check cooldown
+                            local distance = (hrp.Position - otherHRP.Position).Magnitude
+                            if distance < closestDistance then
+                                closestDistance = distance
+                                closestPlayer = otherHRP
+                            end
                         end
                     end
                 end
             end
+
+            if closestPlayer then
+                slapEvent:FireServer(closestPlayer)
+                slappedPlayers[closestPlayer] = true
+                task.delay(2.5, function() -- Cooldown time (adjustable)
+                    slappedPlayers[closestPlayer] = nil
+                end)
+            end
         end
 
-        task.wait(0.10) -- Short delay to prevent overload
+        task.wait(math.random(0.3, 0.5)) -- Random delay to avoid detection
     end
 end
 
--- Toggle Slap Aura with Button Text Update
+-- Function to Toggle Slap Aura
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
-    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
-
     if slapAuraEnabled then
-        slapClosestPlayer()
+        slapAuraLoop = task.spawn(slapClosestPlayer)
+    else
+        task.cancel(slapAuraLoop)
     end
 end
 
--- Connect Button Click
+-- Connect the Button Click to the Function
 arButton.MouseButton1Click:Connect(toggleSlapAura)
 -- Set ZIndex values for proper layering order
 
