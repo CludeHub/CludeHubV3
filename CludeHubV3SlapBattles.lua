@@ -566,6 +566,7 @@ local hrp = char:FindFirstChild("HumanoidRootPart")
 -- Slap Events Mapped to Glove Names
 local slapEvents = {
     ["Default"] = "b",
+    ["Dual"] = "GeneralHit",
     ["Extended"] = "b",
     ["Diamond"] = "DiamondHit",
     ["Brick"] = "BrickHit",
