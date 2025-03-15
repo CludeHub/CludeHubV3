@@ -574,6 +574,7 @@ local slapEvents = {
     ["Pusher"] = "PusherHit",
     ["Magnet"] = "MagnetHIT",
     ["Fort"] = "Fort",
+    ["General"] = "GeneralHit",
     ["Ghost"] = "GhostHit",
     ["Dice"] = "DiceHit",
     ["Bull"] = "BullHit",
@@ -596,6 +597,7 @@ local slapEvents = {
 }
 
 local slapAuraEnabled = false
+local slapCooldown = {} -- Table to track cooldown per player
 local slapAuraLoop
 
 -- Function to Get Current Glove Name
@@ -606,30 +608,38 @@ end
 
 -- Function to Get the Corresponding Slap Event
 local function getSlapEvent(gloveName)
-    return slapEvents[gloveName] and ReplicatedStorage:FindFirstChild(slapEvents[gloveName]) or nil
+    local eventName = slapEvents[gloveName]
+    return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
 end
 
--- Function to Slap Closest Player
+-- Function to Slap Closest Player with Cooldown
 local function slapClosestPlayer()
     while slapAuraEnabled do
         local equippedGlove = getEquippedGlove()
         local slapEvent = getSlapEvent(equippedGlove)
-        local generalHit = ReplicatedStorage:FindFirstChild("GeneralHit")
 
-        for _, otherPlayer in pairs(Players:GetPlayers()) do
-            if otherPlayer ~= player and otherPlayer.Character then
-                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Slap range
-                    if slapEvent then
-                        slapEvent:FireServer(otherHRP)
-                    elseif generalHit then
-                        generalHit:FireServer(otherHRP) -- Fires only if no slap event exists for the glove
+        if slapEvent then
+            for _, otherPlayer in pairs(Players:GetPlayers()) do
+                if otherPlayer ~= player and otherPlayer.Character then
+                    local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Range
+                        
+                        -- Check if the player is on cooldown
+                        if not slapCooldown[otherPlayer.UserId] then
+                            slapEvent:FireServer(otherHRP)
+
+                            -- Set cooldown for this player (2 seconds)
+                            slapCooldown[otherPlayer.UserId] = true
+                            task.delay(2, function()
+                                slapCooldown[otherPlayer.UserId] = nil
+                            end)
+                        end
                     end
                 end
             end
         end
 
-        task.wait(0.10)
+        task.wait(0.10) -- Slap aura speed (adjust if needed)
     end
 end
 
