@@ -676,19 +676,18 @@ gdButtonStroke.Thickness = 2
 gdButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
 gdButtonStroke.Transparency = 0
 
-local function setRainbowBorder(stroke)
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowMainButtonBorder()
     while true do
         for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i
-            gdButtonstroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            arButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
         end
     end
 end
 
--- Apply rainbow effect to both strokes
-coroutine.wrap(setRainbowBorder)(gdButtonStroke)
-coroutine.wrap(setRainbowBorder)(borderStroke)  
+coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
 
 textLabel3.Rotation = 90
 local ZIndex = [[
