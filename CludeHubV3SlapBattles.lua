@@ -574,7 +574,6 @@ local slapEvents = {
     ["Pusher"] = "PusherHit",
     ["Magnet"] = "MagnetHIT",
     ["Fort"] = "Fort",
-    ["General"] = "GeneralHit",
     ["Ghost"] = "GhostHit",
     ["Dice"] = "DiceHit",
     ["Bull"] = "BullHit",
@@ -598,7 +597,6 @@ local slapEvents = {
 
 local slapAuraEnabled = false
 local slapAuraLoop
-local lastSlapTimes = {}  -- Track cooldown per player
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
@@ -608,13 +606,7 @@ end
 
 -- Function to Get the Corresponding Slap Event
 local function getSlapEvent(gloveName)
-    local eventName = slapEvents[gloveName]
-    return eventName and ReplicatedStorage:FindFirstChild(eventName) or nil
-end
-
--- Function to Check if a Player is Ragdolled
-local function isRagdolled(target)
-    return target.Character and target.Character:FindFirstChild("Humanoid") and target.Character.Humanoid.PlatformStand
+    return slapEvents[gloveName] and ReplicatedStorage:FindFirstChild(slapEvents[gloveName]) or nil
 end
 
 -- Function to Slap Closest Player
@@ -622,39 +614,34 @@ local function slapClosestPlayer()
     while slapAuraEnabled do
         local equippedGlove = getEquippedGlove()
         local slapEvent = getSlapEvent(equippedGlove)
+        local generalHit = ReplicatedStorage:FindFirstChild("GeneralHit")
 
-        if slapEvent then
-            for _, otherPlayer in pairs(Players:GetPlayers()) do
-                if otherPlayer ~= player and otherPlayer.Character then
-                    local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-
-                    -- Check if the player is within range and not currently in cooldown
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then
-                        local lastSlapTime = lastSlapTimes[otherPlayer] or 0
-
-                        -- Ensure cooldown (1.9s) and player isn't ragdolled
-                        if tick() - lastSlapTime >= 1.9 and not isRagdolled(otherPlayer) then
-                            slapEvent:FireServer(otherHRP)
-                            lastSlapTimes[otherPlayer] = tick()  -- Set cooldown for this player
-                        end
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character then
+                local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Slap range
+                    if slapEvent then
+                        slapEvent:FireServer(otherHRP)
+                    elseif generalHit then
+                        generalHit:FireServer(otherHRP) -- Fires only if no slap event exists for the glove
                     end
                 end
             end
         end
 
-        task.wait(0.1)  -- Slight delay to reduce load
+        task.wait(0.10)
     end
 end
 
 -- Function to Toggle Slap Aura and Update Button Text
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
-    arButton.Text = "Slap Aura: " .. (slapAuraEnabled and "ON" or "OFF")
-
     if slapAuraEnabled then
+        arButton.Text = "Slap Aura: ON"
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
-        slapAuraLoop = nil  -- Stop the loop
+        arButton.Text = "Slap Aura: OFF"
+        task.cancel(slapAuraLoop)
     end
 end
 
