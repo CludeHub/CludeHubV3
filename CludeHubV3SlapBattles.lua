@@ -689,6 +689,41 @@ end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
 
+gdButton.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+
+    if not char:FindFirstChild("entered") then
+        firetouchinterest(char:FindFirstChild("Head"), workspace.Lobby.Teleport1, 0)
+        firetouchinterest(char:FindFirstChild("Head"), workspace.Lobby.Teleport1, 1)
+    end
+
+    repeat task.wait() until char:FindFirstChildWhichIsA("Tool") or player.Backpack:FindFirstChildWhichIsA("Tool")
+
+    -- Move gloves to LogService (hiding them)
+    for _, v in pairs(char:GetChildren()) do
+        if v:IsA("Tool") then
+            v.Parent = game.LogService
+        end
+    end
+
+    for _, v in pairs(player.Backpack:GetChildren()) do
+        v.Parent = game.LogService
+    end
+
+    -- Trigger God Mode effect
+    game:GetService("ReplicatedStorage"):WaitForChild("HumanoidDied"):FireServer(char, false)
+    wait(3.75)
+
+    -- Return gloves to Backpack but **not equip them**
+    for _, v in pairs(game.LogService:GetChildren()) do
+        v.Parent = player.Backpack
+    end
+
+    -- Teleport player to Origo
+    char.HumanoidRootPart.CFrame = workspace.Origo.CFrame * CFrame.new(0, -5, 0)
+end)
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
