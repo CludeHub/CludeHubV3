@@ -1129,35 +1129,31 @@ end
 
 coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
 
--- Services
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
+local toggle = false -- Starts OFF
 
--- UI Button Setup
-local orbButton = script.Parent:WaitForChild("orbButton") -- Make sure this button exists in your UI
+local orbButton = script.Parent:WaitForChild("orbButton") -- Ensure the button exists
 
--- Toggle Variable
-local farmingEnabled = false
-
--- Function to Farm Orbs
-local function toggleOrbFarm()
-    farmingEnabled = not farmingEnabled
-    orbButton.Text = "Farm Jet and Phase: " .. (farmingEnabled and "ON" or "OFF")
-
-    while farmingEnabled do
+local function farmOrbs()
+    while toggle do
         for _, v in pairs(game.Workspace:GetChildren()) do
             if (v.Name == "JetOrb" or v.Name == "PhaseOrb") and v:FindFirstChild("TouchInterest") then
-                firetouchinterest(player.Character:FindFirstChild("Head"), v, 0)
-                firetouchinterest(player.Character:FindFirstChild("Head"), v, 1)
+                firetouchinterest(player.Character:WaitForChild("Head"), v, 0)
+                firetouchinterest(player.Character:WaitForChild("Head"), v, 1)
             end
         end
-        task.wait(0.1)
+        task.wait(0.1) -- Prevents freezing, adjustable if needed
     end
 end
 
--- Button Click Event
 orbButton.MouseButton1Click:Connect(function()
-    task.spawn(toggleOrbFarm)
+    toggle = not toggle
+    orbButton.Text = "Farm Jet and Phase: " .. (toggle and "ON" or "OFF")
+
+    if toggle then
+        task.spawn(farmOrbs)
+    end
 end)
 
 textLabel3.Rotation = 90
