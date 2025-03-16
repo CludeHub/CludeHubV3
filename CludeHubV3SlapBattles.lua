@@ -590,7 +590,10 @@ local slapEvents = {
     ["Speedrun"] = "Speedrunhit",
     ["Plague"] = "PlagueHit",
     ["Elude"] = "GeneralHit",
-    ["Counter"] = "GeneralHit"
+    ["Counter"] = "GeneralHit",
+    ["Shard"] = "ShardHIT",
+    ["Jet"] = "JetHit",
+    ["Phase"] = "PhaseH",
 }
 
 local slapAuraEnabled = false
@@ -1098,6 +1101,28 @@ end
 
 coroutine.wrap(setRainbowTrapBadgeButtonBorder)() -- Run the rainbow effect in a separate thread
 
+trapBadgeButton.MouseButton1Click:Connect(function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Brick" then
+for i = 1, 200 do
+game:GetService("ReplicatedStorage").lbrick:FireServer()
+game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text = game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text + 1;
+wait(Random.new():NextNumber(1.5,1.75))
+game:GetService("ReplicatedStorage").lbrick:FireServer()
+game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text = game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text + 1;
+wait(Random.new():NextNumber(1.5,1.75))
+game:GetService("ReplicatedStorage").lbrick:FireServer()
+game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text = game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text + 1;
+wait(Random.new():NextNumber(1.5,1.75))
+game:GetService("ReplicatedStorage").lbrick:FireServer()
+game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text = game.Players.LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text + 1;
+wait(Random.new():NextNumber(1.5,1.75))
+game:GetService('VirtualInputManager'):SendKeyEvent(true,'E',false,x)
+wait(Random.new():NextNumber(1.5,1.75))
+end
+else
+print("Equip Bricks First")
+end
+end)
 local orbButton = Instance.new("TextButton")
 orbButton.Size = UDim2.new(0, 150, 0, 40)
 orbButton.Position = UDim2.new(0, 185, 0, 102)  -- Change position as needed
