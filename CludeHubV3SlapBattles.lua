@@ -702,7 +702,7 @@ clButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
 clButton.TextSize = 15.9  -- Set text size
 clButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
 clButton.Parent = frame2  -- Parent the TextButton to frame2
-clButton.Visible = false
+clButton.Visible = true
 
 -- Create a UIStroke to give a rainbow border effect to the TextButton
 local clButtonStroke = Instance.new("UIStroke")
