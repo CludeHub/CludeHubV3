@@ -787,6 +787,39 @@ end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
 
+local slappleFarmEnabled = false
+
+-- Function to collect slapples
+local function collectSlapples()
+    while slappleFarmEnabled do
+        for i, v in ipairs(workspace.Arena.island5.Slapples:GetDescendants()) do
+            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") 
+                and game.Players.LocalPlayer.Character:FindFirstChild("entered") 
+                and v.Name == "Glove" 
+                and v:FindFirstChildWhichIsA("TouchTransmitter") then
+
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
+            end
+        end
+        task.wait(0.1) -- Small delay to prevent lag
+    end
+end
+
+-- Function to toggle Slapple Farm
+local function toggleSlappleFarm()
+    slappleFarmEnabled = not slappleFarmEnabled
+    if slappleFarmEnabled then
+        slfButton.Text = "Slapple Farm: ON"
+        task.spawn(collectSlapples)
+    else
+        slfButton.Text = "Slapple Farm: OFF"
+    end
+end
+
+-- Connect the button click to toggle function
+slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
