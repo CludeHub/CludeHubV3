@@ -767,6 +767,9 @@ end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
 
+infButton.MouseButton1Click:Connect(function()	loadstring(game:HttpGet('https://raw.githubusercontent.com/ionlyusegithubformcmods/1-Line-Scripts/main/Infinite%20Yield%20but%20with%20secure%20dex'))()
+end)
+
 local slfButton = Instance.new("TextButton")
 slfButton.Size = UDim2.new(0, 105, 0, 40)
 slfButton.Position = UDim2.new(0, 185, 0, 35)
