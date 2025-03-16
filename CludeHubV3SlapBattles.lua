@@ -756,6 +756,58 @@ end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
 
+local slfButton = Instance.new("TextButton")
+slfButton.Size = UDim2.new(0, 105, 0, 40)
+slfButton.Position = UDim2.new(0, 185, 0, 35)
+slfButton.Text = "Slapple Farm: OFF"
+slfButton.BackgroundTransparency = 1
+slfButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+slfButton.TextSize = 15.9
+slfButton.Visible = false
+slfButton.TextStrokeTransparency = 0.5
+slfButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local slfButtonStroke = Instance.new("UIStroke")
+isfButtonStroke.Parent = gdButton
+slfButtonStroke.Thickness = 2
+slfButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+slfButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            slfButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
+
+local slappleFarmEnabled = false
+
+local function toggleSlappleFarm()
+    slappleFarmEnabled = not slappleFarmEnabled
+    slappleButton.Text = slappleFarmEnabled and "Slapple Farm: ON" or "Slapple Farm: OFF"
+
+    while slappleFarmEnabled do
+        for i, v in ipairs(workspace.Arena.island5.Slapples:GetDescendants()) do
+            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") 
+            and game.Players.LocalPlayer.Character:FindFirstChild("entered") 
+            and v.Name == "Glove" and v:FindFirstChildWhichIsA("TouchTransmitter") then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
+            end
+        end
+        task.wait(0.2) -- Slight delay to prevent overload
+    end
+end
+
+slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
@@ -810,6 +862,7 @@ arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = true
 infButton.Visible = true
+slfButton.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
@@ -817,6 +870,7 @@ arButton.Visible = true
 gdButton.Visible = true
 clButton.Visible = false
 infButton.Visible = false
+slfButton.Visible = false
 end)
 
 msButton.MouseButton1Click:Connect(function()
@@ -824,6 +878,7 @@ arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
+slfButton.Visible = true
 end)
 
 bdButton.MouseButton1Click:Connect(function()
@@ -831,6 +886,7 @@ arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
+slfButton.Visible = fase
 end)
 
 plButton.MouseButton1Click:Connect(function()
@@ -838,4 +894,5 @@ arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
+slfButton.Visible = false
 end)
