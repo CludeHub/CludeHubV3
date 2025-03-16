@@ -1,10 +1,6 @@
--- Get the local player and their PlayerGui
-local localPlayer = game.Players.LocalPlayer
-local playerGui = localPlayer:WaitForChild("PlayerGui")
-
 -- Create ScreenGui and parent it to PlayerGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = playerGui
+screenGui.Parent = game.CoreGui
 
 -- Create the first frame and set its properties
 local frame = Instance.new("Frame")
@@ -692,7 +688,7 @@ coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a sepa
 
 gdButton.MouseButton1Click:Connect(function()
     game:GetService("Players").LocalPlayer.Reset:FireServer()
-wait(3)
+wait(5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
 end)
 
