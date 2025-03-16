@@ -588,7 +588,8 @@ local slapEvents = {
     ["Golden"] = "GoldenHit",
     ["Boomerang"] = "BoomerangH",
     ["Speedrun"] = "Speedrunhit",
-    ["Plague"] = "PlagueHit"
+    ["Plague"] = "PlagueHit",
+    ["Elude"] = "GeneralHit
 }
 
 local slapAuraEnabled = false
