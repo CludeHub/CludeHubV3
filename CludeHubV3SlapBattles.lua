@@ -842,7 +842,7 @@ slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 
 -- Create the "Get Chain Badge" Button
 local chainBadgeButton = Instance.new("TextButton")
-chainBadgeButton.Size = UDim2.new(0, 150, 0, 40)
+chainBadgeButton.Size = UDim2.new(0, 151, 0, 40)
 chainBadgeButton.Position = UDim2.new(0, 134, 0, 30)  -- Change position as needed
 chainBadgeButton.Text = "Get bob Badge"
 chainBadgeButton.BackgroundTransparency = 1
@@ -994,7 +994,7 @@ end)
 -- Create the "Get Elude" Button
 local eludeButton = Instance.new("TextButton")
 eludeButton.Size = UDim2.new(0, 150, 0, 40)
-eludeButton.Position = UDim2.new(0, 202, 0, 65)  -- Change position as needed
+eludeButton.Position = UDim2.new(0, 203, 0, 65)  -- Change position as needed
 eludeButton.Text = "Get Elude and Counter Badge"
 eludeButton.BackgroundTransparency = 1
 eludeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1069,7 +1069,7 @@ end)
 -- Create the "Get Chain Badge" Button
 local trapBadgeButton = Instance.new("TextButton")
 trapBadgeButton.Size = UDim2.new(0, 150, 0, 40)
-trapBadgeButton.Position = UDim2.new(0, 137, 0, 140)  -- Change position as needed
+trapBadgeButton.Position = UDim2.new(0, 138, 0, 140)  -- Change position as needed
 trapBadgeButton.Text = "Get Trap Badge"
 trapBadgeButton.BackgroundTransparency = 1
 trapBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1100,7 +1100,7 @@ coroutine.wrap(setRainbowTrapBadgeButtonBorder)() -- Run the rainbow effect in a
 
 local orbButton = Instance.new("TextButton")
 orbButton.Size = UDim2.new(0, 150, 0, 40)
-orbButton.Position = UDim2.new(0, 184, 0, 102)  -- Change position as needed
+orbButton.Position = UDim2.new(0, 185, 0, 102)  -- Change position as needed
 orbButton.Text = "Farm Jet and Phase: OFF"
 orbButton.BackgroundTransparency = 1
 orbButton.TextColor3 = Color3.fromRGB(255, 255, 255)
