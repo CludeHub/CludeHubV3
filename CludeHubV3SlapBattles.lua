@@ -523,7 +523,7 @@ coroutine.wrap(setRainbowMainButtonBorder)()
 -- Create the TextButton
 local arButton = Instance.new("TextButton")
 arButton.Size = UDim2.new(0, 105, 0, 40)
-arButton.Position = UDim2.new(0, 143, 0, 35)
+arButton.Position = UDim2.new(0, 166, 0, 35)
 arButton.Text = "Slap Aura: OFF"
 arButton.BackgroundTransparency = 1
 arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
