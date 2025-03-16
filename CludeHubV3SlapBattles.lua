@@ -523,7 +523,7 @@ coroutine.wrap(setRainbowMainButtonBorder)()
 -- Create the TextButton
 local arButton = Instance.new("TextButton")
 arButton.Size = UDim2.new(0, 105, 0, 40)
-arButton.Position = UDim2.new(0, 350, 0, 35)
+arButton.Position = UDim2.new(0, 169.2, 0, 35)
 arButton.Text = "Slap Aura: OFF"
 arButton.BackgroundTransparency = 1
 arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -657,7 +657,7 @@ arButton.MouseButton1Click:Connect(toggleSlapAura)
 
 local gdButton = Instance.new("TextButton")
 gdButton.Size = UDim2.new(0, 105, 0, 40)
-gdButton.Position = UDim2.new(0, 350, 0, 80)
+gdButton.Position = UDim2.new(0, 143, 0, 80)
 gdButton.Text = "Godmode"
 gdButton.BackgroundTransparency = 1
 gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -725,6 +725,37 @@ end
 -- Start the rainbow effect on the TextButton's border
 coroutine.wrap(setRainbowMainButtonBorder)()
 
+local infButton = Instance.new("TextButton")
+infButton.Size = UDim2.new(0, 105, 0, 40)
+infButton.Position = UDim2.new(0, 143, 0, 65)
+infButton.Text = "Infinite yield"
+infButton.BackgroundTransparency = 1
+infButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+infButton.TextSize = 15.9
+infButton.Visible = true
+infButton.TextStrokeTransparency = 0.5
+infButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local infButtonStroke = Instance.new("UIStroke")
+infButtonStroke.Parent = gdButton
+infButtonStroke.Thickness = 2
+infButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+infButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowMainButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            infButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
@@ -778,28 +809,33 @@ mainButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = true
+infButton.Visible = true
 end)
 
 cmButton.MouseButton1Click:Connect(function()
 arButton.Visible = true
 gdButton.Visible = true
 clButton.Visible = false
+infButton.Visible = false
 end)
 
 msButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
+infButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
+infButton.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
 arButton.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
+infButton.Visible = false
 end)
