@@ -1072,6 +1072,23 @@ end
 
 coroutine.wrap(setRainbowEludeButtonBorder)() -- Run the rainbow effect in a separate thread
 
+eludeButton.MouseButton1Click:Connect(function()
+local teleportFunc = queueonteleport or queue_on_teleport
+if teleportFunc then
+    teleportFunc([[
+        if not game:IsLoaded() then
+            game.Loaded:Wait()
+        end
+        repeat wait() until game.Players.LocalPlayer
+        game:GetService("RunService").RenderStepped:Connect(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-502.336, 14.228, -179.597)
+        end)
+game:GetService("TeleportService"):Teleport(6403373529)
+    ]])
+end
+game:GetService("TeleportService"):Teleport(11828384869)
+end)
+
 -- Create the "Get Chain Badge" Button
 local trapBadgeButton = Instance.new("TextButton")
 trapBadgeButton.Size = UDim2.new(0, 150, 0, 40)
