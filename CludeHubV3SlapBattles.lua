@@ -837,6 +837,70 @@ end
 -- Connect the button click to toggle function
 slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 
+-- Create the "Get Chain Badge" Button
+local chainBadgeButton = Instance.new("TextButton")
+chainBadgeButton.Size = UDim2.new(0, 150, 0, 40)
+chainBadgeButton.Position = UDim2.new(0, 134, 0, 100)  -- Change position as needed
+chainBadgeButton.Text = "Get Chain Badge"
+chainBadgeButton.BackgroundTransparency = 1
+chainBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+chainBadgeButton.TextSize = 15.9
+chainBadgeButton.Visible = false
+chainBadgeButton.TextStrokeTransparency = 0.5
+chainBadgeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local chainBadgeButtonStroke = Instance.new("UIStroke")
+chainBadgeButtonStroke.Parent = chainBadgeButton
+chainBadgeButtonStroke.Thickness = 2
+chainBadgeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+chainBadgeButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowChainBadgeButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            chainBadgeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowChainBadgeButtonBorder)() -- Run the rainbow effect in a separate thread
+
+-- Create the "Get Elude" Button
+local eludeButton = Instance.new("TextButton")
+eludeButton.Size = UDim2.new(0, 150, 0, 40)
+eludeButton.Position = UDim2.new(0, 134, 0, 135)  -- Change position as needed
+eludeButton.Text = "Get Elude"
+eludeButton.BackgroundTransparency = 1
+eludeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+eludeButton.TextSize = 15.9
+eludeButton.Visible = false
+eludeButton.TextStrokeTransparency = 0.5
+eludeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local eludeButtonStroke = Instance.new("UIStroke")
+eludeButtonStroke.Parent = eludeButton
+eludeButtonStroke.Thickness = 2
+eludeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+eludeButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowEludeButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            eludeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowEludeButtonBorder)() -- Run the rainbow effect in a separate thread
+
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
