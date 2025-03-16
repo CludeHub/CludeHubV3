@@ -769,7 +769,7 @@ slfButton.Parent = frame2  -- Make sure `frame2` exists before running this scri
 
 -- Create UIStroke for the rainbow effect
 local slfButtonStroke = Instance.new("UIStroke")
-isfButtonStroke.Parent = slfButton
+slfButtonStroke.Parent = slfButton
 slfButtonStroke.Thickness = 2
 slfButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
 slfButtonStroke.Transparency = 0
