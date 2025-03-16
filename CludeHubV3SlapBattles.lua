@@ -556,8 +556,6 @@ coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a sepa
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:FindFirstChild("HumanoidRootPart")
 
 -- Slap Events Mapped to Glove Names
 local slapEvents = {
@@ -596,10 +594,17 @@ local slapEvents = {
 local slapAuraEnabled = false
 local slapCooldown = {} -- Table to track cooldown per player
 local slapAuraLoop
+local char, hrp
+
+-- Function to Update Character Info
+local function updateCharacter()
+    char = player.Character or player.CharacterAdded:Wait()
+    hrp = char:WaitForChild("HumanoidRootPart")
+end
 
 -- Function to Get Current Glove Name
 local function getEquippedGlove()
-    local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+    local tool = char and char:FindFirstChildOfClass("Tool")
     return tool and tool.Name or nil
 end
 
@@ -615,7 +620,7 @@ local function slapClosestPlayer()
         local equippedGlove = getEquippedGlove()
         local slapEvent = getSlapEvent(equippedGlove)
 
-        if slapEvent then
+        if slapEvent and hrp then
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -652,8 +657,14 @@ local function toggleSlapAura()
     end
 end
 
+-- Update Character When Respawning
+player.CharacterAdded:Connect(updateCharacter)
+
 -- Connect the Button Click to the Function
 arButton.MouseButton1Click:Connect(toggleSlapAura)
+
+-- Initialize Character on First Run
+updateCharacter()
 
 local gdButton = Instance.new("TextButton")
 gdButton.Size = UDim2.new(0, 105, 0, 40)
