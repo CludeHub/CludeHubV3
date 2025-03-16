@@ -649,9 +649,11 @@ end
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
     if slapAuraEnabled then
+        arButton.Position = UDim2.new(0, 154, 0, 30)
         arButton.Text = "Slap Aura: ON"
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
+        arButton.Position = UDim2.new(0, 159, 0, 30)
         arButton.Text = "Slap Aura: OFF"
         task.cancel(slapAuraLoop)
     end
@@ -828,7 +830,6 @@ end
 local function toggleSlappleFarm()
     slappleFarmEnabled = not slappleFarmEnabled
     slfButton.Text = slappleFarmEnabled and "Slapple Farm: ON" or "Slapple Farm: OFF"
-
     if slappleFarmEnabled then
         task.spawn(collectSlapples)
     end
@@ -840,7 +841,7 @@ slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 -- Create the "Get Chain Badge" Button
 local chainBadgeButton = Instance.new("TextButton")
 chainBadgeButton.Size = UDim2.new(0, 150, 0, 40)
-chainBadgeButton.Position = UDim2.new(0, 134, 0, 100)  -- Change position as needed
+chainBadgeButton.Position = UDim2.new(0, 144, 0, 30)  -- Change position as needed
 chainBadgeButton.Text = "Get Chain Badge"
 chainBadgeButton.BackgroundTransparency = 1
 chainBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -872,8 +873,8 @@ coroutine.wrap(setRainbowChainBadgeButtonBorder)() -- Run the rainbow effect in 
 -- Create the "Get Elude" Button
 local eludeButton = Instance.new("TextButton")
 eludeButton.Size = UDim2.new(0, 150, 0, 40)
-eludeButton.Position = UDim2.new(0, 134, 0, 135)  -- Change position as needed
-eludeButton.Text = "Get Elude"
+eludeButton.Position = UDim2.new(0, 203, 0, 65)  -- Change position as needed
+eludeButton.Text = "Get Elude and Counter Badge"
 eludeButton.BackgroundTransparency = 1
 eludeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 eludeButton.TextSize = 15.9
@@ -900,6 +901,69 @@ local function setRainbowEludeButtonBorder()
 end
 
 coroutine.wrap(setRainbowEludeButtonBorder)() -- Run the rainbow effect in a separate thread
+
+-- Create the "Get Chain Badge" Button
+local trapBadgeButton = Instance.new("TextButton")
+trapBadgeButton.Size = UDim2.new(0, 150, 0, 40)
+trapBadgeButton.Position = UDim2.new(0, 137, 0, 140)  -- Change position as needed
+trapBadgeButton.Text = "Get Trap Badge"
+trapBadgeButton.BackgroundTransparency = 1
+trapBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+trapBadgeButton.TextSize = 15.9
+trapBadgeButton.Visible = false
+trapBadgeButton.TextStrokeTransparency = 0.5
+trapBadgeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local trapBadgeButtonStroke = Instance.new("UIStroke")
+trapBadgeButtonStroke.Parent = trapBadgeButton
+trapBadgeButtonStroke.Thickness = 2
+trapBadgeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+trapBadgeButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowTrapBadgeButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            trapBadgeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowTrapBadgeButtonBorder)() -- Run the rainbow effect in a separate thread
+
+local orbButton = Instance.new("TextButton")
+orbButton.Size = UDim2.new(0, 150, 0, 40)
+orbButton.Position = UDim2.new(0, 184, 0, 102)  -- Change position as needed
+orbButton.Text = "Farm Jet and Phase: OFF"
+orbButton.BackgroundTransparency = 1
+orbButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+orbButton.TextSize = 15.9
+orbButton.Visible = false
+orbButton.TextStrokeTransparency = 0.5
+orbButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+
+-- Create UIStroke for the rainbow effect
+local orbButtonStroke = Instance.new("UIStroke")
+orbButtonStroke.Parent = orbButton
+orbButtonStroke.Thickness = 2
+orbButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
+orbButtonStroke.Transparency = 0
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowOrbButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            orbButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
 
 textLabel3.Rotation = 90
 local ZIndex = [[
@@ -958,6 +1022,8 @@ infButton.Visible = true
 slfButton.Visible = false
 chainBadgeButton.Visible = false
 eludeButton.Visible = false
+trapBadgeButton.Visible = false
+orbButton.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
@@ -968,6 +1034,8 @@ infButton.Visible = false
 slfButton.Visible = false
 chainBadgeButton.Visible = false
 eludeButton.Visible = false
+trapBadgeButton.Visible = false
+orbButton.Visible = false
 end)
 
 msButton.MouseButton1Click:Connect(function()
@@ -978,6 +1046,8 @@ infButton.Visible = false
 slfButton.Visible = true
 chainBadgeButton.Visible = false
 eludeButton.Visible = false
+trapBadgeButton.Visible = false
+orbButton.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
@@ -988,6 +1058,8 @@ infButton.Visible = false
 slfButton.Visible = fase
 chainBadgeButton.Visible = true
 eludeButton.Visible = true
+trapBadgeButton.Visible = true
+orbButton.Visible = true
 end)
 
 plButton.MouseButton1Click:Connect(function()
@@ -998,4 +1070,6 @@ infButton.Visible = false
 slfButton.Visible = false
 chainBadgeButton.Visible = false
 eludeButton.Visible = false
+trapBadgeButton.Visible = false
+orbButton.Visible = false
 end)
