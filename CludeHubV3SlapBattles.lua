@@ -956,6 +956,8 @@ gdButton.Visible = false
 clButton.Visible = true
 infButton.Visible = true
 slfButton.Visible = false
+chainBadgeButton = false
+eludeButton = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
@@ -964,6 +966,8 @@ gdButton.Visible = true
 clButton.Visible = false
 infButton.Visible = false
 slfButton.Visible = false
+chainBadgeButton = false
+eludeButton = false
 end)
 
 msButton.MouseButton1Click:Connect(function()
@@ -972,6 +976,8 @@ gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
 slfButton.Visible = true
+chainBadgeButton = false
+eludeButton = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
@@ -980,6 +986,8 @@ gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
 slfButton.Visible = fase
+chainBadgeButton = true
+eludeButton = true
 end)
 
 plButton.MouseButton1Click:Connect(function()
@@ -988,4 +996,6 @@ gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
 slfButton.Visible = false
+chainBadgeButton = false
+eludeButton = false
 end)
