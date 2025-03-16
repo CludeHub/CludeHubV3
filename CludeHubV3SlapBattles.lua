@@ -843,7 +843,7 @@ slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 -- Create the "Get Chain Badge" Button
 local chainBadgeButton = Instance.new("TextButton")
 chainBadgeButton.Size = UDim2.new(0, 150, 0, 40)
-chainBadgeButton.Position = UDim2.new(0, 137, 0, 30)  -- Change position as needed
+chainBadgeButton.Position = UDim2.new(0, 134, 0, 30)  -- Change position as needed
 chainBadgeButton.Text = "Get bob Badge"
 chainBadgeButton.BackgroundTransparency = 1
 chainBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -994,7 +994,7 @@ end)
 -- Create the "Get Elude" Button
 local eludeButton = Instance.new("TextButton")
 eludeButton.Size = UDim2.new(0, 150, 0, 40)
-eludeButton.Position = UDim2.new(0, 203, 0, 65)  -- Change position as needed
+eludeButton.Position = UDim2.new(0, 202, 0, 65)  -- Change position as needed
 eludeButton.Text = "Get Elude and Counter Badge"
 eludeButton.BackgroundTransparency = 1
 eludeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
