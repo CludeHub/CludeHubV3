@@ -523,7 +523,7 @@ coroutine.wrap(setRainbowMainButtonBorder)()
 -- Create the TextButton
 local arButton = Instance.new("TextButton")
 arButton.Size = UDim2.new(0, 105, 0, 40)
-arButton.Position = UDim2.new(0, 198, 0, 35)
+arButton.Position = UDim2.new(0, 159, 0, 30)
 arButton.Text = "Slap Aura: OFF"
 arButton.BackgroundTransparency = 1
 arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -668,7 +668,7 @@ updateCharacter()
 
 local gdButton = Instance.new("TextButton")
 gdButton.Size = UDim2.new(0, 105, 0, 40)
-gdButton.Position = UDim2.new(0, 143, 0, 80)
+gdButton.Position = UDim2.new(0, 134, 0, 65)
 gdButton.Text = "Godmode"
 gdButton.BackgroundTransparency = 1
 gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -772,7 +772,7 @@ end)
 
 local slfButton = Instance.new("TextButton")
 slfButton.Size = UDim2.new(0, 105, 0, 40)
-slfButton.Position = UDim2.new(0, 185, 0, 35)
+slfButton.Position = UDim2.new(0, 176, 0, 30)
 slfButton.Text = "Slapple Farm: OFF"
 slfButton.BackgroundTransparency = 1
 slfButton.TextColor3 = Color3.fromRGB(255, 255, 255)
