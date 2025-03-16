@@ -769,7 +769,7 @@ slfButton.Parent = frame2  -- Make sure `frame2` exists before running this scri
 
 -- Create UIStroke for the rainbow effect
 local slfButtonStroke = Instance.new("UIStroke")
-isfButtonStroke.Parent = gdButton
+isfButtonStroke.Parent = slfButton
 slfButtonStroke.Thickness = 2
 slfButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
 slfButtonStroke.Transparency = 0
@@ -787,26 +787,6 @@ end
 
 coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
 
-local slappleFarmEnabled = false
-
-local function toggleSlappleFarm()
-    slappleFarmEnabled = not slappleFarmEnabled
-    slappleButton.Text = slappleFarmEnabled and "Slapple Farm: ON" or "Slapple Farm: OFF"
-
-    while slappleFarmEnabled do
-        for i, v in ipairs(workspace.Arena.island5.Slapples:GetDescendants()) do
-            if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") 
-            and game.Players.LocalPlayer.Character:FindFirstChild("entered") 
-            and v.Name == "Glove" and v:FindFirstChildWhichIsA("TouchTransmitter") then
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
-            end
-        end
-        task.wait(0.2) -- Slight delay to prevent overload
-    end
-end
-
-slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 
 textLabel3.Rotation = 90
 local ZIndex = [[
