@@ -1129,26 +1129,6 @@ end
 
 coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
 
-local farmEnabled = false
-local orbButton = script.Parent -- Make sure the script is inside your button
-
-local function toggleFarm()
-    farmEnabled = not farmEnabled
-    orbButton.Text = farmEnabled and "Farm Jet and Phase: ON" or "Farm Jet and Phase: OFF"
-
-    while farmEnabled do
-        for _, v in pairs(game.Workspace:GetChildren()) do
-            if (v.Name == "JetOrb" or v.Name == "PhaseOrb") and v:FindFirstChild("TouchInterest") then
-                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 0)
-                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 1)
-            end
-        end
-        task.wait()
-    end
-end
-
-orbButton.MouseButton1Click:Connect(toggleFarm)
-
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
