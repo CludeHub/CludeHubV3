@@ -595,7 +595,7 @@ local slapEvents = {
     ["Jet"] = "JetHit",
     ["Phase"] = "PhaseH",
     ["Obby"] = "GeneralHit",
-    ["Icecate"] = "GeneralHit"
+    ["Iceskate"] = "GeneralHit"
 }
 
 local slapAuraEnabled = false
