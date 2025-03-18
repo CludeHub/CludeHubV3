@@ -570,6 +570,7 @@ local slapEvents = {
     ["Magnet"] = "MagnetHIT",
     ["Fort"] = "Fort",
     ["General"] = "GeneralHit",
+    ["Golden"] = "GoldenHit",
     ["Ghost"] = "GhostHit",
     ["Dice"] = "DiceHit",
     ["Bull"] = "BullHit",
