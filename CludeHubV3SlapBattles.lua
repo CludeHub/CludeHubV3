@@ -520,31 +520,71 @@ end
 -- Start the rainbow effect on the TextButton's border
 coroutine.wrap(setRainbowMainButtonBorder)()
 
--- Create the TextButton
-local arButton = Instance.new("TextButton")
-arButton.Size = UDim2.new(0, 105, 0, 40)
-arButton.Position = UDim2.new(0, 159, 0, 30)
-arButton.Text = "Slap Aura: OFF"
-arButton.BackgroundTransparency = 1
-arButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-arButton.TextSize = 15.9
-arButton.Visible = false
-arButton.TextStrokeTransparency = 0.5
-arButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+local tgfframe1 = Instance.new("Frame")
+tgfframe1.Size = UDim2.new(0, 27, 0, 27)
+tgfframe1.Position = UDim2.new(0, 462, 0, 38)
+tgfframe1.BackgroundTransparency = 1
+tgfframe1.Parent = frame2
+tgfframe1.Visible = false
+
+local tgfuicorner1 = Instance.new("UICorner")
+tgfuicorner1.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
+tgfuicorner1.Parent = tgfframe1
+
+local tgfUIStroke1 = Instance.new("UIStroke")
+tgfUIStroke1.Thickness = 3
+tgfUIStroke1.Parent = tgfframe1
+
+-- Rainbow effect using RenderStepped for smooth updates
+local function setRainbowOrbButtonBorder()
+    while true do
+        for i = 0, 1, 0.01 do
+            local hue = tick() * 0.1 + i  -- Fast rainbow effect
+            tgfUIStroke1.Color = Color3.fromHSV(hue % 1, 1, 1)
+            wait(0.05)  -- Faster color change speed
+        end
+    end
+end
+
+coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
+
+local tgfframe2 = Instance.new("Frame")
+tgfframe2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+tgfframe2.Size = UDim2.new(0, 27, 0, 27)
+tgfframe2.Position = UDim2.new(0, 0, 0, 0)
+tgfframe2.BackgroundTransparency = 0
+tgfframe2.Parent = tgfframe1
+tgfframe2.Visible = false
+
+local tgfuicorner2 = Instance.new("UICorner")
+tgfuicorner2.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
+tgfuicorner2.Parent = tgfframe2
+
+-- Create the TextLabel
+local arButtonL = Instance.new("TextButton")
+arButtonL.Size = UDim2.new(0, 105, 0, 40)
+arButtonL.Position = UDim2.new(0, 134, 0, 30)
+arButtonL.Text = "Slap Aura"
+arButtonL.BackgroundTransparency = 1
+arButtonL.TextColor3 = Color3.fromRGB(255, 255, 255)
+arButtonL.TextSize = 15.9
+arButtonL.Visible = false
+arButtonL.TextStrokeTransparency = 0.5
+arButtonL.Parent = frame2  -- Make sure `frame2` exists before running this script
 
 -- Create UIStroke for the rainbow effect
-local arButtonStroke = Instance.new("UIStroke")
-arButtonStroke.Parent = arButton
-arButtonStroke.Thickness = 2
-arButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-arButtonStroke.Transparency = 0
+local arButtonLStrokeL = Instance.new("UIStroke")
+arButtonLStrokeL.Parent = arButtonL
+arButtonLStrokeL.Thickness = 2
+arButtonLStrokeL.LineJoinMode = Enum.LineJoinMode.Round
+arButtonLStrokeL.Transparency = 0
 
 -- Rainbow effect using RenderStepped for smooth updates
 local function setRainbowMainButtonBorder()
     while true do
         for i = 0, 1, 0.01 do
             local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            arButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
+            arButtonLStrokeL.Color = Color3.fromHSV(hue % 1, 1, 1)
             wait(0.05)  -- Faster color change speed
         end
     end
@@ -599,7 +639,11 @@ local slapEvents = {
     ["Iceskate"] = "GeneralHit",
     ["Booster"] = "GeneralHit",
     ["Ping Pong"] = "GeneralHit",
-    ["Baller"] = "GeneralHit"
+    ["Baller"] = "GeneralHit",
+    ["Chain"] = "GeneralHit",
+    ["Spy"] = "SpyHit",
+    ["Orbit"] = "Orbihit",
+    ["Charge"] = "GeneralHit"
 }
 
 local slapAuraEnabled = false
@@ -660,12 +704,10 @@ end
 local function toggleSlapAura()
     slapAuraEnabled = not slapAuraEnabled
     if slapAuraEnabled then
-        arButton.Position = UDim2.new(0, 154, 0, 30)
-        arButton.Text = "Slap Aura: ON"
+        tgfframe2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
-        arButton.Position = UDim2.new(0, 159, 0, 30)
-        arButton.Text = "Slap Aura: OFF"
+        tgfframe2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
         task.cancel(slapAuraLoop)
     end
 end
@@ -674,7 +716,7 @@ end
 player.CharacterAdded:Connect(updateCharacter)
 
 -- Connect the Button Click to the Function
-arButton.MouseButton1Click:Connect(toggleSlapAura)
+arButtonL.MouseButton1Click:Connect(toggleSlapAura)
 
 -- Initialize Character on First Run
 updateCharacter()
@@ -787,7 +829,7 @@ end)
 local slfButton = Instance.new("TextButton")
 slfButton.Size = UDim2.new(0, 105, 0, 40)
 slfButton.Position = UDim2.new(0, 176, 0, 30)
-slfButton.Text = "Slapple Farm: OFF"
+slfButton.Text = "Slapple Farm"
 slfButton.BackgroundTransparency = 1
 slfButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 slfButton.TextSize = 15.9
@@ -1132,7 +1174,7 @@ end)
 local orbButton = Instance.new("TextButton")
 orbButton.Size = UDim2.new(0, 150, 0, 40)
 orbButton.Position = UDim2.new(0, 185, 0, 102)  -- Change position as needed
-orbButton.Text = "Farm Jet and Phase: OFF"
+orbButton.Text = "Farm Jet and Phase"
 orbButton.BackgroundTransparency = 1
 orbButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 orbButton.TextSize = 15.9
@@ -1230,7 +1272,7 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 mainButton.MouseButton1Click:Connect(function()
-arButton.Visible = false
+arButtonL.Visible = false
 gdButton.Visible = false
 clButton.Visible = true
 infButton.Visible = true
@@ -1239,10 +1281,13 @@ chainBadgeButton.Visible = false
 eludeButton.Visible = false
 trapBadgeButton.Visible = false
 orbButton.Visible = false
+tgfframe2.Visible = false
+tgfframe1.Visible = false
+tgfframe3.Visible = false
 end)
 
 cmButton.MouseButton1Click:Connect(function()
-arButton.Visible = true
+arButtonL.Visible = true
 gdButton.Visible = true
 clButton.Visible = false
 infButton.Visible = false
@@ -1251,10 +1296,13 @@ chainBadgeButton.Visible = false
 eludeButton.Visible = false
 trapBadgeButton.Visible = false
 orbButton.Visible = false
+tgfframe2.Visible = true
+tgfframe1.Visible = true
+tgfframe3.Visible = true
 end)
 
 msButton.MouseButton1Click:Connect(function()
-arButton.Visible = false
+arButtonL.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
@@ -1263,10 +1311,13 @@ chainBadgeButton.Visible = false
 eludeButton.Visible = false
 trapBadgeButton.Visible = false
 orbButton.Visible = false
+tgfframe2.Visible = false
+tgfframe1.Visible = false
+tgfframe3.Visible = false
 end)
 
 bdButton.MouseButton1Click:Connect(function()
-arButton.Visible = false
+arButtonL.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
@@ -1275,10 +1326,13 @@ chainBadgeButton.Visible = true
 eludeButton.Visible = true
 trapBadgeButton.Visible = true
 orbButton.Visible = true
+tgfframe2.Visible = false
+tgfframe1.Visible = false
+tgfframe3.Visible = false
 end)
 
 plButton.MouseButton1Click:Connect(function()
-arButton.Visible = false
+arButtonL.Visible = false
 gdButton.Visible = false
 clButton.Visible = false
 infButton.Visible = false
@@ -1287,4 +1341,7 @@ chainBadgeButton.Visible = false
 eludeButton.Visible = false
 trapBadgeButton.Visible = false
 orbButton.Visible = false
+tgfframe2.Visible = false
+tgfframe1.Visible = false
+tgfframe3.Visible = false
 end)
