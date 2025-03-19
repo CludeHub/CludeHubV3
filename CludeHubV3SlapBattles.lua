@@ -1232,6 +1232,18 @@ Tab2:AddToggle({
     end    
 })
 
+if game.Workspace:FindFirstChild("NoChanged") == nil then
+local NoChanged = Instance.new("BoolValue", workspace)
+NoChanged.Name = "NoChanged"
+end
+Tab5:AddToggle({
+	Name = "All Toggle Anti",
+	Default = false,
+	Callback = function(Value)
+game.Workspace.NoChanged.Value = Value
+	end    
+})
+
 AR = Tab5:AddToggle({
                     Name = "Anti Ragdoll (Resets character)",
                     Default = false,
@@ -1628,5 +1640,81 @@ OrionLib:MakeNotification({Name = "Error",Content = "You need enter erane, or 7 
 wait(0.05)
 AutoTycoon:Set(false)
 end
+	end    
+})
+
+Tab2:AddToggle({
+	Name = "ESP Glove",
+	Default = false,
+	Callback = function(Value)
+_G.GloveESP = Value
+if _G.GloveESP == false then
+for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Character and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("GloveEsp") then
+ v.Character.Head.GloveEsp:Destroy()
+                end
+            end
+end
+while _G.GloveESP do
+for i,v in ipairs(game.Players:GetChildren()) do
+if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
+if v.Character.Head:FindFirstChild("GloveEsp") and v.Character.Head.GloveEsp:FindFirstChild("TextLabel") and v.Character.Head.GloveEsp.TextLabel.TextColor3 ~= _G.ColorESP then
+v.Character.Head.GloveEsp.TextLabel.TextColor3 = _G.ColorESP
+end
+if v.Character.Head:FindFirstChild("GloveEsp") and v.Character.Head.GloveEsp:FindFirstChild("TextLabel") and v.Character.Head.GloveEsp.TextLabel.Text ~= "Glove [ "..v.leaderstats.Glove.Value.." ]" then
+v.Character.Head.GloveEsp.TextLabel.Text = "Glove [ "..v.leaderstats.Glove.Value.." ]"
+end
+if v.Character.Head:FindFirstChild("GloveEsp") == nil then
+GloveEsp = Instance.new("BillboardGui", v.Character.Head)
+GloveEsp.Adornee = v.Character.Head
+GloveEsp.Name = "GloveEsp"
+GloveEsp.Size = UDim2.new(0, 100, 0, 150)
+GloveEsp.StudsOffset = Vector3.new(0, 1, 0)
+GloveEsp.AlwaysOnTop = true
+GloveEsp.StudsOffset = Vector3.new(0, 3, 0)
+GloveEspText = Instance.new("TextLabel", GloveEsp)
+GloveEspText.BackgroundTransparency = 1
+GloveEspText.Size = UDim2.new(0, 100, 0, 100)
+GloveEspText.TextSize = 20
+GloveEspText.Font = Enum.Font.FredokaOne
+GloveEspText.TextColor3 = _G.ColorESP
+GloveEspText.TextStrokeTransparency = 0.5
+GloveEspText.Text = "Glove [ "..v.leaderstats.Glove.Value.." ]"
+                end
+            end
+            end
+task.wait()
+end
+	end    
+})
+
+Tab3:AddTextbox({
+	Name = "Auto Change Nametag",
+	Default = "Nametag",
+	TextDisappear = false,
+	Callback = function(Value)
+game.Workspace.NametagChanged.Value = Value
+	end	  
+})
+
+Tab3:AddToggle({
+	Name = " Auto Change Nametag",
+	Default = false,
+	Callback = function(Value)
+	AutoChangeNameTag = Value
+        if AutoChangeNameTag == true and game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true) then
+        game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
+end
+workspace.NametagChanged.Changed:Connect(function()
+        if AutoChangeNameTag == true and game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true) then
+        game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
+end
+end)
+            game.Players.LocalPlayer.CharacterAdded:Connect(function()
+                if AutoChangeNameTag == true then
+repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true)
+                game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
+                end
+            end)
 	end    
 })
