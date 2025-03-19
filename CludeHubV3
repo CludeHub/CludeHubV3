@@ -2,24 +2,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-if _G.AutoExecuter == true then
-local ScriptSpawnSlap = queueonteleport or queue_on_teleport
-if ScriptSpawnSlap then
-    ScriptSpawnSlap([[
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-repeat wait() until game.Players.LocalPlayer
-wait(0.25)
-_G.AutoExecuter = true
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Slap_Battles/main/Slap_Battles.lua"))()
-    ]])
-else
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "You cannot auto execute",Icon = "rbxassetid://7733658504",Duration = 5})
-end
-end
-
-game:GetService("GuiService"):ClearError()
+GuiService"):ClearError()
 
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Giangplay/Script/main/Orion_Library_PE_V2.lua")))()
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
@@ -32,39 +15,7 @@ local bypass;
     bypass = hookmetamethod(game, "__namecall", function(method, ...) 
         if getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.Ban then
             return
-        elseif getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.AdminGUI then
-            return
-        elseif getnamecallmethod() == "FireServer" and method == game.ReplicatedStorage.WalkSpeedChanged then
-            return
-        end
-        return bypass(method, ...)
-    end)
-
----Potion---
-
-_G.GetPotion = {
-	["Grug"] = {"Mushroom"},
-	["idIot"] = {"Cake Mix"},
-	["Nightmare"] = {"Dark Root","Dark Root","Dark Root"},
-	["Confusion"] = {"Red Crystal","Blue Crystal","Glowing Mushroom"},
-	["Power"] = {"Dire Flower","Red Crystal","Wild Vine"},
-	["Paralyzing"] = {"Plane Flower","Plane Flower"},
-	["Haste"] = {"Autumn Sprout","Jade Stone"},
-	["Invisibility"] = {"Hazel Lily","Hazel Lily","Blue Crystal"},
-	["Explosion"] = {"Red Crystal","Fire Flower","Fire Flower"},
-	["Invincible"] = {"Elder Wood","Mushroom","Mushroom"},
-	["Toxic"] = {"Dark Root","Dark Root","Blood Rose","Red Crystal"},
-	["Freeze"] = {"Winter Rose","Winter Rose","Wild Vine","Blue Crystal","Glowing Mushroom"},
-	["Feather"] = {"Mushroom","Hazel Lily"},
-	["Speed"] = {"Mushroom","Mushroom","Plane Flower","Hazel Lily","Blue Crystal"},
-	["Lethal"] = {"Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Blood Rose","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root","Dark Root"},
-	["Slow"] = {"Mushroom","Mushroom","Blue Crystal","Blue Crystal","Jade Stone","Plane Flower"},
-	["Antitoxin"] = {"Blue Crystal","Glowing Mushroom","Plane Flower","Plane Flower","Elder Wood"},
-	["Corrupted Vine"] = {"Wild Vine","Wild Vine","Wild Vine","Blood Rose","Dark Root","Elder Wood","Jade Stone"},
-	["Field"] = {"Hazel Lily","Plane Flower","Plane Flower"}
-}
-
----GetSome---
+        ---
 
 if not game.ReplicatedStorage:FindFirstChild("robAnimation") then
 local robAnim = Instance.new("Animation")
