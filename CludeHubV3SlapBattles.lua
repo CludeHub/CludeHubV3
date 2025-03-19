@@ -1623,44 +1623,89 @@ Tab2:AddToggle({
 	Name = "ESP Glove",
 	Default = false,
 	Callback = function(Value)
-_G.GloveESP = Value
-if _G.GloveESP == false then
-for i, v in ipairs(game.Players:GetChildren()) do
-                if v.Character and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("GloveEsp") then
- v.Character.Head.GloveEsp:Destroy()
-                end
-            end
-end
-while _G.GloveESP do
-for i,v in ipairs(game.Players:GetChildren()) do
-if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
-if v.Character.Head:FindFirstChild("GloveEsp") and v.Character.Head.GloveEsp:FindFirstChild("TextLabel") and v.Character.Head.GloveEsp.TextLabel.TextColor3 ~= _G.ColorESP then
-v.Character.Head.GloveEsp.TextLabel.TextColor3 = _G.ColorESP
-end
-if v.Character.Head:FindFirstChild("GloveEsp") and v.Character.Head.GloveEsp:FindFirstChild("TextLabel") and v.Character.Head.GloveEsp.TextLabel.Text ~= "Glove [ "..v.leaderstats.Glove.Value.." ]" then
-v.Character.Head.GloveEsp.TextLabel.Text = "Glove [ "..v.leaderstats.Glove.Value.." ]"
-end
-if v.Character.Head:FindFirstChild("GloveEsp") == nil then
-GloveEsp = Instance.new("BillboardGui", v.Character.Head)
-GloveEsp.Adornee = v.Character.Head
-GloveEsp.Name = "GloveEsp"
-GloveEsp.Size = UDim2.new(0, 100, 0, 150)
-GloveEsp.StudsOffset = Vector3.new(0, 1, 0)
-GloveEsp.AlwaysOnTop = true
-GloveEsp.StudsOffset = Vector3.new(0, 3, 0)
-GloveEspText = Instance.new("TextLabel", GloveEsp)
-GloveEspText.BackgroundTransparency = 1
-GloveEspText.Size = UDim2.new(0, 100, 0, 100)
-GloveEspText.TextSize = 20
-GloveEspText.Font = Enum.Font.FredokaOne
-GloveEspText.TextColor3 = _G.ColorESP
-GloveEspText.TextStrokeTransparency = 0.5
-GloveEspText.Text = "Glove [ "..v.leaderstats.Glove.Value.." ]"
-                end
-            end
-            end
-task.wait()
-end
+		_G.GloveESP = Value
+
+		if not _G.GloveESP then
+			-- Remove ESP when toggled off
+			for _, v in ipairs(game.Players:GetChildren()) do
+				if v.Character then
+					if v.Character:FindFirstChild("Highlight") then
+						v.Character.Highlight:Destroy()
+					end
+					if v.Character:FindFirstChild("Head") then
+						local esp = v.Character.Head:FindFirstChild("GloveEsp")
+						if esp then esp:Destroy() end
+					end
+				end
+			end
+			return
+		end
+
+		-- ESP Loop
+		while _G.GloveESP do
+			for _, v in ipairs(game.Players:GetChildren()) do
+				if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") and v:FindFirstChild("leaderstats") then
+					local head = v.Character.Head
+					local gloveStat = v.leaderstats:FindFirstChild("Glove")
+					local humanoid = v.Character:FindFirstChildOfClass("Humanoid")
+
+					-- Create or update Highlight (Wallhack)
+					local highlight = v.Character:FindFirstChild("Highlight")
+					if not highlight then
+						highlight = Instance.new("Highlight", v.Character)
+						highlight.FillColor = Color3.new(1, 1, 1) -- White
+						highlight.OutlineColor = Color3.new(1, 1, 1)
+						highlight.FillTransparency = 0.5
+						highlight.OutlineTransparency = 0
+					end
+
+					-- Create or update ESP BillboardGui
+					local esp = head:FindFirstChild("GloveEsp")
+					if not esp then
+						esp = Instance.new("BillboardGui", head)
+						esp.Adornee = head
+						esp.Name = "GloveEsp"
+						esp.Size = UDim2.new(0, 100, 0, 150)
+						esp.StudsOffset = Vector3.new(0, 3, 0)
+						esp.AlwaysOnTop = true
+
+						-- Text Label for Glove
+						local gloveText = Instance.new("TextLabel", esp)
+						gloveText.BackgroundTransparency = 1
+						gloveText.Size = UDim2.new(0, 100, 0, 50)
+						gloveText.TextSize = 20
+						gloveText.Font = Enum.Font.FredokaOne
+						gloveText.TextStrokeTransparency = 0.5
+						gloveText.TextColor3 = _G.ColorESP
+						gloveText.Name = "GloveText"
+
+						-- Text Label for Health
+						local healthText = Instance.new("TextLabel", esp)
+						healthText.BackgroundTransparency = 1
+						healthText.Size = UDim2.new(0, 100, 0, 50)
+						healthText.Position = UDim2.new(0, 0, 0.5, 0)
+						healthText.TextSize = 18
+						healthText.Font = Enum.Font.FredokaOne
+						healthText.TextStrokeTransparency = 0.5
+						healthText.TextColor3 = Color3.new(1, 0, 0) -- Red for health
+						healthText.Name = "HealthText"
+					end
+
+					-- Update Glove Text
+					local gloveText = esp:FindFirstChild("GloveText")
+					if gloveText and gloveStat then
+						gloveText.Text = "Glove [ " .. gloveStat.Value .. " ]"
+					end
+
+					-- Update Health Text
+					local healthText = esp:FindFirstChild("HealthText")
+					if healthText and humanoid then
+						healthText.Text = "Health: " .. math.floor(humanoid.Health) .. "/" .. math.floor(humanoid.MaxHealth)
+					end
+				end
+			end
+			task.wait(0.1) -- Prevents lag
+		end
 	end    
 })
 
