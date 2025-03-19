@@ -1694,3 +1694,41 @@ repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Name
             end)
 	end    
 })
+
+Tab4:AddButton({
+	Name = "Get Boxer Badge",
+	Callback = function()
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+local targetGameId = 7234087065
+local targetPosition = Vector3.new(4235.08, 3505.25, 266.56)
+
+local function teleportToPosition(character)
+    if not character then return end
+    local hrp = character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        hrp.CFrame = CFrame.new(targetPosition)
+        StarterGui:SetCore("SendNotification", {
+            Title = "Teleport Successful",
+            Text = "Click the Boxer Glove to Get the badge",
+            Duration = 10
+        })
+    end
+end
+
+-- Check if we're already in the target game
+if game.PlaceId == targetGameId then
+    -- Teleport immediately when in the correct game
+    if Players.LocalPlayer.Character then
+        teleportToPosition(Players.LocalPlayer.Character)
+    end
+    Players.LocalPlayer.CharacterAdded:Connect(teleportToPosition)
+else
+    -- Teleport to the target game if not already there
+    TeleportService:Teleport(targetGameId, Players.LocalPlayer)
+end
+      		print("button pressed")
+  	end    
+})
