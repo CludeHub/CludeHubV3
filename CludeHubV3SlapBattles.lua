@@ -13,6 +13,13 @@ end
 
 CreateSafeSpot()
 
+local part = Instance.new("Part")  
+part.Size = Vector3.new(2048, 15, 2048)  
+part.Position = Vector3.new(3420, 70, 3)  
+part.Anchored = true  
+part.CanCollide = false  
+part.Parent = game.Workspace  
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -1275,20 +1282,11 @@ end
                     end    
                 })
 
-local TournamentAntiVoid = Instance.new("Part")
-TournamentAntiVoid.Name = "TAntiVoid"
-TournamentAntiVoid.Size = Vector3.new(2048, 15, 2048)
-TournamentAntiVoid.Position = Vector3.new(3420, 70, 3)
-TournamentAntiVoid.CanCollide = false
-TournamentAntiVoid.Transparency = 1
-TournamentAntiVoid.Anchored = true
-TournamentAntiVoid.Parent = game.Workspace -- Parent it to the workspace
-
 AV = Tab5:AddToggle({
     Name = "Anti Void",
     Default = false,
     Callback = function(Value)
-        TournamentAntiVoid.CanCollide = Value
+        part.CanCollide = Value
     end    
 })
 
