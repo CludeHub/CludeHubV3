@@ -22,7 +22,6 @@ TournamentAntiVoid.CanCollide = false
 TournamentAntiVoid.Transparency = 1
 TournamentAntiVoid.Anchored = true
 end
-end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
