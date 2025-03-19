@@ -1283,7 +1283,7 @@ end
                     end    
                 })
 
-AB = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Brazil",
                     Default = false,
                     Callback = function(Value)
@@ -1299,7 +1299,7 @@ end
                     end    
                 })
 
-               ACOD = Tab5:AddToggle({
+               Tab5:AddToggle({
                     Name = "Anti Cube of Death",
                     Default = false,
                     Callback = function(Value)
@@ -1311,7 +1311,7 @@ if Value == true then
                     end    
                 })
 
-AT = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Timestop",
                     Default = false,
                     Callback = function(Value)
@@ -1327,7 +1327,7 @@ end
                     end    
                 })
 
-               AS = Tab5:AddToggle({
+               Tab5:AddToggle({
                     Name = "Anti Squid",
                     Default = false,
                     Callback = function(Value)
@@ -1344,7 +1344,7 @@ end
                     end    
                 })
 
-AC = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Conveyor",
                     Default = false,
                     Callback = function(Value)
@@ -1352,7 +1352,7 @@ game.Players.LocalPlayer.PlayerScripts.ConveyorVictimized.Disabled = Value
                     end    
                 })
 
-ABK = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Brick",
                     Default = false,
                     Callback = function(Value)
@@ -1368,7 +1368,7 @@ end
                     end    
                 })
 
-               AN = Tab5:AddToggle({
+               Tab5:AddToggle({
                     Name = "Anti Null",
                     Default = false,
                     Callback = function(Value)
@@ -1384,7 +1384,7 @@ end
                     end    
                 })
 
-ARD = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti [REDACTED]",
                     Default = false,
                     Callback = function(Value)
@@ -1392,7 +1392,7 @@ game.Players.LocalPlayer.PlayerScripts.Well.Disabled = Value
                     end    
                 })
 
-               AZ = Tab5:AddToggle({
+               Tab5:AddToggle({
                     Name = "Anti Za Hando",
                     Default = false,
                     Callback = function(Value)
@@ -1408,7 +1408,7 @@ task.wait()
                     end    
                 })
 
-ARR = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Reaper",
                     Default = false,
                     Callback = function(Value)
@@ -1425,7 +1425,7 @@ end
                     end    
                 })
 
-               AP = Tab3:AddToggle({
+               Tab3:AddToggle({
                     Name = "Anti Pusher",
                     Default = false,
                     Callback = function(Value)
@@ -1441,7 +1441,7 @@ end
                     end    
                 })
 
-ABR = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Booster",
                     Default = false,
                     Callback = function(Value)
@@ -1457,7 +1457,7 @@ end
                     end    
                 })
 
-               AM = Tab5:AddToggle({
+               Tab5:AddToggle({
                     Name = "Anti Mail",
                     Default = false,
                     Callback = function(Value)
@@ -1472,7 +1472,7 @@ end
                     end    
                 })
 
-ASN = Tab5:AddToggle({
+Tab5:AddToggle({
                     Name = "Anti Stun",
                     Default = false,
                     Callback = function(Value)
@@ -1486,7 +1486,7 @@ end
                     end    
                 })
 
-               AMC = Tab5:AddToggle({
+                Tab5:AddToggle({
                     Name = "Anti Megarock/Custom",
                     Default = false,
                     Callback = function(Value)
