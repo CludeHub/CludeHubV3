@@ -1197,11 +1197,11 @@ tgfframe12.Visible = false
 
 local tgfuicorner12 = Instance.new("UICorner")
 tgfuicorner12.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner12.Parent = tgfframe1
+tgfuicorner12.Parent = tgfframe12
 
 local tgfUIStroke12 = Instance.new("UIStroke")
 tgfUIStroke12.Thickness = 3
-tgfUIStroke12.Parent = tgfframe1
+tgfUIStroke12.Parent = tgfframe12
 
 -- Rainbow effect using RenderStepped for smooth updates
 local function setRainbowOrbButtonBorder()
@@ -1226,7 +1226,7 @@ tgfframe23.Visible = false
 
 local tgfuicorner23 = Instance.new("UICorner")
 tgfuicorner23.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner23.Parent = tgfframe2
+tgfuicorner23.Parent = tgfframe12
 
 textLabel3.Rotation = 90
 local ZIndex = [[
