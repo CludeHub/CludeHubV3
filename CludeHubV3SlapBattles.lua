@@ -1116,6 +1116,24 @@ local function StartTeleportLoop()
     end
 end
 
+-- Function to auto-enter the arena
+local function AutoEnterArena()
+    while true do
+        local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local head = char:FindFirstChild("Head")
+        local teleportPart = workspace.Lobby:FindFirstChild("Teleport1")  -- Ensure this is the correct teleporter name
+
+        if char and not char:FindFirstChild("entered") and teleportPart and head then
+            firetouchinterest(head, teleportPart, 0)
+            firetouchinterest(head, teleportPart, 1)
+        end
+        wait(1)  -- Prevent excessive looping
+    end
+end
+
+-- Start Auto-Enter Arena in a separate thread
+task.spawn(AutoEnterArena)
+
 -- Restart teleport loop after respawn
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(1)  -- Wait for character to load
@@ -1125,8 +1143,8 @@ LocalPlayer.CharacterAdded:Connect(function()
 end)
 
 -- UI Toggle Button
-Tab2:AddToggle({
-    Name = "Slap Farm (Teleport to random player)",
+Tab2.AddToggle({
+    Name = "Slap Farm (Teleport to random player)",  
     Default = false,
     Callback = function(Value)
         TeleportActive = Value
