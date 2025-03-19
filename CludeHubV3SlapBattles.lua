@@ -1260,6 +1260,49 @@ end
                     end    
                 })
 
+local AntiVoidEnabled = false
+local Platform
+
+local function CreatePlatform()
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(10, 1, 10)
+    part.Transparency = 1
+    part.Anchored = true
+    part.CanCollide = true
+    part.Parent = game.Workspace
+    return part
+end
+
+local function UpdatePlatform()
+    while AntiVoidEnabled do
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local root = player.Character.HumanoidRootPart
+            Platform.Position = Vector3.new(root.Position.X, root.Position.Y - 5, root.Position.Z)
+        end
+        task.wait(0.1)
+    end
+end
+
+Tab5:AddToggle({
+    Name = "Anti Void",
+    Default = false,
+    Callback = function(Value)
+        AntiVoidEnabled = Value
+        if AntiVoidEnabled then
+            if not Platform then
+                Platform = CreatePlatform()
+            end
+            task.spawn(UpdatePlatform)
+        else
+            if Platform then
+                Platform:Destroy()
+                Platform = nil
+            end
+        end
+    end    
+})
+
 ADB = Tab5:AddToggle({
                     Name = "Anti Death Barriers",
                     Default = false,
