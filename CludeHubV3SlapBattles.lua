@@ -1454,3 +1454,179 @@ task.wait()
 end
                     end    
                 })
+
+AntiSbeve = Tab5:AddToggle({
+	Name = "Anti Sbeve",
+	Default = false,
+	Callback = function(Value)
+		_G.AntiSbeve = Value
+while _G.AntiSbeve do
+for _,v in pairs(game.Players:GetChildren()) do
+                    if v ~= game.Players.LocalPlayer and v.Character:FindFirstChild("stevebody") then
+                        v.Character:FindFirstChild("stevebody").CanTouch = false
+                        v.Character:FindFirstChild("stevebody").CanQuery = false
+                        v.Character:FindFirstChild("stevebody").CanCollide = false
+                    end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiBallBaller = Tab5:AddToggle({
+	Name = "Anti Ball Baller",
+	Default = false,
+	Callback = function(Value)
+		_G.AntiBallBaller = Value
+while _G.AntiBallBaller do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "ClonedBall" then
+                        v.CanTouch = false
+                        v.CanCollide = true
+                    end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiBus = Tab5:AddToggle({
+	Name = "Anti Bus",
+	Default = false,
+	Callback = function(Value)
+		_G.AntiBus = Value
+while _G.AntiBus do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "BusModel" then
+                        v.CanTouch = false
+                    end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiLure = Tab5:AddToggle({
+	Name = "Anti Lure",
+	Default = false,
+	Callback = function(Value)
+		_G.AntiLure = Value
+while _G.AntiLure do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if string.find(v.Name, "_lure") and v:FindFirstChild("Root") and v:FindFirstChild("watercircle") then
+                        v.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                        v.watercircle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiJack = Tab5:AddToggle({
+	Name = "Anti Hallow - Jack",
+	Default = false,
+	Callback = function(Value)
+game.Players.LocalPlayer.PlayerScripts.HallowJackAbilities.Disabled = Value
+	end    
+})
+
+AntiNightmareAndPotion = Tab5:AddToggle({
+	Name = "Anti Nightmare",
+	Default = false,
+	Callback = function(Value)
+        if Value == true then
+        game.Players.LocalPlayer.PlayerScripts.VFXListener.NightmareEffect.Parent = game.Lighting
+    else
+        game.Players.LocalPlayer.PlayerScripts.VFXListener.NightmareEffect.Parent = game.Players.LocalPlayer.PlayerScripts.VFXListener
+    end
+	end    
+})
+
+AntiIceAndPotion = Tab5:AddToggle({
+	Name = "Anti Ice",
+	Default = false,
+	Callback = function(Value)
+_G.AntiIce = Value
+while _G.AntiIce do
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v.Name == "Icecube" then
+                v:Destroy()
+                game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+                game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
+            end
+       end
+task.wait()
+end
+	end    
+})
+
+AntiBrick = Tab5:AddToggle({
+	Name = "Anti Brick",
+	Default = false,
+	Callback = function(Value)
+_G.AntiBrick = Value
+while _G.AntiBrick do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "Union" then
+                        v.CanTouch = false
+                        v.CanQuery = false
+                    end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiAttackPlank = Tab5:AddToggle({
+	Name = "Anti Plank",
+	Default = false,
+	Callback = function(Value)
+	_G.AntiPlank = Value
+while _G.AntiPlank do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if string.find(v.Name, "'s Plank") and v.ClassName == "Part" then
+                         v.CanTouch = false
+                         v.CanQuery = false
+                     end
+                end
+task.wait()
+end
+	end    
+})
+
+AntiBubble = Tab5:AddToggle({
+	Name = "Anti Bubble",
+	Default = false,
+	Callback = function(Value)
+		 _G.AntiBubble = Value
+while _G.AntiBubble do
+for i,v in pairs(workspace:GetChildren()) do
+                    if v.Name == "BubbleObject" and v:FindFirstChild("Weld") then
+                        v:FindFirstChild("Weld"):Destroy()
+                    end
+               end
+task.wait()
+end
+	end    
+})
+
+AutoTycoon = Tab4:AddToggle({
+	Name = "Get Tycoon",
+	Default = false,
+	Callback = function(Value)
+	   _G.AutoTpPlate = Value
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") and #game.Players:GetPlayers() >= 7 then
+while _G.AutoTpPlate do
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") and #game.Players:GetPlayers() >= 7 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.Plate.CFrame
+end
+task.wait()
+end
+elseif _G.AutoTpPlate == true then
+OrionLib:MakeNotification({Name = "Error",Content = "You need enter erane, or 7 people the server",Image = "rbxassetid://7733658504",Time = 5})
+wait(0.05)
+AutoTycoon:Set(false)
+end
+	end    
+})
