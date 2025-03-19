@@ -1287,7 +1287,11 @@ AV = Tab5:AddToggle({
                     Name = "Anti Void",
                     Default = false,
                     Callback = function(Value)
-TAntiVoid.CanCollide = Value
+if TAntiVoid = then
+TAntiVoid.CanCollide = false
+else
+TAntiVoid.CanCollide = true
+end
                     end    
                 })
 
