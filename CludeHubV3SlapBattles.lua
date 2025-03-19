@@ -1344,54 +1344,6 @@ end
                     end    
                 })
 
-Tab5:AddToggle({
-                    Name = "Anti Conveyor",
-                    Default = false,
-                    Callback = function(Value)
-game.Players.LocalPlayer.PlayerScripts.ConveyorVictimized.Disabled = Value
-                    end    
-                })
-
-Tab5:AddToggle({
-                    Name = "Anti Brick",
-                    Default = false,
-                    Callback = function(Value)
-AntiBrick = Value
-while AntiBrick do
-for i,v in pairs(game.Workspace:GetChildren()) do
-                    if v.Name == "Union" then
-                        v.CanTouch = false
-                    end
-                end
-task.wait()
-end
-                    end    
-                })
-
-               Tab5:AddToggle({
-                    Name = "Anti Null",
-                    Default = false,
-                    Callback = function(Value)
-AntiNull = Value
-while AntiNull do
-for i,v in pairs(game.Workspace:GetChildren()) do
-                    if v.Name == "Imp" and v:FindFirstChild("Body") then
-shared.gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v.Body,true)
-end
-end
-task.wait()
-end
-                    end    
-                })
-
-Tab5:AddToggle({
-                    Name = "Anti [REDACTED]",
-                    Default = false,
-                    Callback = function(Value)
-game.Players.LocalPlayer.PlayerScripts.Well.Disabled = Value
-                    end    
-                })
-
                Tab5:AddToggle({
                     Name = "Anti Za Hando",
                     Default = false,
