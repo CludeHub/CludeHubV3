@@ -1,3 +1,22 @@
+if workspace:FindFirstChild("Spot") == nil then
+local SafeSpot = Instance.new("Part", workspace)
+SafeSpot.Position = Vector3.new(math.random(-25000,-2500),500,math.random(-25000,-2500))
+SafeSpot.Name = "Spot"
+SafeSpot.Size = Vector3.new(500,50,500)
+SafeSpot.Anchored = true
+SafeSpot.Transparency = .5
+end
+if workspace:FindFirstChild("TAntiVoid") == nil then
+local TournamentAntiVoid = Instance.new("Part", workspace)
+TournamentAntiVoid.Name = "TAntiVoid"
+TournamentAntiVoid.Size = Vector3.new(2048, 15, 2048)
+TournamentAntiVoid.Position = Vector3.new(3420, 70, 3)
+TournamentAntiVoid.CanCollide = false
+TournamentAntiVoid.Transparency = 1
+TournamentAntiVoid.Anchored = true
+end
+end
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -1076,7 +1095,7 @@ end
 Tab3:AddDropdown({
 	Name = "Teleport",
 	Default = "",
-	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
+	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Castle", "Moai Island", "Slapple Island", "Plate"},
 	Callback = function(Value)
 if Value == "Safe spot" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Spot.CFrame * CFrame.new(0,28,0)
@@ -1088,8 +1107,8 @@ elseif Value == "Slapple Island" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.island5.Union.CFrame * CFrame.new(0,3.25,0)
 elseif Value == "Plate" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame * CFrame.new(0,2,0)
-elseif Value == "Tournament" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Battlearena.Arena.CFrame * CFrame.new(0,10,0)
+elseif Value == "Castle" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(258.57, 33.68, 193.06)
 elseif Value == "Default Arena" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(120,360,-3)
 elseif Value == "Lobby" then
@@ -1261,6 +1280,15 @@ end
                 })
 
 game.Workspace.dedBarrier.Position =  Vector3.new(15, -17, 41.5)
+AV = Tab5:AddToggle({
+                    Name = "Anti Void",
+                    Default = false,
+                    Callback = function(Value)
+game.Workspace.dedBarrier.CanCollide = Value
+game.Workspace.TAntiVoid.CanCollide = Value
+                    end    
+                })
+
 ADB = Tab5:AddToggle({
                     Name = "Anti Death Barriers",
                     Default = false,
