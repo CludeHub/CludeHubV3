@@ -895,7 +895,7 @@ end
   	end    
 })
 
-Tab4:7AddButton({
+Tab4:AddButton({
                     Name = "Get [REDACTED] (Needs 5k slaps)",
 Callback = function()
 if game.Players.LocalPlayer.leaderstats.Slaps.Value >= 5000 then
