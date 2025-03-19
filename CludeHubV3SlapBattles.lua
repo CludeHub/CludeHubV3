@@ -13,6 +13,17 @@ end
 
 CreateSafeSpot()
 
+if workspace:FindFirstChild("TAntiVoid") == nil then
+local TournamentAntiVoid = Instance.new("Part", workspace)
+TournamentAntiVoid.Name = "TAntiVoid"
+TournamentAntiVoid.Size = Vector3.new(2048, 15, 2048)
+TournamentAntiVoid.Position = Vector3.new(3420, 70, 3)
+TournamentAntiVoid.CanCollide = false
+TournamentAntiVoid.Transparency = 1
+TournamentAntiVoid.Anchored = true
+end
+end
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -1275,48 +1286,13 @@ end
                     end    
                 })
 
-local AntiVoidEnabled = false
-local Platform
-
-local function CreatePlatform()
-    local part = Instance.new("Part")
-    part.Size = Vector3.new(2048, 15, 2048)
-    part.Transparency = 1
-    part.Anchored = true
-    part.CanCollide = true
-    part.Parent = game.Workspace
-    return part
-end
-
-local function UpdatePlatform()
-    while AntiVoidEnabled do
-        local player = game.Players.LocalPlayer
-        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local root = player.Character.HumanoidRootPart
-            Platform.Position = Vector3.new(3420, 70, 3)
-        end
-        task.wait(0.1)
-    end
-end
-
-Tab5:AddToggle({
-    Name = "Anti Void",
-    Default = false,
-    Callback = function(Value)
-        AntiVoidEnabled = Value
-        if AntiVoidEnabled then
-            if not Platform then
-                Platform = CreatePlatform()
-            end
-            task.spawn(UpdatePlatform)
-        else
-            if Platform then
-                Platform:Destroy()
-                Platform = nil
-            end
-        end
-    end    
-})
+AV = Tab5:AddToggle({
+                    Name = "Anti Void",
+                    Default = false,
+                    Callback = function(Value)
+game.Workspace.TAntiVoid.CanCollide = Value
+                    end    
+                })
 
 ADB = Tab5:AddToggle({
                     Name = "Anti Death Barriers",
