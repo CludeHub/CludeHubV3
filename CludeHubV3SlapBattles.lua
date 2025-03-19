@@ -1,3 +1,18 @@
+local safespot
+
+local function CreateSafeSpot()
+    safespot = Instance.new("Part")
+    safespot.Name = "Safespot"
+    safespot.Size = Vector3.new(100, 2, 100)
+    safespot.Position = Vector3.new(math.random(-25000, -2500), 500, math.random(-25000, -2500))
+    safespot.Transparency = 0.3
+    safespot.Anchored = true
+    safespot.CanCollide = true
+    safespot.Parent = game.Workspace
+end
+
+CreateSafeSpot()
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -1079,7 +1094,7 @@ Tab3:AddDropdown({
 	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Castle", "Moai Island", "Slapple Island", "Plate"},
 	Callback = function(Value)
 if Value == "Safe spot" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Spot.CFrame * CFrame.new(0,28,0)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Safespot.CFrame * CFrame.new(0,28,0)
 elseif Value == "Arena" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
 elseif Value == "Moai Island" then
