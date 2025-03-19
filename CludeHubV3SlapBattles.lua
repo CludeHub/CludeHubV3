@@ -11,14 +11,7 @@ local function CreateSafeSpot()
     safespot.Parent = game.Workspace
 end
 
-CreateSafeSpot()
-
-local part = Instance.new("Part")  
-part.Size = Vector3.new(2048, 15, 2048)  
-part.Position = Vector3.new(3420, 70, 3)  
-part.Anchored = true  
-part.CanCollide = false  
-part.Parent = game.Workspace  
+CreateSafeSpot()  
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
@@ -1282,13 +1275,31 @@ end
                     end    
                 })
 
-AV = Tab5:AddToggle({
-    Name = "Anti Void",
-    Default = false,
-    Callback = function(Value)
-        part.CanCollide = Value
-    end    
+Tab5:AddToggle({
+	Name = "Anti Void",
+	Default = false,
+	Callback = function(Value)
+if Value == true then
+            for i,v in pairs(game.Workspace:GetDescendants()) do
+                if v.Name == "dedBarrier"  or v.Name == "ArenaBarrier" or v.Name == "DEATHBARRIER" or v.Name == "DEATHBARRIER2" then               
+                    v.CanCollide = true
+                    v.Material = "ForceField"
+                    v.Color = Color3.new(255,255,255)
+                    v.Transparency = .9
+                end  
+            end 
+        else
+            for i,v in pairs(game.Workspace:GetDescendants()) do
+                if v.Name == "dedBarrier"  or v.Name == "ArenaBarrier" or v.Name == "DEATHBARRIER" or v.Name == "DEATHBARRIER2" then               
+                    v.CanCollide = false
+                    v.Transparency = 1
+                end  
+            end
+        end
+		print(Value)
+	end    
 })
+
 
 ADB = Tab5:AddToggle({
                     Name = "Anti Death Barriers",
@@ -1805,4 +1816,82 @@ else
 end
       		print("button pressed")
   	end    
+})
+
+Tab3:AddSlider({
+	Name = "Speed Cloud",
+	Min = 0.1,
+	Max = 1.2,
+	Default = 0.5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 0.1,
+	ValueName = "Speed",
+	Callback = function(Value)
+		_G.SetSpeedCloud = Value
+	end    
+})
+
+CloudSpeed = Tab3:AddToggle({
+	Name = "Auto Set Cloud Speed",
+	Default = false,
+	Callback = function(Value)
+_G.CloudSpeed = Value
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Cloud" then
+while _G.CloudSpeed and game.Players.LocalPlayer.leaderstats.Glove.Value == "Cloud" do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("BodyVelocity") then
+                        v.BodyVelocity.Velocity = v.BodyVelocity.Velocity * _G.SetSpeedCloud
+                    end
+               end
+task.wait(0.10)
+end
+elseif _G.CloudSpeed == true then
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Cloud equipped.",Image = "rbxassetid://7733658504",Time = 5})
+wait(0.05)
+CloudSpeed:Set(false)
+end
+	end    
+})
+
+FullKinetic = Tab3:AddToggle({
+	Name = "Auto Full Kinetic",
+	Default = false,
+	Callback = function(Value)
+FullKineticSpam = Value
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Kinetic" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+while FullKineticSpam and game.Players.LocalPlayer.leaderstats.Glove.Value == "Kinetic" do
+game.ReplicatedStorage.SelfKnockback:FireServer({["Force"] = 0,["Direction"] = Vector3.new(0,0.01,0)})
+task.wait()
+end
+elseif Value == true then
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Kinetic equipped.",Image = "rbxassetid://7733658504",Time = 5})
+wait(0.05)
+FullKinetic:Set(false)
+end
+	end    
+})
+
+Tab3:AddDropdown({
+	Name = "Ability Spam (All Glove)",
+	Default = "Null",
+	Options = {"Null", "Rhythm Explosion"},
+	Callback = function(Value)
+AbilitySpamAllGlove = Value
+	end    
+})
+
+Tab3:AddToggle({
+	Name = "Spam Ability (All Glove)",
+	Default = false,
+	Callback = function(Value)
+SpamAbility = Value
+while SpamAbility and AbilitySpamAllGlove == "Null" do
+game:GetService("ReplicatedStorage").NullAbility:FireServer()
+wait(0.1)
+end
+while SpamAbility and AbilitySpamAllGlove == "Rhythm Explosion" do
+game:GetService("ReplicatedStorage").rhythmevent:FireServer("AoeExplosion",0)
+task.wait()
+end
+	end    
 })
