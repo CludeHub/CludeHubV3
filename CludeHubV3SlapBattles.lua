@@ -13,15 +13,13 @@ end
 
 CreateSafeSpot()
 
-if workspace:FindFirstChild("TAntiVoid") == nil then
-local TournamentAntiVoid = Instance.new("Part", workspace)
+local TournamentAntiVoid = Instance.new("Part")
 TournamentAntiVoid.Name = "TAntiVoid"
 TournamentAntiVoid.Size = Vector3.new(2048, 15, 2048)
 TournamentAntiVoid.Position = Vector3.new(3420, 70, 3)
 TournamentAntiVoid.CanCollide = false
 TournamentAntiVoid.Transparency = 1
 TournamentAntiVoid.Anchored = true
-end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
@@ -1289,7 +1287,7 @@ AV = Tab5:AddToggle({
                     Name = "Anti Void",
                     Default = false,
                     Callback = function(Value)
-game.Workspace.TAntiVoid.CanCollide = Value
+TAntiVoid.CanCollide = Value
                     end    
                 })
 
