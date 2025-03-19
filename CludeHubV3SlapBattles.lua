@@ -1188,46 +1188,6 @@ end
 
 orbButton.MouseButton1Click:Connect(toggleFarm)
 
-local tgfframe12 = Instance.new("Frame")
-tgfframe12.Size = UDim2.new(0, 27, 0, 27)
-tgfframe12.Position = UDim2.new(0, 462, 0, 38)
-tgfframe12.BackgroundTransparency = 1
-tgfframe12.Parent = frame2
-tgfframe12.Visible = true
-
-local tgfuicorner12 = Instance.new("UICorner")
-tgfuicorner12.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner12.Parent = tgfframe12
-
-local tgfUIStroke12 = Instance.new("UIStroke")
-tgfUIStroke12.Thickness = 3
-tgfUIStroke12.Parent = tgfframe12
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowOrbButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            tgfUIStroke12.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
-
-local tgfframe23 = Instance.new("Frame")
-tgfframe23.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-tgfframe23.Size = UDim2.new(0, 27, 0, 27)
-tgfframe23.Position = UDim2.new(0, 0, 0, 0)
-tgfframe23.BackgroundTransparency = 0
-tgfframe23.Parent = tgfframe12
-tgfframe23.Visible = true
-
-local tgfuicorner23 = Instance.new("UICorner")
-tgfuicorner23.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner23.Parent = tgfframe23
-
 textLabel3.Rotation = 90
 local ZIndex = [[
 frame2.ZIndex = 2
@@ -1244,43 +1204,6 @@ msButton.ZIndex = 10
 bdButton.ZIndex = 10
 plButton.ZIndex = 10
 ]]
-
-local slappleFarmEnabled = false
-local tgfframe23 = game.Players.LocalPlayer.PlayerGui:FindFirstChild("tgfframe23") -- Adjust the path if necessary
-
--- Function to collect slapples
-local function collectSlapples()
-    while slappleFarmEnabled do
-        for _, v in ipairs(workspace.Arena.island5.Slapples:GetDescendants()) do
-            if game.Players.LocalPlayer.Character
-                and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                and game.Players.LocalPlayer.Character:FindFirstChild("entered")
-                and v:IsA("BasePart") -- Ensure it's a part
-                and v.Name == "Glove"
-                and v:FindFirstChildWhichIsA("TouchTransmitter") then
-
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
-                task.wait(0.05) -- Small delay for better detection
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 1)
-            end
-        end
-        task.wait(0.2) -- Prevents lag
-    end
-end
-
--- Function to toggle Slapple Farm and change frame color
-local function toggleSlappleFarm()
-    slappleFarmEnabled = not slappleFarmEnabled
-    if tgfframe23 then
-        tgfframe23.BackgroundColor3 = slappleFarmEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-    end
-    if slappleFarmEnabled then
-        task.spawn(collectSlapples)
-    end
-end
-
--- Connect the button click to toggle function
-slfButton.MouseButton1Click:Connect(toggleSlappleFarm)
 
 local TweenService = game:GetService("TweenService")
 local isOpen = false  -- Track if frame2 is open
