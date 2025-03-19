@@ -1226,7 +1226,7 @@ tgfframe23.Visible = false
 
 local tgfuicorner23 = Instance.new("UICorner")
 tgfuicorner23.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner23.Parent = tgfframe12
+tgfuicorner23.Parent = tgfframe23
 
 textLabel3.Rotation = 90
 local ZIndex = [[
