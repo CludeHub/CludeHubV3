@@ -469,3 +469,244 @@ task.wait()
 end
 end
                 })
+
+Tab4:AddButton({
+	Name = "Get Brazil badge",
+	Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Lobby.brazil.portal.CFrame
+                    end    
+                })
+
+Tab4:AddButton({
+	Name = "Get court evidence badge",
+	Callback = function()
+fireclickdetector(game.Workspace.Lobby.Scene.knofe.ClickDetector)
+                    end    
+                })
+
+Tab4:AddButton({
+	Name = "Get duck badge",
+	Callback = function()
+fireclickdetector(game.Workspace.Arena["default island"]["Rubber Ducky"].ClickDetector)
+                    end    
+                })
+
+Tab4:AddButton({
+	Name = "Get The Lone Orange badge",
+	Callback = function()
+fireclickdetector(game.Workspace.Arena.island5.Orange.ClickDetector)
+                    end    
+                })
+
+Tab4:AddButton({
+	Name = "Get Kinetic",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Stun" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+for i = 1,150 do
+game.ReplicatedStorage.SelfKnockback:FireServer({["Force"] = 0,["Direction"] = Vector3.new(0,0.01,0)})
+wait(0.05)
+end
+wait(1.5)
+repeat
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("rock") == nil and RandomPlayer.Character.Head:FindFirstChild("UnoReverseCard") == nil and RandomPlayer.Character.Humanoid.Health ~= 0
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame * CFrame.new(0,-20,0)
+wait(0.25)
+game.ReplicatedStorage.StunR:FireServer(game.Players.LocalPlayer.Character.Stun)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+wait(0.5)
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("EMPStunBadgeCounter") then
+OrionLib:MakeNotification({Name = "Error",Content = "Counter Stun [ "..game.Players.LocalPlayer.Character.EMPStunBadgeCounter.Value.." ]",Image = "rbxassetid://7733658504",Time = 5})
+end
+wait(12.3)
+until game.Players.LocalPlayer.Character:FindFirstChild("EMPStunBadgeCounter") and game.Players.LocalPlayer.Character.EMPStunBadgeCounter.Value >= 50
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Stun equipped, or you aren't in the arena",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end 
+})
+
+Tab4:AddButton({
+	Name = "Win Obby Pyscho",
+	Callback = function()
+if game.Workspace:FindFirstChild("RepressedMemoriesMap") ~= nil then
+OGL = game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StartPsychoEvent.CFrame
+OGL1 = game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StopPsychoEvent.CFrame
+wait(0.5)
+game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StartPsychoEvent.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+wait(2.5)
+game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StartPsychoEvent.CFrame = OGL
+wait(2.5)
+game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StopPsychoEvent.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+wait(2.5)
+game.Workspace.RepressedMemoriesMap.Psychokinesis.Triggers.StopPsychoEvent.CFrame = OGL1
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You have enter limbo [ don't show all, not work ]",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end 
+})
+
+Tab4:AddButton({
+	Name = "Get Bomb",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Warp" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2124919840) then
+OldTouch = workspace.DEATHBARRIER.CanTouch
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("Ragdolled").Value == false
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character:FindFirstChild("HumanoidRootPart").CFrame
+task.wait(0.2)
+game.ReplicatedStorage.WarpHt:FireServer(Target.Character:WaitForChild("HumanoidRootPart"))
+task.wait(0.15)
+if workspace.DEATHBARRIER.CanTouch == true then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").DEATHBARRIER.CFrame
+else
+workspace.DEATHBARRIER.CanTouch = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").DEATHBARRIER.CFrame
+end
+wait(0.1)
+game:GetService("ReplicatedStorage").WLOC:FireServer()
+wait(0.2)
+workspace.DEATHBARRIER.CanTouch = OldTouch
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Warp equipped, or you have owner badge",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end    
+})
+
+Tab4:AddButton({
+	Name = "Get Warp",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Swapper" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2124914780) then
+if _G.ClosestMagnitude == nil then
+_G.ClosestMagnitude = 999999
+end
+repeat
+for _, v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("entered") then
+local Magnitude = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
+if Magnitude <= _G.ClosestMagnitude then
+if v.Character:FindFirstChild("entered") == nil or v.Character.Humanoid.Health == 0 then
+_G.ClosestMagnitude = 999999
+RandomPlayer = nil
+else
+_G.ClosestMagnitude = Magnitude
+RandomPlayer = v
+end
+end
+end
+end
+if RandomPlayer and _G.ClosestMagnitude ~= 999999 then
+if RandomPlayer ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and RandomPlayer.Character then
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("HumanoidRootPart") and RandomPlayer.Character.Ragdolled.Value == false then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = RandomPlayer.Character:FindFirstChild("Head").CFrame
+wait(0.17)
+game.ReplicatedStorage.HitSwapper:FireServer(RandomPlayer.Character:WaitForChild("Head"))
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["SafeBox"].CFrame * CFrame.new(0,5,0)
+end
+end
+end
+task.wait(0.15)
+until RandomPlayer.Character.HumanoidRootPart.Position.Y < -10
+wait(0.2)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = RandomPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,10,0)
+wait(0.15)
+game:GetService("ReplicatedStorage").SLOC:FireServer()
+wait(0.2)
+if _G.ClosestMagnitude and RandomPlayer then
+_G.ClosestMagnitude = nil
+RandomPlayer = nil
+end
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Swapper equipped, or you have owner badge",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end    
+})
+
+Tab4:AddButton({
+	Name = "Get Plank",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Fort" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 4031317971987872) then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 97, 4)
+wait(0.2)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+wait(0.3)
+game:GetService("ReplicatedStorage").Fortlol:FireServer()
+wait(3.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+wait(0.1)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 106, -6)
+wait(0.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have Fort equipped, or you have owner badge [ Don't turn on shiftlock ]",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end    
+})
+
+Tab4:AddButton({
+	Name = "Get Blasphemy",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "bus" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 3335299217032061) then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+repeat
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 or game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil then
+break
+end
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("rock") == nil and RandomPlayer.Character.Head:FindFirstChild("UnoReverseCard") == nil and RandomPlayer.Character:FindFirstChild("entered")
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame
+task.wait(0.34)
+game:GetService("ReplicatedStorage").busmoment:FireServer()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+wait(1.5)
+game.ReplicatedStorage.SelfKnockback:FireServer({["Force"] = 0,["Direction"] = Vector3.new(0,0.01,0)})
+wait(0.8)
+for i = 1,50 do
+for i,v in pairs(game.Workspace:GetChildren()) do
+if v.Name == "BusModel" then
+v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+end
+task.wait()
+end
+end
+task.wait(3.5)
+until game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 3335299217032061)
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You don't have bus equipped, or you have owner badge",Image = "rbxassetid://7733658504",Time = 5})
+end
+  	end    
+})
+
+Tab4:AddButton({
+	Name = "Auto Get FrostBite",
+	Callback = function()
+local teleportFunc = queueonteleport or queue_on_teleport
+    if teleportFunc then
+        teleportFunc([[
+            if not game:IsLoaded() then
+                game.Loaded:Wait()
+            end
+            repeat wait() until game.Players.LocalPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-554, 177, 56)
+wait(0.7)
+for i,v in ipairs(game:GetService("Workspace"):GetDescendants()) do
+            if v.ClassName == "ProximityPrompt" then
+                fireproximityprompt(v)
+            end
+        end
+]])
+end
+game:GetService("TeleportService"):Teleport(17290438723)
+  	end    
+})
+
