@@ -643,7 +643,8 @@ local slapEvents = {
     ["Chain"] = "GeneralHit",
     ["Spy"] = "SpyHit",
     ["Orbit"] = "Orbihit",
-    ["Charge"] = "GeneralHit"
+    ["Charge"] = "GeneralHit",
+    ["Detonator"] = "DetonatorHit"
 }
 
 local slapAuraEnabled = false
