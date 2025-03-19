@@ -193,6 +193,7 @@ local slapEvents = {
 ["God's Hand"] = Godshand,
 ["Error"] = "Errorhit",
 ["Iceskate"] = "GeneralHit"
+}
 
 local slapAuraEnabled = false
 local slapCooldown = {} -- Table to track cooldown per player
