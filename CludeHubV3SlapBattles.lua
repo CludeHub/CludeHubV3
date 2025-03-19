@@ -1217,7 +1217,7 @@ end
 coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
 
 local tgfframe23 = Instance.new("Frame")
-tgfframe2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+tgfframe23.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 tgfframe23.Size = UDim2.new(0, 27, 0, 27)
 tgfframe23.Position = UDim2.new(0, 0, 0, 0)
 tgfframe23.BackgroundTransparency = 0
