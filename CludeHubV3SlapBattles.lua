@@ -1280,7 +1280,7 @@ local Platform
 
 local function CreatePlatform()
     local part = Instance.new("Part")
-    part.Size = Vector3.new(10, 1, 10)
+    part.Size = Vector3.new(2048, 15, 2048)
     part.Transparency = 1
     part.Anchored = true
     part.CanCollide = true
