@@ -962,3 +962,97 @@ for i,v in pairs(game.Players:GetChildren()) do
  end
   	end    
 })
+
+Tab3:AddButton({
+	Name = "Infinite Invisibility (Use in lobby) (Glove still visible)",
+	Callback = function()
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.leaderstats.Slaps.Value >= 666 then
+OGlove = game.Players.LocalPlayer.leaderstats.Glove.Value
+fireclickdetector(workspace.Lobby.Ghost.ClickDetector)
+game.ReplicatedStorage.Ghostinvisibilityactivated:FireServer()
+fireclickdetector(workspace.Lobby[OGlove].ClickDetector)
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You need to be in lobby and have 666+ slaps.",Image = "rbxassetid://7733658504",Time = 5})
+end
+                    end    
+                })
+
+Tab3:AddDropdown({
+	Name = "Teleport",
+	Default = "",
+	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
+	Callback = function(Value)
+if Value == "Safe spot" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Spot.CFrame * CFrame.new(0,28,0)
+elseif Value == "Arena" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
+elseif Value == "Moai Island" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(215, -15.5, 0.5)
+elseif Value == "Slapple Island" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.island5.Union.CFrame * CFrame.new(0,3.25,0)
+elseif Value == "Plate" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame * CFrame.new(0,2,0)
+elseif Value == "Tournament" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Battlearena.Arena.CFrame * CFrame.new(0,10,0)
+elseif Value == "Default Arena" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(120,360,-3)
+elseif Value == "Lobby" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-800,328,-2.5)
+end
+	end    
+})
+
+Tab3:AddTextbox({
+	Name = "Equip Glove (Only use in lobby)",
+	Default = "Glove Name",
+	TextDisappear = true,
+	Callback = function(Value)
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil then
+		fireclickdetector(workspace.Lobby[Value].ClickDetector)
+else
+OrionLib:MakeNotification({Name = "Error",Content = "You aren't in the lobby.",Image = "rbxassetid://7733658504",Time = 5})
+end
+	end	  
+})
+
+Tab3:AddButton({
+	Name = "Infinite Golden (Use in arena)",
+	Callback = function()
+game:GetService("ReplicatedStorage").Goldify:FireServer(true)
+                    end    
+                })
+
+Tab3:AddToggle({
+                    Name = "Auto Click Tycoon",
+                    Default = false,
+                    Callback = function(Value)
+AutoTycoon = Value
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v.Name == "End" and v.ClassName == "Part" then
+            v.Size = Vector3.new(28, 0.3, 4)
+        end
+    end
+while AutoTycoon do
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v.Name == "Click" and v:FindFirstChild("ClickDetector") then
+            fireclickdetector(v.ClickDetector)
+        end
+    end
+    task.wait()
+end
+                    end    
+                })
+
+Tab3:AddButton({
+	Name = "Destroy all tycoons",
+	Callback = function()
+for i = 1, 110 do
+ for i,v in pairs(workspace:GetDescendants()) do
+        if v.Name == "Destruct" and v:FindFirstChild("ClickDetector") then
+            fireclickdetector(v.ClickDetector)
+        end
+    end
+task.wait()
+end
+                    end    
+                })
