@@ -1193,7 +1193,7 @@ tgfframe12.Size = UDim2.new(0, 27, 0, 27)
 tgfframe12.Position = UDim2.new(0, 462, 0, 38)
 tgfframe12.BackgroundTransparency = 1
 tgfframe12.Parent = frame2
-tgfframe12.Visible = false
+tgfframe12.Visible = true
 
 local tgfuicorner12 = Instance.new("UICorner")
 tgfuicorner12.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
@@ -1222,7 +1222,7 @@ tgfframe23.Size = UDim2.new(0, 27, 0, 27)
 tgfframe23.Position = UDim2.new(0, 0, 0, 0)
 tgfframe23.BackgroundTransparency = 0
 tgfframe23.Parent = tgfframe12
-tgfframe23.Visible = false
+tgfframe23.Visible = true
 
 local tgfuicorner23 = Instance.new("UICorner")
 tgfuicorner23.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
