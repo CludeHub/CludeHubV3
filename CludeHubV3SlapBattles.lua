@@ -1116,24 +1116,6 @@ local function StartTeleportLoop()
     end
 end
 
--- Function to auto-enter the arena
-local function AutoEnterArena()
-    while true do
-        local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        local head = char:FindFirstChild("Head")
-        local teleportPart = workspace.Lobby:FindFirstChild("Teleport1")  -- Ensure this is the correct teleporter name
-
-        if char and not char:FindFirstChild("entered") and teleportPart and head then
-            firetouchinterest(head, teleportPart, 0)
-            firetouchinterest(head, teleportPart, 1)
-        end
-        wait(1)  -- Prevent excessive looping
-    end
-end
-
--- Start Auto-Enter Arena in a separate thread
-task.spawn(AutoEnterArena)
-
 -- Restart teleport loop after respawn
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(1)  -- Wait for character to load
@@ -1143,8 +1125,8 @@ LocalPlayer.CharacterAdded:Connect(function()
 end)
 
 -- UI Toggle Button
-Tab2.AddToggle({
-    Name = "Slap Farm (Teleport to random player)",  
+Tab2:AddToggle({
+    Name = "Slap Farm (Teleport to random player)",
     Default = false,
     Callback = function(Value)
         TeleportActive = Value
@@ -1153,3 +1135,123 @@ Tab2.AddToggle({
         end
     end    
 })
+
+AR = Tab5:AddToggle({
+                    Name = "Anti Ragdoll (Resets character)",
+                    Default = false,
+                    Callback = function(Value)
+AntiRagdoll = Value
+if AntiRagdoll then
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Changed:Connect(function()
+if game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == true and AntiRagdoll then
+repeat task.wait() game.Players.LocalPlayer.Character.Torso.Anchored = true
+until game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+game.Players.LocalPlayer.Character.Torso.Anchored = false
+end
+end)
+end)
+end
+                    end    
+                })
+
+game.Workspace.dedBarrier.Position =  Vector3.new(15, -17, 41.5)
+ADB = Tab3:AddToggle({
+                    Name = "Anti Death Barriers",
+                    Default = false,
+                    Callback = function(Value)
+if Value == true then
+for i,v in pairs(game.Workspace.DEATHBARRIER:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == "BLOCK" then
+                        v.CanTouch = false
+                    end
+                end
+workspace.DEATHBARRIER.CanTouch = false
+workspace.DEATHBARRIER2.CanTouch = false
+workspace.dedBarrier.CanTouch = false
+workspace.ArenaBarrier.CanTouch = false
+workspace.AntiDefaultArena.CanTouch = false
+else
+for i,v in pairs(game.Workspace.DEATHBARRIER:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == "BLOCK" then
+                        v.CanTouch = true
+                    end
+                end
+workspace.DEATHBARRIER.CanTouch = true
+workspace.DEATHBARRIER2.CanTouch = true
+workspace.dedBarrier.CanTouch = true
+workspace.ArenaBarrier.CanTouch = true
+workspace.AntiDefaultArena.CanTouch = true
+end
+                    end    
+                })
+
+AB = Tab3:AddToggle({
+                    Name = "Anti Brazil",
+                    Default = false,
+                    Callback = function(Value)
+if Value == true then
+for i,v in pairs(game.Workspace.Lobby.brazil:GetChildren()) do
+                        v.CanTouch = false
+                end
+else
+for i,v in pairs(game.Workspace.Lobby.brazil:GetChildren()) do
+                        v.CanTouch = true
+                end
+end
+                    end    
+                })
+
+               ACOD = Tab3:AddToggle({
+                    Name = "Anti Cube of Death",
+                    Default = false,
+                    Callback = function(Value)
+if Value == true then
+        workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = false
+        else
+        workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = true
+        end
+                    end    
+                })
+
+AT = Tab3:AddToggle({
+                    Name = "Anti Timestop",
+                    Default = false,
+                    Callback = function(Value)
+AntiTimestop = Value
+while AntiTimestop do
+                for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                    if v.ClassName == "Part" then
+                        v.Anchored = false
+                    end
+                end
+task.wait()
+end
+                    end    
+                })
+
+               AS = Tab3:AddToggle({
+                    Name = "Anti Squid",
+                    Default = false,
+                    Callback = function(Value)
+AntiSquid = Value
+if AntiSquid == false then
+        game.Players.LocalPlayer.PlayerGui.SquidInk.Enabled = true
+        end
+while AntiSquid do
+if game.Players.LocalPlayer.PlayerGui:FindFirstChild("SquidInk") then
+        game.Players.LocalPlayer.PlayerGui.SquidInk.Enabled = false
+end
+task.wait()
+end
+                    end    
+                })
+
+AC = Tab3:AddToggle({
+                    Name = "Anti Conveyor",
+                    Default = false,
+                    Callback = function(Value)
+game.Players.LocalPlayer.PlayerScripts.ConveyorVictimized.Disabled = Value
+                    end    
+                })
