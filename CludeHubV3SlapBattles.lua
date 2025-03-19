@@ -1,22 +1,3 @@
-if workspace:FindFirstChild("Spot") == nil then
-local SafeSpot = Instance.new("Part", workspace)
-SafeSpot.Position = Vector3.new(math.random(-25000,-2500),500,math.random(-25000,-2500))
-SafeSpot.Name = "Spot"
-SafeSpot.Size = Vector3.new(500,50,500)
-SafeSpot.Anchored = true
-SafeSpot.Transparency = .5
-end
-if workspace:FindFirstChild("TAntiVoid") == nil then
-local TournamentAntiVoid = Instance.new("Part", workspace)
-TournamentAntiVoid.Name = "TAntiVoid"
-TournamentAntiVoid.Size = Vector3.new(2048, 15, 2048)
-TournamentAntiVoid.Position = Vector3.new(3420, 70, 3)
-TournamentAntiVoid.CanCollide = false
-TournamentAntiVoid.Transparency = 1
-TournamentAntiVoid.Anchored = true
-end
-end
-
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
 
 local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
@@ -1276,16 +1257,6 @@ end
 end)
 end)
 end
-                    end    
-                })
-
-game.Workspace.dedBarrier.Position =  Vector3.new(15, -17, 41.5)
-AV = Tab5:AddToggle({
-                    Name = "Anti Void",
-                    Default = false,
-                    Callback = function(Value)
-game.Workspace.dedBarrier.CanCollide = Value
-game.Workspace.TAntiVoid.CanCollide = Value
                     end    
                 })
 
