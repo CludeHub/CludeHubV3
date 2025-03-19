@@ -1,596 +1,45 @@
--- Create ScreenGui and parent it to PlayerGui
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.CoreGui
-
--- Create the first frame and set its properties
-local frame = Instance.new("Frame")
-frame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)  -- Set background color
-frame.Size = UDim2.new(0, 50, 0, 50)  -- Set size
-frame.Position = UDim2.new(0, 53, 0, 0)  -- Set position
-frame.Parent = screenGui  -- Parent frame to ScreenGui
-frame.BackgroundTransparency = 0.7
-
--- Add UICorner to the first frame to round its corners
-local frameCorner = Instance.new("UICorner")
-frameCorner.CornerRadius = UDim.new(0, 10)  -- Set corner radius
-frameCorner.Parent = frame  -- Parent UICorner to the frame
-
--- Create ImageButton, set its properties, and parent it to the frame
-local imageButton = Instance.new("ImageButton")
-imageButton.Size = UDim2.new(0, 50, 0, 50)  -- Set size of the button
-imageButton.Position = UDim2.new(0, 0, 0, 0)  -- Set position of the button
-imageButton.Image = "rbxassetid://15315284749"  -- Set image for the button
-imageButton.Transparency = 1 -- Make the button transparent
-imageButton.Parent = frame  -- Parent imageButton to the frame
-
--- Create the second frame (initially hidden above the screen)
-local frame2 = Instance.new("Frame")
-frame2.BackgroundColor3 = Color3.fromRGB(32, 32, 32)  -- Set background color
-frame2.Size = UDim2.new(0, 500, 0, 300)  -- Set size
-frame2.Position = UDim2.new(0, 153, 0, -300)  -- Initially place it above the screen (hidden)
-frame2.Parent = screenGui  -- Parent frame2 to ScreenGui
-frame2.Visible = false  -- Make frame2 initially invisible
-frame2.BackgroundTransparency = 0.8
-
--- Add UICorner to the second frame to round its corners
-local frame2Corner = Instance.new("UICorner")
-frame2Corner.CornerRadius = UDim.new(0, 10)  -- Set corner radius
-frame2Corner.Parent = frame2  -- Parent UICorner to frame2
-
--- Create a UIStroke to give a border to frame2
-local uiStroke = Instance.new("UIStroke")
-uiStroke.Parent = frame2
-uiStroke.Thickness = 3  -- Set thickness of the border
-uiStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-uiStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border by cycling through colors
-local function setRainbowBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            uiStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow border effect
-coroutine.wrap(setRainbowBorder)()
-
--- Create a UIStroke to give a border to frame
-local uiStroke1 = Instance.new("UIStroke")
-uiStroke1.Parent = frame
-uiStroke1.Thickness = 2 -- Set thickness of the border
-uiStroke1.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-uiStroke1.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border by cycling through colors
-local function setRainbowBorder1()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            uiStroke1.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow border effect
-coroutine.wrap(setRainbowBorder1)()
-
--- Create a TextLabel for the rainbow border at the top of frame2
-local textLabel = Instance.new("TextLabel")
-textLabel.Size = UDim2.new(1, 0, 0, 30)  -- Set size (full width, 30px height)
-textLabel.Position = UDim2.new(0, -182, 0, 0)  -- Position at the top of frame2
-textLabel.Text = "Slap Battle"  -- Set the text
-textLabel.BackgroundTransparency = 1  -- Make the background transparent
-textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-textLabel.TextSize = 16  -- Set text size
-textLabel.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-textLabel.Parent = frame2  -- Parent the TextLabel to frame2
-
--- Create a rainbow effect for the border of the TextLabel
-local uiStroke2 = Instance.new("UIStroke")
-uiStroke2.Parent = textLabel
-uiStroke2.Thickness = 1 -- Set thickness of the border
-uiStroke2.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-uiStroke2.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextLabel
-local function setRainbowTextLabelBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            uiStroke2.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextLabel's border
-coroutine.wrap(setRainbowTextLabelBorder)()
-
--- Create a TextLabel for the rainbow border at the top of frame2
-local textLabel2 = Instance.new("TextLabel")
-textLabel2.Size = UDim2.new(1, 0, 0, 30)  -- Set size (full width, 30px height)
-textLabel2.Position = UDim2.new(0, 0, 0, 5)  -- Position at the top of frame2
-textLabel2.Text = "_________________________________________"  -- Set the text
-textLabel2.BackgroundTransparency = 1  -- Make the background transparent
-textLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-textLabel2.TextSize = 16  -- Set text size
-textLabel2.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-textLabel2.Parent = frame2  -- Parent the TextLabel to frame2
-
--- Create a rainbow effect for the border of the TextLabel
-local uiStroke3 = Instance.new("UIStroke")
-uiStroke3.Parent = textLabel2
-uiStroke3.Thickness = 1 -- Set thickness of the border
-uiStroke3.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-uiStroke3.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextLabel
-local function setRainbowTextLabelBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            uiStroke3.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextLabel's border
-coroutine.wrap(setRainbowTextLabelBorder)()
-
--- Create a TextLabel for the rainbow border at the top of frame2
-local textLabel3 = Instance.new("TextLabel")
-textLabel3.Size = UDim2.new(1, 0, 0, 30)  -- Set size (full width, 30px height)
-textLabel3.Position = UDim2.new(0, -109, 0, 134)  -- Position at the top of frame2
-textLabel3.Text = "_________________________"  -- Set the tex
-textLabel3.BackgroundTransparency = 1  -- Make the background transparent
-textLabel3.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-textLabel3.TextSize = 16 -- Set text size
-textLabel3.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-textLabel3.Parent = frame2  -- Parent the TextLabel to frame2
-
--- Create a rainbow effect for the border of the TextLabel
-local uiStroke4 = Instance.new("UIStroke")
-uiStroke4.Parent = textLabel3
-uiStroke4.Thickness = 2 -- Set thickness of the border
-uiStroke4.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-uiStroke4.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextLabel
-local function setRainbowTextLabelBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            uiStroke4.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextLabel's border
-coroutine.wrap(setRainbowTextLabelBorder)()
-
--- Create a TextLabel for the FPS counter
-local fpsLabel = Instance.new("TextLabel")
-fpsLabel.Size = UDim2.new(0, 200, 0, 30)  -- Set size (200px width, 30px height)
-fpsLabel.Position = UDim2.new(0, 90, 0, 0)  -- Position inside frame2
-fpsLabel.Text = "FPS: 0"  -- Initial text (will be updated)
-fpsLabel.BackgroundTransparency = 1  -- Make the background transparent
-fpsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-fpsLabel.TextSize = 16  -- Set text size
-fpsLabel.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-fpsLabel.Parent = frame2  -- Parent the FPS label to frame2
-
--- Create a UIStroke to give a rainbow border effect to the FPS label
-local fpsLabelStroke = Instance.new("UIStroke")
-fpsLabelStroke.Parent = fpsLabel
-fpsLabelStroke.Thickness = 1 -- Set thickness of the border
-fpsLabelStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-fpsLabelStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Function to apply the rainbow effect to the FPS label's text and its border
-local function setRainbowEffectForFPS()
-    while true do
-        -- Cycle through the colors in rainbow effect for the text
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            -- Apply the rainbow color effect to the text and the border at once
-            fpsLabelStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the FPS label and its border
-coroutine.wrap(setRainbowEffectForFPS)()
-
--- Function to update FPS count and set it on the label
-local function updateFPS()
-    while true do
-        local fps = math.floor(1 / game:GetService("RunService").Heartbeat:Wait())  -- Calculate FPS
-        fpsLabel.Text = "FPS: " .. fps  -- Update the text with the current FPS
-        wait(0.1)  -- Update the FPS label every 0.1 seconds
-    end
-end
-
--- Start updating FPS counter
-coroutine.wrap(updateFPS)()
-
--- Create a TextLabel for the player count
-local playerCountLabel = Instance.new("TextLabel")
-playerCountLabel.Size = UDim2.new(0, 200, 0, 30)  -- Set size (200px width, 30px height)
-playerCountLabel.Position = UDim2.new(0, 215, 0, 0)  -- Position inside frame2 (adjust this as needed)
-playerCountLabel.Text = "Players: 0/0"  -- Initial text (will be updated)
-playerCountLabel.BackgroundTransparency = 1  -- Make the background transparent
-playerCountLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-playerCountLabel.TextSize = 16  -- Set text size
-playerCountLabel.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-playerCountLabel.Parent = frame2  -- Parent the player count label to frame2
-
--- Create a UIStroke to give a rainbow border effect to the player count label
-local playerCountLabelStroke = Instance.new("UIStroke")
-playerCountLabelStroke.Parent = playerCountLabel
-playerCountLabelStroke.Thickness = 1 -- Set thickness of the border
-playerCountLabelStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-playerCountLabelStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Function to apply the rainbow effect to the player count label's text and its border
-local function setRainbowEffectForPlayerCount()
-    while true do
-        -- Cycle through the colors in rainbow effect for the text
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            -- Apply the rainbow color effect to the text and the border at once
-            playerCountLabelStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the player count label and its border
-coroutine.wrap(setRainbowEffectForPlayerCount)()
-
--- Function to update player count and set it on the label
-local function updatePlayerCount()
-    while true do
-        local currentPlayerCount = game.Players.NumPlayers  -- Get the current player count
-        local maxPlayerCount = game.Players.MaxPlayers  -- Get the maximum player count
-        playerCountLabel.Text = "Players: " .. currentPlayerCount .. "/" .. maxPlayerCount  -- Update the text with the current player count and max players
-        wait(1)  -- Update the player count label every 1 second
-    end
-end
-
--- Start updating player count
-coroutine.wrap(updatePlayerCount)()
-
--- Create a TextLabel for the timer
-local timerLabel = Instance.new("TextLabel")
-timerLabel.Size = UDim2.new(0, 200, 0, 30)  -- Set size (200px width, 30px height)
-timerLabel.Position = UDim2.new(0, 325, 0, 0)  -- Position inside frame2 (adjusted to avoid overlap)
-timerLabel.Text = "0:00"  -- Initial text (starting from 0)
-timerLabel.BackgroundTransparency = 1  -- Make the background transparent
-timerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-timerLabel.TextSize = 16  -- Set text size
-timerLabel.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-timerLabel.Parent = frame2  -- Parent the timer label to frame2
-
--- Create a UIStroke to give a rainbow border effect to the timer label
-local timerLabelStroke = Instance.new("UIStroke")
-timerLabelStroke.Parent = timerLabel
-timerLabelStroke.Thickness = 1 -- Set thickness of the border
-timerLabelStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-timerLabelStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Function to apply the rainbow effect to the timer label's text and its border
-local function setRainbowEffectForTimer()
-    while true do
-        -- Cycle through the colors in rainbow effect for the text
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            -- Apply the rainbow color effect to the text and the border at once
-            timerLabelStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the timer label and its border
-coroutine.wrap(setRainbowEffectForTimer)()
-
--- Timer variables
-local startTime = tick()  -- Capture the start time
-local elapsedTime = 0     -- Time elapsed since start
-
--- Function to update the timer
-local function updateTimer()
-    while true do
-        elapsedTime = tick() - startTime  -- Calculate elapsed time
-
-        -- Calculate minutes and seconds
-        local minutes = math.floor(elapsedTime / 60)
-        local seconds = math.floor(elapsedTime % 60)
-
-        -- Format the time as mm:ss, ensuring two digits for seconds
-        local formattedTime = string.format("%d:%02d", minutes, seconds)
-
-        -- Update the timer label with the formatted time
-        timerLabel.Text = formattedTime
-
-        wait(1)  -- Update the timer every second
-    end
-end
-
--- Start updating the timer
-coroutine.wrap(updateTimer)()
-
--- Create the TextButton
-local mainButton = Instance.new("TextButton")
-mainButton.Size = UDim2.new(0, 105, 0, 40)  -- Set size of the button (200px width, 50px height)
-mainButton.Position = UDim2.new(0, 10, 0, 30)  -- Position inside frame2 (adjust position as needed)
-mainButton.Text = "Info"  -- Set text of the button
-mainButton.BackgroundTransparency = 1 -- Make the background transparent
-mainButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-mainButton.TextSize = 15.9  -- Set text size
-mainButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-mainButton.Parent = frame2  -- Parent the TextButton to frame2
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local mainButtonStroke = Instance.new("UIStroke")
-mainButtonStroke.Parent = mainButton
-mainButtonStroke.Thickness = 2  -- Set thickness of the border
-mainButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-mainButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            mainButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
--- Create a TextButton for the "Close" button
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0, 50, 0, 30)  -- Set the size of the button (50px width, 30px height)
-closeButton.Position = UDim2.new(0, 450, 0, 1)  -- Position inside frame2 (adjust as needed)
-closeButton.Text = "-"  -- Set the text to "-"
-closeButton.BackgroundTransparency = 1  -- Make the background transparent
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-closeButton.TextSize = 20  -- Set text size
-closeButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-closeButton.Parent = frame2  -- Parent the close button to frame2
-
--- Create a UIStroke to give a rainbow border effect to the close button
-local closeButtonStroke = Instance.new("UIStroke")
-closeButtonStroke.Parent = closeButton
-closeButtonStroke.Thickness = 2  -- Set the thickness of the border (2)
-closeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-closeButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the close button
-local function setRainbowCloseButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            closeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the close button's border
-coroutine.wrap(setRainbowCloseButtonBorder)()
-
--- Create the TextButton
-local cmButton = Instance.new("TextButton")
-cmButton.Size = UDim2.new(0, 105, 0, 40)  
-cmButton.Position = UDim2.new(0, 10, 0, 68) 
-cmButton.Text = "Combat"  -- Set text of the button
-cmButton.BackgroundTransparency = 1 -- Make the background transparent
-cmButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-cmButton.TextSize = 15.9  -- Set text size
-cmButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-cmButton.Parent = frame2  -- Parent the TextButton to frame2
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local cbStroke = Instance.new("UIStroke")
-cbStroke.Parent = cmButton
-cbStroke.Thickness = 2  -- Set thickness of the border
-cbStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-cbStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            cbStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
--- Create the TextButton
-local msButton = Instance.new("TextButton")
-msButton.Size = UDim2.new(0, 105, 0, 40)  
-msButton.Position = UDim2.new(0, 10, 0, 109) 
-msButton.Text = "misc"  -- Set text of the button
-msButton.BackgroundTransparency = 1 -- Make the background transparent
-msButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-msButton.TextSize = 15.9  -- Set text size
-msButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-msButton.Parent = frame2  -- Parent the TextButton to frame2
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local smStroke = Instance.new("UIStroke")
-smStroke.Parent = msButton
-smStroke.Thickness = 2  -- Set thickness of the border
-smStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-smStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            smStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
--- Create the TextButton
-local bdButton = Instance.new("TextButton")
-bdButton.Size = UDim2.new(0, 105, 0, 40)  
-bdButton.Position = UDim2.new(0, 10, 0, 146) 
-bdButton.Text = "Badge"  -- Set text of the button
-bdButton.BackgroundTransparency = 1 -- Make the background transparent
-bdButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-bdButton.TextSize = 15.9  -- Set text size
-bdButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-bdButton.Parent = frame2  -- Parent the TextButton to frame2
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local dbStroke = Instance.new("UIStroke")
-dbStroke.Parent = bdButton
-dbStroke.Thickness = 2  -- Set thickness of the border
-dbStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-dbStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            dbStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
--- Create the TextButton
-local plButton = Instance.new("TextButton")
-plButton.Size = UDim2.new(0, 105, 0, 40)  
-plButton.Position = UDim2.new(0, 10, 0, 188) 
-plButton.Text = "anti"  -- Set text of the button
-plButton.BackgroundTransparency = 1 -- Make the background transparent
-plButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-plButton.TextSize = 15.9  -- Set text size
-plButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-plButton.Parent = frame2  -- Parent the TextButton to frame2
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local lpStroke = Instance.new("UIStroke")
-lpStroke.Parent = plButton
-lpStroke.Thickness = 2  -- Set thickness of the border
-lpStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-lpStroke.Transparency = 0 -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            lpStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
-end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
-local tgfframe1 = Instance.new("Frame")
-tgfframe1.Size = UDim2.new(0, 27, 0, 27)
-tgfframe1.Position = UDim2.new(0, 462, 0, 38)
-tgfframe1.BackgroundTransparency = 1
-tgfframe1.Parent = frame2
-tgfframe1.Visible = false
-
-local tgfuicorner1 = Instance.new("UICorner")
-tgfuicorner1.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner1.Parent = tgfframe1
-
-local tgfUIStroke1 = Instance.new("UIStroke")
-tgfUIStroke1.Thickness = 3
-tgfUIStroke1.Parent = tgfframe1
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowOrbButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            tgfUIStroke1.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
-
-local tgfframe2 = Instance.new("Frame")
-tgfframe2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-tgfframe2.Size = UDim2.new(0, 27, 0, 27)
-tgfframe2.Position = UDim2.new(0, 0, 0, 0)
-tgfframe2.BackgroundTransparency = 0
-tgfframe2.Parent = tgfframe1
-tgfframe2.Visible = false
-
-local tgfuicorner2 = Instance.new("UICorner")
-tgfuicorner2.CornerRadius = UDim.new(0.2, 0) -- Adjust for rounded corners
-tgfuicorner2.Parent = tgfframe2
-
--- Create the TextLabel
-local arButtonL = Instance.new("TextButton")
-arButtonL.Size = UDim2.new(0, 105, 0, 40)
-arButtonL.Position = UDim2.new(0, 134, 0, 30)
-arButtonL.Text = "Slap Aura"
-arButtonL.BackgroundTransparency = 1
-arButtonL.TextColor3 = Color3.fromRGB(255, 255, 255)
-arButtonL.TextSize = 15.9
-arButtonL.Visible = false
-arButtonL.TextStrokeTransparency = 0.5
-arButtonL.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local arButtonLStrokeL = Instance.new("UIStroke")
-arButtonLStrokeL.Parent = arButtonL
-arButtonLStrokeL.Thickness = 2
-arButtonLStrokeL.LineJoinMode = Enum.LineJoinMode.Round
-arButtonLStrokeL.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            arButtonLStrokeL.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/CludeHub/SourceOfNewOrion/refs/heads/main/Fiendorion')))()
+
+local Window = OrionLib:MakeWindow({Name = "Slap Battle", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+local Tab1 = Window:MakeTab({
+	Name = "Home",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab2 = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab3 = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab4 = Window:MakeTab({
+	Name = "Badges",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Tab5 = Window:MakeTab({
+	Name = "Anti",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab1:AddLabel("Slap Battle Script made by Paul Paras as Clude Subscribe to him on Youtube")
+
+Tab1:AddButton({
+	Name = "Infinite yield",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
 
 -- Game Services
 local Players = game:GetService("Players")
@@ -626,7 +75,6 @@ local slapEvents = {
     ["Replica"] = "ReplicaHit",
     ["Mister"] = "MisterHit",
     ["Mail"] = "MailHit",
-    ["Golden"] = "GoldenHit",
     ["Boomerang"] = "BoomerangH",
     ["Speedrun"] = "Speedrunhit",
     ["Plague"] = "PlagueHit",
@@ -680,7 +128,7 @@ local function slapClosestPlayer()
             for _, otherPlayer in pairs(Players:GetPlayers()) do
                 if otherPlayer ~= player and otherPlayer.Character then
                     local otherHRP = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 20 then -- Range
+                    if otherHRP and (hrp.Position - otherHRP.Position).Magnitude <= 25 then -- Range
                         
                         -- Check if the player is on cooldown
                         if not slapCooldown[otherPlayer.UserId] then
@@ -701,199 +149,68 @@ local function slapClosestPlayer()
     end
 end
 
--- Function to Toggle Slap Aura and Update Button Text
-local function toggleSlapAura()
-    slapAuraEnabled = not slapAuraEnabled
+-- Function to Toggle Slap Aura
+local function toggleSlapAura(value)
+    slapAuraEnabled = value
     if slapAuraEnabled then
-        tgfframe2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
         slapAuraLoop = task.spawn(slapClosestPlayer)
     else
-        tgfframe2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        task.cancel(slapAuraLoop)
+        if slapAuraLoop then
+            task.cancel(slapAuraLoop)
+        end
     end
 end
 
 -- Update Character When Respawning
 player.CharacterAdded:Connect(updateCharacter)
 
--- Connect the Button Click to the Function
-arButtonL.MouseButton1Click:Connect(toggleSlapAura)
+-- GUI Toggle Button
+Tab2:AddToggle({
+	Name = "Slap Aura",
+	Default = false,
+	Callback = function(value)
+		toggleSlapAura(value)
+	end    
+})
 
--- Initialize Character on First Run
+-- Initialize Character
 updateCharacter()
 
-local gdButton = Instance.new("TextButton")
-gdButton.Size = UDim2.new(0, 105, 0, 40)
-gdButton.Position = UDim2.new(0, 134, 0, 65)
-gdButton.Text = "Godmode"
-gdButton.BackgroundTransparency = 1
-gdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-gdButton.TextSize = 15.9
-gdButton.Visible = false
-gdButton.TextStrokeTransparency = 0.5
-gdButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local gdButtonStroke = Instance.new("UIStroke")
-gdButtonStroke.Parent = gdButton
-gdButtonStroke.Thickness = 2
-gdButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-gdButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            gdButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
-
-gdButton.MouseButton1Click:Connect(function()
-    game:GetService("Players").LocalPlayer.Reset:FireServer()
+Tab2:AddButton({
+	Name = "GodMode",
+	Callback = function()
+game:GetService("Players").LocalPlayer.Reset:FireServer()
 wait(5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
-end)
+      		print("button pressed")
+  	end    
+})
 
--- Create the TextButton
-local clButton = Instance.new("TextLabel")
-clButton.Size = UDim2.new(0, 200, 0, 40)  -- Set size of the button (200px width, 50px height)
-clButton.Position = UDim2.new(0, 206, 0, 30)  -- Position inside frame2 (adjust position as needed)
-clButton.Text = "CludeHub Slap Battle By Paul Paras"  -- Set text of the button
-clButton.BackgroundTransparency = 1 -- Make the background transparent
-clButton.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Set text color (white)
-clButton.TextSize = 15.9  -- Set text size
-clButton.TextStrokeTransparency = 0.5  -- Add stroke to text for better visibility
-clButton.Parent = frame2  -- Parent the TextButton to frame2
-clButton.Visible = true
-
--- Create a UIStroke to give a rainbow border effect to the TextButton
-local clButtonStroke = Instance.new("UIStroke")
-clButtonStroke.Parent = clButton
-clButtonStroke.Thickness = 2  -- Set thickness of the border
-clButtonStroke.LineJoinMode = Enum.LineJoinMode.Round  -- Round the corners of the border
-clButtonStroke.Transparency = 0  -- Set transparency (0 is fully visible)
-
--- Create a rainbow effect for the border of the TextButton
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Make the hue cycle over time
-            clButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)  -- Apply the hue as a rainbow color to the border
-            wait(0.05)  -- Adjust speed of the rainbow effect
-        end
-    end
+Tab3:AddToggle({
+	Name = "Slapple Farm",
+	Default = false,
+	Callback = function(Value)
+SlapAura = Value
+                while SlapAura do
+for i,v in pairs(game.Players:GetChildren()) do
+                    if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v.Character then
+if v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") then
+Magnitude = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
+                        if 25 >= Magnitude then
+game.ReplicatedStorage.KSHit:FireServer(v.Character:WaitForChild("HumanoidRootPart"))
+                    end
 end
-
--- Start the rainbow effect on the TextButton's border
-coroutine.wrap(setRainbowMainButtonBorder)()
-
-local infButton = Instance.new("TextButton")
-infButton.Size = UDim2.new(0, 105, 0, 40)
-infButton.Position = UDim2.new(0, 143, 0, 65)
-infButton.Text = "Infinite yield"
-infButton.BackgroundTransparency = 1
-infButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-infButton.TextSize = 15.9
-infButton.Visible = true
-infButton.TextStrokeTransparency = 0.5
-infButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local infButtonStroke = Instance.new("UIStroke")
-infButtonStroke.Parent = infButton
-infButtonStroke.Thickness = 2
-infButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-infButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            infButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
 end
-
-coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread  
-
-infButton.MouseButton1Click:Connect(function()	
-loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-end)
-
-local slfButton = Instance.new("TextButton")
-slfButton.Size = UDim2.new(0, 105, 0, 40)
-slfButton.Position = UDim2.new(0, 176, 0, 30)
-slfButton.Text = "Slapple Farm"
-slfButton.BackgroundTransparency = 1
-slfButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-slfButton.TextSize = 15.9
-slfButton.Visible = false
-slfButton.TextStrokeTransparency = 0.5
-slfButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local slfButtonStroke = Instance.new("UIStroke")
-slfButtonStroke.Parent = slfButton
-slfButtonStroke.Thickness = 2
-slfButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-slfButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowMainButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            slfButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
+                end
+task.wait()
 end
+		print(Value)
+	end    
+})
 
-coroutine.wrap(setRainbowMainButtonBorder)() -- Run the rainbow effect in a separate thread
-
--- Create the "Get Chain Badge" Button
-local chainBadgeButton = Instance.new("TextButton")
-chainBadgeButton.Size = UDim2.new(0, 151, 0, 40)
-chainBadgeButton.Position = UDim2.new(0, 134, 0, 30)  -- Change position as needed
-chainBadgeButton.Text = "Get bob Badge"
-chainBadgeButton.BackgroundTransparency = 1
-chainBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-chainBadgeButton.TextSize = 15.9
-chainBadgeButton.Visible = false
-chainBadgeButton.TextStrokeTransparency = 0.5
-chainBadgeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local chainBadgeButtonStroke = Instance.new("UIStroke")
-chainBadgeButtonStroke.Parent = chainBadgeButton
-chainBadgeButtonStroke.Thickness = 2
-chainBadgeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-chainBadgeButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowChainBadgeButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            chainBadgeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowChainBadgeButtonBorder)() -- Run the rainbow effect in a separate thread
-
-plButton.MouseButton1Click:Connect(function()
-if not game:IsLoaded() then
-     game.Loaded:Wait()
-end
+Tab4:AddButton({
+	Name = "Get Bob",
+	Callback = function()
 if  game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2125950512) then
      game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Nice!",Text = "Congratulations, you got bob ;)" ,Duration = 1000, Icon = "rbxthumb://type=Asset&id=9649923610&w=150&h=150",Button1 = "OK"})
      fireclickdetector(game:GetService("Workspace").Lobby.bob.ClickDetector)
@@ -1007,41 +324,13 @@ end
 
 
 module:Teleport(game.PlaceId)
-end)
+      		print("button pressed")
+  	end    
+})
 
--- Create the "Get Elude" Button
-local eludeButton = Instance.new("TextButton")
-eludeButton.Size = UDim2.new(0, 150, 0, 40)
-eludeButton.Position = UDim2.new(0, 203, 0, 65)  -- Change position as needed
-eludeButton.Text = "Get Elude and Counter Badge"
-eludeButton.BackgroundTransparency = 1
-eludeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-eludeButton.TextSize = 15.9
-eludeButton.Visible = false
-eludeButton.TextStrokeTransparency = 0.5
-eludeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local eludeButtonStroke = Instance.new("UIStroke")
-eludeButtonStroke.Parent = eludeButton
-eludeButtonStroke.Thickness = 2
-eludeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-eludeButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowEludeButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            eludeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowEludeButtonBorder)() -- Run the rainbow effect in a separate thread
-
-eludeButton.MouseButton1Click:Connect(function()
+Tab4:AddButton({
+	Name = "Get Elude and Counter",
+	Callback = function()
 local teleportFunc = queueonteleport or queue_on_teleport 
 if teleportFunc then     
     teleportFunc([[         
@@ -1082,41 +371,13 @@ if teleportFunc then
 end 
 
 game:GetService("TeleportService"):Teleport(11828384869)
-end)
+      		print("button pressed")
+  	end    
+})
 
--- Create the "Get Chain Badge" Button
-local trapBadgeButton = Instance.new("TextButton")
-trapBadgeButton.Size = UDim2.new(0, 150, 0, 40)
-trapBadgeButton.Position = UDim2.new(0, 138, 0, 140)  -- Change position as needed
-trapBadgeButton.Text = "Get Trap Badge"
-trapBadgeButton.BackgroundTransparency = 1
-trapBadgeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-trapBadgeButton.TextSize = 15.9
-trapBadgeButton.Visible = false
-trapBadgeButton.TextStrokeTransparency = 0.5
-trapBadgeButton.Parent = frame2  -- Make sure `frame2` exists before running this script
-
--- Create UIStroke for the rainbow effect
-local trapBadgeButtonStroke = Instance.new("UIStroke")
-trapBadgeButtonStroke.Parent = trapBadgeButton
-trapBadgeButtonStroke.Thickness = 2
-trapBadgeButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-trapBadgeButtonStroke.Transparency = 0
-
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowTrapBadgeButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            trapBadgeButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
-end
-
-coroutine.wrap(setRainbowTrapBadgeButtonBorder)() -- Run the rainbow effect in a separate thread
-
-trapBadgeButton.MouseButton1Click:Connect(function()
+Tab4:AddButton({
+	Name = "Get Trap",
+	Callback = function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Brick" then
 for i = 1, 200 do
 game:GetService("ReplicatedStorage").lbrick:FireServer()
@@ -1137,187 +398,74 @@ end
 else
 print("Equip Bricks First")
 end
-end)
-local orbButton = Instance.new("TextButton")
-orbButton.Size = UDim2.new(0, 150, 0, 40)
-orbButton.Position = UDim2.new(0, 185, 0, 102)  -- Change position as needed
-orbButton.Text = "Farm Jet and Phase"
-orbButton.BackgroundTransparency = 1
-orbButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-orbButton.TextSize = 15.9
-orbButton.Visible = false
-orbButton.TextStrokeTransparency = 0.5
-orbButton.Parent = frame2  -- Make sure `frame2` exists before running this script
+      		print("button pressed")
+  	end    
+})
 
--- Create UIStroke for the rainbow effect
-local orbButtonStroke = Instance.new("UIStroke")
-orbButtonStroke.Parent = orbButton
-orbButtonStroke.Thickness = 2
-orbButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-orbButtonStroke.Transparency = 0
+Tab4:AddButton({
+	Name = "Get iceskate",
+	Callback = function()
+local args = {
+    [1] = "touched_ice"
+}
 
--- Rainbow effect using RenderStepped for smooth updates
-local function setRainbowOrbButtonBorder()
-    while true do
-        for i = 0, 1, 0.01 do
-            local hue = tick() * 0.1 + i  -- Fast rainbow effect
-            orbButtonStroke.Color = Color3.fromHSV(hue % 1, 1, 1)
-            wait(0.05)  -- Faster color change speed
-        end
-    end
+game:GetService("ReplicatedStorage").IceSkate:FireServer(unpack(args))
+
+local args = {
+    [1] = "Freeze"
+}
+
+game:GetService("ReplicatedStorage").IceSkate:FireServer(unpack(args))
+
+      		print("button pressed")
+  	end    
+})
+
+Tab4:AddToggle({
+	Name = "Jet Farm",
+	Default = false,
+	Callback = function(Value)
+Jetfarm = Value
+while Jetfarm do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "JetOrb" and v:FindFirstChild("TouchInterest") then
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 1)
+                    end
+                end
+task.wait()
 end
+	end    
+})
 
-coroutine.wrap(setRainbowOrbButtonBorder)() -- Run the rainbow effect in a separate thread
-
-orbButton.MouseButton1Click:Connect(toggleFarm)
-local farming = false  -- Toggle state
-
-local function toggleFarm()
-    farming = not farming  -- Toggle between true and false
-    orbButton.Text = "Farm Jet and Phase: " .. (farming and "ON" or "OFF")
-
-    while farming do
-        for _, v in pairs(game.Workspace:GetChildren()) do
-            if (v.Name == "JetOrb" or v.Name == "PhaseOrb") and v:FindFirstChild("TouchInterest") then
-                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 0)
-                firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 1)
-            end
-        end
-        task.wait()  -- Prevents script from freezing
-    end
+Tab4:AddToggle({
+	Name = "Phase Farm",
+	Default = false,
+	Callback = function(Value)
+Phasefarm = Value
+while Phasefarm do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "PhaseOrb" and v:FindFirstChild("TouchInterest") then
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), v, 1)
+                    end
+                end
+task.wait()
 end
+	end    
+})
 
-orbButton.MouseButton1Click:Connect(toggleFarm)
-
-textLabel3.Rotation = 90
-local ZIndex = [[
-frame2.ZIndex = 2
-imageButton.ZIndex = 3
-textLabel.ZIndex = 4
-textLabel2.ZIndex = 5
-textLabel3.ZIndex = 6
-fpsLabel.ZIndex = 7
-playerCountLabel.ZIndex = 8
-timerLabel.ZIndex = 9
-mainButton.ZIndex = 10 
-cmButton.ZIndex = 10
-msButton.ZIndex = 10
-bdButton.ZIndex = 10
-plButton.ZIndex = 10
-]]
-
-local TweenService = game:GetService("TweenService")
-local isOpen = false  -- Track if frame2 is open
-
-local normalPosition = UDim2.new(0, 153, 0, 00)  -- Position when open
-local hiddenPosition = UDim2.new(0, 153, 0, -400)  -- Position when hidden
-
-local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)  -- Smooth animation
-
-imageButton.MouseButton1Click:Connect(function()
-    if not isOpen then  -- Only open if it's closed
-        isOpen = true
-        local tween = TweenService:Create(frame2, tweenInfo, {Position = normalPosition})
-        tween:Play()
-        frame2.Visible = true
-        frame.Visible = false
+Tab2:AddToggle({
+                    Name = "Auto Enter Arena",
+                    Default = false,
+                    Callback = function(Value)
+AutoEnterArena = Value
+while AutoEnterArena do
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1, 1)
     end
-end)
-
-closeButton.MouseButton1Click:Connect(function()
-    if isOpen then  -- Only close if it's open
-        isOpen = false
-        local tween = TweenService:Create(frame2, tweenInfo, {Position = hiddenPosition})
-        tween:Play()
-        
-        -- Wait for animation to finish before hiding (optional)
-        tween.Completed:Connect(function()
-            frame2.Visible = false
-            frame.Visible = true
-        end)
-    end
-end)
-
-mainButton.MouseButton1Click:Connect(function()
-arButtonL.Visible = false
-gdButton.Visible = false
-clButton.Visible = true
-infButton.Visible = true
-slfButton.Visible = false
-chainBadgeButton.Visible = false
-eludeButton.Visible = false
-trapBadgeButton.Visible = false
-orbButton.Visible = false
-tgfframe2.Visible = false
-tgfframe1.Visible = false
-tgfframe3.Visible = false
-tgfframe23.Visible = false
-tgfframe12.Visible = false
-end)
-
-cmButton.MouseButton1Click:Connect(function()
-arButtonL.Visible = true
-gdButton.Visible = true
-clButton.Visible = false
-infButton.Visible = false
-slfButton.Visible = false
-chainBadgeButton.Visible = false
-eludeButton.Visible = false
-trapBadgeButton.Visible = false
-orbButton.Visible = false
-tgfframe2.Visible = true
-tgfframe1.Visible = true
-tgfframe3.Visible = true
-tgfframe23.Visible = false
-tgfframe12.Visible = false
-end)
-
-msButton.MouseButton1Click:Connect(function()
-arButtonL.Visible = false
-gdButton.Visible = false
-clButton.Visible = false
-infButton.Visible = false
-slfButton.Visible = true
-chainBadgeButton.Visible = false
-eludeButton.Visible = false
-trapBadgeButton.Visible = false
-orbButton.Visible = false
-tgfframe2.Visible = false
-tgfframe1.Visible = false
-tgfframe3.Visible = false
-tgfframe23.Visible = true
-tgfframe12.Visible = true
-end)
-
-bdButton.MouseButton1Click:Connect(function()
-arButtonL.Visible = false
-gdButton.Visible = false
-clButton.Visible = false
-infButton.Visible = false
-slfButton.Visible = fase
-chainBadgeButton.Visible = true
-eludeButton.Visible = true
-trapBadgeButton.Visible = true
-orbButton.Visible = true
-tgfframe2.Visible = false
-tgfframe1.Visible = false
-tgfframe3.Visible = false
-tgfframe23.Visible = false
-tgfframe12.Visible = false
-end)
-
-plButton.MouseButton1Click:Connect(function()
-arButtonL.Visible = false
-gdButton.Visible = false
-clButton.Visible = false
-infButton.Visible = false
-slfButton.Visible = false
-chainBadgeButton.Visible = false
-eludeButton.Visible = false
-trapBadgeButton.Visible = false
-orbButton.Visible = false
-tgfframe2.Visible = false
-tgfframe1.Visible = false
-tgfframe23.Visible = false
-tgfframe12.Visible = false
-end)
+task.wait()
+end
+end
+                })
