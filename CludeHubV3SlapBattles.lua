@@ -184,6 +184,7 @@ local slapEvents = {
 ["Quake"] = "GeneralHit",
 ["Counter"] = "GeneralHit",
 ["Hammer"] = "GeneralHit",
+["Spoonful"] = "GeneralHit",
 ["Excavator"] = "GeneralHit",
 ["Slicer"] = "GeneralHit",
 ["Whirlwind"] = "GeneralHit",
