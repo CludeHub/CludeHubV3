@@ -1660,125 +1660,260 @@ end
 	end    
 })
 
-Tab2:AddToggle({
-	Name = "ESP Glove",
-	Default = false,
-	Callback = function(Value)
-		_G.GloveESP = Value
+Tab2:AddButton({
+	Name = "Edgelord (Max the Graphics for better experience",
+	Callback = function()
+-- EdgeLord Slap Battle
+-- Edgelord made by CludeHub/Paras
+game:GetService("Players").LocalPlayer.Reset:FireServer()
+wait(4.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
+wait(0.4)
+-- Services and Variables
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
 
-		if not _G.GloveESP then
-			-- Remove ESP when toggled off
-			for _, v in ipairs(game.Players:GetChildren()) do
-				if v.Character then
-					if v.Character:FindFirstChild("Highlight") then
-						v.Character.Highlight:Destroy()
-					end
-					if v.Character:FindFirstChild("Head") then
-						local esp = v.Character.Head:FindFirstChild("GloveEsp")
-						if esp then esp:Destroy() end
-					end
-				end
-			end
-			return
-		end
+-- Variables for slap aura
+local slapEnabled = false
+local slapDistance = 25
+local slapCooldown = 1
+local lastSlapTime = 0
+local clickCooldown = 1
+local lastClickTime = 0
 
-		-- ESP Loop
-		while _G.GloveESP do
-			for _, v in ipairs(game.Players:GetChildren()) do
-				if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") and v:FindFirstChild("leaderstats") then
-					local head = v.Character.Head
-					local gloveStat = v.leaderstats:FindFirstChild("Glove")
-					local humanoid = v.Character:FindFirstChildOfClass("Humanoid")
+-- Function to add all animations, effects, and slap aura handling
+local function setupCharacter(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-					-- Create or update Highlight (Wallhack)
-					local highlight = v.Character:FindFirstChild("Highlight")
-					if not highlight then
-						highlight = Instance.new("Highlight", v.Character)
-						highlight.FillColor = Color3.new(1, 1, 1) -- White
-						highlight.OutlineColor = Color3.new(1, 1, 1)
-						highlight.FillTransparency = 0.5
-						highlight.OutlineTransparency = 0
-					end
+    -- Set walkspeed
+    humanoid.WalkSpeed = 30
 
-					-- Create or update ESP BillboardGui
-					local esp = head:FindFirstChild("GloveEsp")
-					if not esp then
-						esp = Instance.new("BillboardGui", head)
-						esp.Adornee = head
-						esp.Name = "GloveEsp"
-						esp.Size = UDim2.new(0, 100, 0, 150)
-						esp.StudsOffset = Vector3.new(0, 3, 0)
-						esp.AlwaysOnTop = true
+    -- Animation setup
+    local idleAnimation = Instance.new("Animation")
+    idleAnimation.AnimationId = "rbxassetid://16163355836"
+    local walkAnimation = Instance.new("Animation")
+    walkAnimation.AnimationId = "rbxassetid://16163350920"
+    local slapAnimation = Instance.new("Animation")
+    slapAnimation.AnimationId = "rbxassetid://16102717448"
 
-						-- Text Label for Glove
-						local gloveText = Instance.new("TextLabel", esp)
-						gloveText.BackgroundTransparency = 1
-						gloveText.Size = UDim2.new(0, 100, 0, 50)
-						gloveText.TextSize = 20
-						gloveText.Font = Enum.Font.FredokaOne
-						gloveText.TextStrokeTransparency = 0.5
-						gloveText.TextColor3 = _G.ColorESP
-						gloveText.Name = "GloveText"
+    local idleAnimTrack = humanoid:LoadAnimation(idleAnimation)
+    local walkAnimTrack = humanoid:LoadAnimation(walkAnimation)
 
-						-- Text Label for Health
-						local healthText = Instance.new("TextLabel", esp)
-						healthText.BackgroundTransparency = 1
-						healthText.Size = UDim2.new(0, 100, 0, 50)
-						healthText.Position = UDim2.new(0, 0, 0.5, 0)
-						healthText.TextSize = 18
-						healthText.Font = Enum.Font.FredokaOne
-						healthText.TextStrokeTransparency = 0.5
-						healthText.TextColor3 = Color3.new(1, 0, 0) -- Red for health
-						healthText.Name = "HealthText"
-					end
+    idleAnimTrack.Looped = true
+    walkAnimTrack.Looped = true
+    idleAnimTrack:Play()
 
-					-- Update Glove Text
-					local gloveText = esp:FindFirstChild("GloveText")
-					if gloveText and gloveStat then
-						gloveText.Text = "Glove [ " .. gloveStat.Value .. " ]"
-					end
+    -- Animation switching based on movement
+    local function updateAnimation()
+        if humanoid.MoveDirection.Magnitude > 0 then
+            if not walkAnimTrack.IsPlaying then
+                idleAnimTrack:Stop()
+                walkAnimTrack:Play()
+            end
+        else
+            if not idleAnimTrack.IsPlaying then
+                walkAnimTrack:Stop()
+                idleAnimTrack:Play()
+            end
+        end
+    end
 
-					-- Update Health Text
-					local healthText = esp:FindFirstChild("HealthText")
-					if healthText and humanoid then
-						healthText.Text = "Health: " .. math.floor(humanoid.Health) .. "/" .. math.floor(humanoid.MaxHealth)
-					end
-				end
-			end
-			task.wait(0.1) -- Prevents lag
-		end
-	end    
-})
+    humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(updateAnimation)
 
-Tab3:AddTextbox({
-	Name = "Auto Change Nametag",
-	Default = "Nametag",
-	TextDisappear = false,
-	Callback = function(Value)
-game.Workspace.NametagChanged.Value = Value
-	end	  
-})
+    -- Function to create and attach aura and glitch particles
+    local function createParticles()
+        local particles = {}
 
-Tab3:AddToggle({
-	Name = " Auto Change Nametag",
-	Default = false,
-	Callback = function(Value)
-	AutoChangeNameTag = Value
-        if AutoChangeNameTag == true and game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true) then
-        game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
-end
-workspace.NametagChanged.Changed:Connect(function()
-        if AutoChangeNameTag == true and game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true) then
-        game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
-end
-end)
-            game.Players.LocalPlayer.CharacterAdded:Connect(function()
-                if AutoChangeNameTag == true then
-repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("Nametag",true)
-                game.Players.LocalPlayer.Character.Head.Nametag.TextLabel.Text = game.Workspace.NametagChanged.Value
+        for _, part in ipairs(character:GetChildren()) do
+            if part:IsA("BasePart") then
+                -- Aura Particle
+                local auraParticle = Instance.new("ParticleEmitter")
+                auraParticle.Texture = "rbxassetid://833874434"
+                auraParticle.Brightness = 2
+                auraParticle.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
+                auraParticle.LightEmission = 0.5
+                auraParticle.Size = NumberSequence.new(0.9)
+                auraParticle.Lifetime = NumberRange.new(2)
+                auraParticle.Rate = 60
+                auraParticle.Speed = NumberRange.new(0.5)
+                auraParticle.Parent = part
+                auraParticle.Enabled = true
+
+                -- Glitch Particle
+                local glitchParticle = Instance.new("ParticleEmitter")
+                glitchParticle.Texture = "rbxassetid://3876444567"
+                glitchParticle.Brightness = 1
+                glitchParticle.Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 22, 42)),
+                    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(21, 42, 148)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 50, 148))
+                })
+                glitchParticle.LightEmission = 0.8
+                glitchParticle.Size = NumberSequence.new(1)
+                glitchParticle.Lifetime = NumberRange.new(0.1)
+                glitchParticle.Rate = 100
+                glitchParticle.Speed = NumberRange.new(2)
+                glitchParticle.Parent = part
+                glitchParticle.Enabled = true
+
+                table.insert(particles, {aura = auraParticle, glitch = glitchParticle})
+            end
+        end
+
+        return particles
+    end
+
+    -- Create and store particles
+    local particles = createParticles()
+
+    -- Slap aura particles (black effect)
+    local function createSlapParticles()
+        local slapParticles = {}
+
+        for _, part in ipairs(character:GetChildren()) do
+            if part:IsA("BasePart") then
+                local particle = Instance.new("ParticleEmitter")
+                particle.Texture = "rbxassetid://3876444567"
+                particle.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))  -- Black slap particles
+                particle.LightEmission = 0.5
+                particle.Size = NumberSequence.new(1)
+                particle.Rate = 150
+                particle.Lifetime = NumberRange.new(0.5, 1)
+                particle.Speed = NumberRange.new(2, 4)
+                particle.VelocitySpread = 360
+                particle.RotSpeed = NumberRange.new(-100, 100)
+                particle.Parent = part
+                particle.Enabled = false
+
+                table.insert(slapParticles, particle)
+            end
+        end
+
+        return slapParticles
+    end
+
+    local slapParticles = createSlapParticles()
+
+    -- Toggle aura function
+    local function toggleAura()
+        slapEnabled = true
+
+        -- Enable black slap particles
+        for _, particle in ipairs(slapParticles) do
+        end
+
+        wait(1)
+
+        slapEnabled = false
+
+        -- Disable black slap particles
+        for _, particle in ipairs(slapParticles) do
+            
+        end
+    end
+
+    -- Slap animation and aura activation
+    local function playSlapAnimation()
+        local slapTrack = humanoid:LoadAnimation(slapAnimation)
+        slapTrack:Play()
+        slapTrack.Looped = false
+    end
+
+    -- Slap nearest player globally (lobby + arena)
+    local function slapClosestPlayer()
+        if not slapEnabled then return end
+
+        local closestPlayer = nil
+        local closestDistance = slapDistance
+
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local otherPlayerPosition = otherPlayer.Character.HumanoidRootPart.Position
+                local distance = (character.HumanoidRootPart.Position - otherPlayerPosition).Magnitude
+
+                if distance <= closestDistance then
+                    closestDistance = distance
+                    closestPlayer = otherPlayer
                 end
-            end)
-	end    
+            end
+        end
+
+        if closestPlayer and tick() - lastSlapTime >= slapCooldown then
+            lastSlapTime = tick()
+
+            if closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                local head = closestPlayer.Character.Head
+                local args = {head}
+
+                -- Fire both remotes
+                local generalRemote = ReplicatedStorage:FindFirstChild("GeneralHit")
+                local plagueRemote = ReplicatedStorage:FindFirstChild("PlagueHit")
+
+                if generalRemote then
+                    generalRemote:FireServer(unpack(args))
+                end
+
+                if plagueRemote then
+                    plagueRemote:FireServer(unpack(args))
+                end
+            end
+        end
+    end
+
+    -- Input handling with cooldown
+    UserInputService.InputBegan:Connect(function(input, processed)
+        if processed then return end
+
+        if tick() - lastClickTime >= clickCooldown then
+            lastClickTime = tick()
+
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                playSlapAnimation()
+                toggleAura()
+            end
+        end
+    end)
+
+    -- Continuous slap aura checking
+    RunService.RenderStepped:Connect(function()
+        if slapEnabled then
+            slapClosestPlayer()
+        end
+    end)
+end
+
+-- Initial setup
+setupCharacter(player.Character)
+
+-- Handle character respawn
+player.CharacterAdded:Connect(function(character)
+    -- Wait for character to load fully before applying animations and effects
+    character:WaitForChild("HumanoidRootPart")
+    setupCharacter(character)
+end)
+local Sound = Instance.new("Sound")
+Sound.Parent = game.Workspace
+Sound.SoundId = "rbxassetid://9133844756"
+Sound.Volume = 1 -- Adjust volume (0 to 10)
+Sound.Looped = true
+Sound:Play()
+
+local player = game.Players.LocalPlayer
+
+-- Stop music when player dies
+player.CharacterAdded:Connect(function(char)
+    local humanoid = char:WaitForChild("Humanoid")
+    
+    humanoid.Died:Connect(function()
+        Sound:Stop()
+    end)
+end)
+      		print("button pressed")
+  	end    
 })
 
 Tab4:AddButton({
