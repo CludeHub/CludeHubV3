@@ -1663,51 +1663,58 @@ end
 Tab2:AddButton({
 	Name = "Edgelord (Max the Graphics for better experience",
 	Callback = function()
--- EdgeLord Slap Battle
+-- EdgeLord Slap Battle --
 -- Edgelord made by CludeHub/Paras
+
 game:GetService("Players").LocalPlayer.Reset:FireServer()
 wait(4.5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
 wait(0.4)
+
 -- Services and Variables
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
+local mouse = player:GetMouse()
 
--- Variables for slap aura
+-- Slap Aura Variables
 local slapEnabled = false
 local slapDistance = 25
 local slapCooldown = 1
 local lastSlapTime = 0
-local clickCooldown = 1
-local lastClickTime = 0
+local slapAnimCooldown = 1  
+local lastSlapAnimTime = 0  
 
--- Function to add all animations, effects, and slap aura handling
+local auraParticles = {}  -- Store aura & glitch particles
+local auraVisible = true  -- Track aura visibility
+
+-- Function to add animations, effects, and slap aura
 local function setupCharacter(character)
     local humanoid = character:WaitForChild("Humanoid")
     local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-    -- Set walkspeed
-    humanoid.WalkSpeed = 30
-
-    -- Animation setup
+    -- Animations
     local idleAnimation = Instance.new("Animation")
     idleAnimation.AnimationId = "rbxassetid://16163355836"
+
     local walkAnimation = Instance.new("Animation")
     walkAnimation.AnimationId = "rbxassetid://16163350920"
+
     local slapAnimation = Instance.new("Animation")
     slapAnimation.AnimationId = "rbxassetid://16102717448"
 
+    -- Load animations
     local idleAnimTrack = humanoid:LoadAnimation(idleAnimation)
     local walkAnimTrack = humanoid:LoadAnimation(walkAnimation)
+    local slapAnimTrack = humanoid:LoadAnimation(slapAnimation)
 
+    -- Loop idle and walking animations
     idleAnimTrack.Looped = true
     walkAnimTrack.Looped = true
     idleAnimTrack:Play()
 
-    -- Animation switching based on movement
+    -- Play walking animation when moving
     local function updateAnimation()
         if humanoid.MoveDirection.Magnitude > 0 then
             if not walkAnimTrack.IsPlaying then
@@ -1724,106 +1731,66 @@ local function setupCharacter(character)
 
     humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(updateAnimation)
 
-    -- Function to create and attach aura and glitch particles
-    local function createParticles()
-        local particles = {}
+    -- Sound for slap
+    local slapSound = Instance.new("Sound")
+    slapSound.SoundId = "rbxassetid://858508159"
+    slapSound.Volume = 150
+    slapSound.Parent = humanoidRootPart
 
+    -- Function to create aura & glitch effects
+    local function createParticles()
         for _, part in ipairs(character:GetChildren()) do
             if part:IsA("BasePart") then
-                -- Aura Particle
                 local auraParticle = Instance.new("ParticleEmitter")
                 auraParticle.Texture = "rbxassetid://833874434"
-                auraParticle.Brightness = 2
+                auraParticle.Brightness = 6
                 auraParticle.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
                 auraParticle.LightEmission = 0.5
-                auraParticle.Size = NumberSequence.new(0.9)
-                auraParticle.Lifetime = NumberRange.new(2)
-                auraParticle.Rate = 60
-                auraParticle.Speed = NumberRange.new(0.5)
+                auraParticle.Size = NumberSequence.new(1.4)
+                auraParticle.Lifetime = NumberRange.new(0.5)
+                auraParticle.Rate = 140
+                auraParticle.Speed = NumberRange.new(2)
                 auraParticle.Parent = part
-                auraParticle.Enabled = true
+                table.insert(auraParticles, auraParticle)
 
-                -- Glitch Particle
                 local glitchParticle = Instance.new("ParticleEmitter")
                 glitchParticle.Texture = "rbxassetid://3876444567"
-                glitchParticle.Brightness = 1
+                glitchParticle.Brightness = 4
                 glitchParticle.Color = ColorSequence.new({
                     ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 22, 42)),
                     ColorSequenceKeypoint.new(0.5, Color3.fromRGB(21, 42, 148)),
                     ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 50, 148))
                 })
-                glitchParticle.LightEmission = 0.8
+                glitchParticle.LightEmission = 0.9
                 glitchParticle.Size = NumberSequence.new(1)
                 glitchParticle.Lifetime = NumberRange.new(0.1)
-                glitchParticle.Rate = 100
+                glitchParticle.Rate = 135
                 glitchParticle.Speed = NumberRange.new(2)
                 glitchParticle.Parent = part
-                glitchParticle.Enabled = true
-
-                table.insert(particles, {aura = auraParticle, glitch = glitchParticle})
+                table.insert(auraParticles, glitchParticle)
             end
         end
-
-        return particles
     end
 
-    -- Create and store particles
-    local particles = createParticles()
+    createParticles()
 
-    -- Slap aura particles (black effect)
-    local function createSlapParticles()
-        local slapParticles = {}
-
-        for _, part in ipairs(character:GetChildren()) do
-            if part:IsA("BasePart") then
-                local particle = Instance.new("ParticleEmitter")
-                particle.Texture = "rbxassetid://3876444567"
-                particle.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))  -- Black slap particles
-                particle.LightEmission = 0.5
-                particle.Size = NumberSequence.new(1)
-                particle.Rate = 150
-                particle.Lifetime = NumberRange.new(0.5, 1)
-                particle.Speed = NumberRange.new(2, 4)
-                particle.VelocitySpread = 360
-                particle.RotSpeed = NumberRange.new(-100, 100)
-                particle.Parent = part
-                particle.Enabled = false
-
-                table.insert(slapParticles, particle)
-            end
-        end
-
-        return slapParticles
-    end
-
-    local slapParticles = createSlapParticles()
-
-    -- Toggle aura function
-    local function toggleAura()
+    -- Function to activate Slap Aura
+    local function activateSlapAura()
         slapEnabled = true
-
-        -- Enable black slap particles
-        for _, particle in ipairs(slapParticles) do
-        end
-
         wait(1)
-
         slapEnabled = false
-
-        -- Disable black slap particles
-        for _, particle in ipairs(slapParticles) do
-            
-        end
     end
 
-    -- Slap animation and aura activation
+    -- Play slap animation with cooldown
     local function playSlapAnimation()
-        local slapTrack = humanoid:LoadAnimation(slapAnimation)
-        slapTrack:Play()
-        slapTrack.Looped = false
+        if tick() - lastSlapAnimTime < slapAnimCooldown then return end  
+        lastSlapAnimTime = tick()  
+
+        slapAnimTrack:Play()
+        slapAnimTrack.Looped = false
     end
 
-    -- Slap nearest player globally (lobby + arena)
+    -- Slap nearest player
     local function slapClosestPlayer()
         if not slapEnabled then return end
 
@@ -1832,8 +1799,7 @@ local function setupCharacter(character)
 
         for _, otherPlayer in pairs(Players:GetPlayers()) do
             if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local otherPlayerPosition = otherPlayer.Character.HumanoidRootPart.Position
-                local distance = (character.HumanoidRootPart.Position - otherPlayerPosition).Magnitude
+                local distance = (character.HumanoidRootPart.Position - otherPlayer.Character.HumanoidRootPart.Position).Magnitude
 
                 if distance <= closestDistance then
                     closestDistance = distance
@@ -1844,39 +1810,19 @@ local function setupCharacter(character)
 
         if closestPlayer and tick() - lastSlapTime >= slapCooldown then
             lastSlapTime = tick()
-
-            if closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                local head = closestPlayer.Character.Head
+            local head = closestPlayer.Character:FindFirstChild("Head")
+            if head then
                 local args = {head}
-
-                -- Fire both remotes
                 local generalRemote = ReplicatedStorage:FindFirstChild("GeneralHit")
                 local plagueRemote = ReplicatedStorage:FindFirstChild("PlagueHit")
 
-                if generalRemote then
-                    generalRemote:FireServer(unpack(args))
-                end
+                if generalRemote then generalRemote:FireServer(unpack(args)) end
+                if plagueRemote then plagueRemote:FireServer(unpack(args)) end
 
-                if plagueRemote then
-                    plagueRemote:FireServer(unpack(args))
-                end
+                slapSound:Play()
             end
         end
     end
-
-    -- Input handling with cooldown
-    UserInputService.InputBegan:Connect(function(input, processed)
-        if processed then return end
-
-        if tick() - lastClickTime >= clickCooldown then
-            lastClickTime = tick()
-
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                playSlapAnimation()
-                toggleAura()
-            end
-        end
-    end)
 
     -- Continuous slap aura checking
     RunService.RenderStepped:Connect(function()
@@ -1884,21 +1830,62 @@ local function setupCharacter(character)
             slapClosestPlayer()
         end
     end)
+
+    return activateSlapAura, playSlapAnimation
 end
 
 -- Initial setup
-setupCharacter(player.Character)
+local activateSlapAura, playSlapAnimation = setupCharacter(player.Character)
 
--- Handle character respawn
-player.CharacterAdded:Connect(function(character)
-    -- Wait for character to load fully before applying animations and effects
-    character:WaitForChild("HumanoidRootPart")
-    setupCharacter(character)
+-- Function to toggle aura visibility
+local function toggleAura()
+    auraVisible = not auraVisible
+    for _, particle in ipairs(auraParticles) do
+        particle.Enabled = auraVisible
+    end
+end
+
+-- Create "Aura" toggle tool
+local auraTool = Instance.new("Tool")
+auraTool.RequiresHandle = false
+auraTool.Name = "Aura"
+auraTool.Parent = player.Backpack
+
+-- Toggle aura on tool activation
+auraTool.Activated:Connect(toggleAura)
+
+-- Create "Telekinetic Force" tool
+local slapTool = Instance.new("Tool")
+slapTool.RequiresHandle = false
+slapTool.Name = "Telekinetic Force"
+slapTool.Parent = player.Backpack
+
+-- When the tool is used, activate the slap aura
+slapTool.Activated:Connect(function()
+    playSlapAnimation()
+    activateSlapAura()
+end)
+
+-- Create "Click TP" tool
+local tpTool = Instance.new("Tool")
+tpTool.RequiresHandle = false
+tpTool.Name = "Click TP"
+tpTool.Parent = player.Backpack
+
+-- Teleport function
+tpTool.Activated:Connect(function()
+    local targetPosition = mouse.Hit.Position
+    if targetPosition then
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+        end
+    end
 end)
 local Sound = Instance.new("Sound")
 Sound.Parent = game.Workspace
 Sound.SoundId = "rbxassetid://9133844756"
-Sound.Volume = 1 -- Adjust volume (0 to 10)
+Sound.Volume = 50 -- Adjust volume (0 to 10)
 Sound.Looped = true
 Sound:Play()
 
@@ -1912,9 +1899,6 @@ player.CharacterAdded:Connect(function(char)
         Sound:Stop()
     end)
 end)
-      		print("button pressed")
-  	end    
-})
 
 Tab4:AddButton({
 	Name = "Get Boxer Badge",
